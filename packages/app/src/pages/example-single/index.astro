@@ -1,0 +1,38 @@
+---
+interface Entry {
+  title: string
+  uri: string
+}
+
+const response = await fetch("http://astro-craftcms.ddev.site/api",
+  {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      query: `
+        query getExampleSingle {
+          entries(section: "exampleSingle") {
+            title
+            uri
+          }
+        }
+      `,
+    }),
+  });
+
+const json = await response.json();
+const { entries: [entry] }: { entries: Array<Entry> } = json.data;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{entry.title} :: astro-craftcms</title>
+  </head>
+  <body>
+    <h1>{entry.title}</h1>
+  </body>
+</html>
