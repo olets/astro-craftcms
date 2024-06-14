@@ -6,3 +6,10 @@ export interface ExampleChannelEntry {
   title?: string
   uri?: string
 }
+
+export interface ExampleStructureEntry {
+  sectionHandle?: string
+  slug?: string
+  title?: string
+  uri?: string
+}
