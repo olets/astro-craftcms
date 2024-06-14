@@ -1,17 +1,21 @@
 {
   "name": "astro-craftcms-app",
   "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
   "dependencies": {
     "astro": "^4.10.2",
     "@astrojs/check": "^0.7.0",
     "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "dev": "bun run fetch-data && astro dev",
+    "start": "bun run fetch-data && astro dev",
+    "build": "astro check && bun run fetch-data && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "fetch-data": "bun bin/fetch-data/*.ts"
+  },
   "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.14.2"
   }
 }

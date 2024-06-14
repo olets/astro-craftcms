@@ -1,0 +1,38 @@
+---
+import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
+import getEntry from "@utilities/get-entry.ts";
+import { entries, staticPaths, uriPrefix } from "./data.ts";
+
+type Entry = typeof entries[number];
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+
+const { slug } = Astro.params as Params;
+const entry = await getEntry<Entry>({entries, slug, uriPrefix});
+
+if (!entry) {
+  // return a Response rather than use Astro.response to prevent `entry.x` in the template from giving `'entry' is possibly 'undefined'.ts(18048)`
+  return new Response(null, { status: 404 });
+}
+
+export const getStaticPaths = (async () => {
+  return staticPaths;
+}) satisfies GetStaticPaths;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{slug} :: astro-craftcms</title>
+  </head>
+  <body>
+    <dl>
+      <dt>title</dt>
+      <dd>{entry.title}</dd>
+      <dt>slug</dt>
+      <dd>{slug}</dd>
+    </dl>
+  </body>
+</html>
