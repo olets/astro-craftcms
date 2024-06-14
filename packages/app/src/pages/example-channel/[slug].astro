@@ -1,7 +1,7 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
 import getEntry from "@utilities/get-entry.ts";
-import { entries, staticPaths, uriPrefix } from "./data.ts";
+import { entries, staticPaths, uriPrefix } from "@data/example-channel.ts";
 
 type Entry = typeof entries[number];
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;

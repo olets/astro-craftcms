@@ -7,12 +7,12 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "dev": "bun run fetch-data && astro dev",
-    "start": "bun run fetch-data && astro dev",
-    "build": "astro check && bun run fetch-data && astro build",
+    "dev": "bun run cache-data && astro dev",
+    "start": "bun run cache-data && astro dev",
+    "build": "astro check && bun run cache-data && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-data": "bun bin/fetch-data/*.ts"
+    "cache-data": "bun bin/cache-data.ts"
   },
   "type": "module",
   "devDependencies": {

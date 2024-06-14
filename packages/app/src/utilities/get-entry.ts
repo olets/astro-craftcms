@@ -1,4 +1,4 @@
-import { fetchData } from "@@bin/fetch-data/example-channel.ts";
+import { fetchData } from "@@bin/data.ts";
 
 interface Props<Entry> {
   entries: Array<Entry>
