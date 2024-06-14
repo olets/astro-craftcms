@@ -1,0 +1,7 @@
+isPublic: true
+name: 'Public Schema'
+scope:
+  - 'sites.0bda1c6b-607d-4b82-8274-4bdc4f5a2a78:read' # astro-craftcms
+  - 'sections.f527f66e-862e-4c16-8439-cdb3e1f894c3:read' # Example Single
+  - 'sections.31cbaa90-6504-4e89-87f0-d8c2ed3f5f32:read' # Example Channel
+  - 'sections.b34ffb6b-3496-4a01-a7b4-92e89cc74117:read' # Example Structure

@@ -1,0 +1,27 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - 95ef0b64-7fa5-4a78-96c8-54053c025f38 # Example Channel Entry Type
+handle: exampleChannel
+maxAuthors: 1
+name: 'Example Channel'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  0bda1c6b-607d-4b82-8274-4bdc4f5a2a78: # astro-craftcms
+    enabledByDefault: true
+    hasUrls: true
+    template: null
+    uriFormat: 'example-channel/{slug}'
+type: channel
