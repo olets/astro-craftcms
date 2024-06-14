@@ -1,6 +1,5 @@
 {
-  "name": "app",
-  "type": "module",
+  "name": "astro-craftcms-app",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
@@ -13,5 +12,6 @@
     "astro": "^4.10.2",
     "@astrojs/check": "^0.7.0",
     "typescript": "^5.4.5"
+  "type": "module",
   }
 }

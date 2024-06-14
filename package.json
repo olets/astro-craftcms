@@ -2,6 +2,14 @@
   "name": "astro-craftcms",
   "packageManager": "bun@1.1.13",
   "private": true,
+  "scripts": {
+    "app": "bun run --filter astro-craftcms-app",
+    "build": "bun run app build",
+    "cms": "bun run --filter astro-craftcms-cms", 
+    "dev": "bun run cms restart && bun run app dev",
+    "preview": "bun run app preview",
+    "start": "bun run cms restart && bun run app start"
+  },
   "workspaces": [
     "packages/*"
   ]
