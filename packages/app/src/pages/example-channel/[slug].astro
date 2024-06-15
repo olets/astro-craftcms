@@ -15,8 +15,8 @@ const entry = await getEntry<(typeof entries)[number]>({
 });
 
 if (!entry) {
-  // return a Response rather than use Astro.response to prevent `entry.x` in the template from giving `'entry' is possibly 'undefined'.ts(18048)`
-  return new Response(null, { status: 404 });
+  Astro.response.status = 404;
+  return;
 }
 
 export const getStaticPaths = (async () => {
