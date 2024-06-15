@@ -1,8 +1,9 @@
 import fetchApi from "@lib/craft-cms.ts";
+import type { Props as fetchApiProps } from "@lib/craft-cms.ts";
 
 interface Props<Entry> {
   entries: Array<Entry>;
-  query: string;
+  queryProps: fetchApiProps;
   slug: string;
   uriPrefix: string;
 }
@@ -13,7 +14,7 @@ interface Entry {
 
 export default async function getEntry<T extends Entry>({
   entries,
-  query,
+  queryProps,
   slug,
   uriPrefix,
 }: Props<T>): Promise<T | undefined> {
@@ -22,7 +23,10 @@ export default async function getEntry<T extends Entry>({
   let entry = entries.find((staticEntry) => staticEntry.slug === slug);
 
   if (import.meta.env.DEV) {
-    const dynamicEntries = (await fetchApi(query)) as Array<T>;
+    const dynamicEntries = (await fetchApi({
+      ...queryProps,
+      additionalArguments: `uri: "${uri}"`,
+    })) as Array<T>;
 
     if (dynamicEntries.length > 0) {
       entry = dynamicEntries[0];

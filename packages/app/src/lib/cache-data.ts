@@ -3,14 +3,15 @@ import path from "path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "url";
 import fetchApi from "./craft-cms.ts";
+import type { Props } from "./craft-cms.ts";
 
 interface CacheEntry {
   slug: string;
   uri: string;
 }
 
-export default async function (query: string): Promise<void> {
-  const entries = await fetchApi(query) as CacheEntry[];
+export default async function (queryProps: Props): Promise<void> {
+  const entries = await fetchApi(queryProps) as CacheEntry[];
 
   const { slug: exemplarySlug = "", uri: exemplaryUri = "" } = entries[0];
 

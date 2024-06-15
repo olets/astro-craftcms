@@ -1,4 +1,4 @@
 import cacheData from "@lib/cache-data.ts";
-import query from "./query.ts";
+import queryProps from "./query-props.ts";
 
-cacheData(query);
+cacheData(queryProps);

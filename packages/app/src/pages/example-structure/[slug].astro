@@ -1,13 +1,18 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
 import getEntry from "@utilities/get-entry.ts";
+import queryProps from "./_/query-props.ts"
 import { entries, staticPaths, uriPrefix } from "./_/cache/data.ts";
-import query from "./_/query.ts";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 const { slug } = Astro.params as Params;
-const entry = await getEntry<typeof entries[number]>({ entries, query, slug, uriPrefix });
+const entry = await getEntry<(typeof entries)[number]>({
+  entries,
+  queryProps,
+  slug,
+  uriPrefix,
+});
 
 if (!entry) {
   // return a Response rather than use Astro.response to prevent `entry.x` in the template from giving `'entry' is possibly 'undefined'.ts(18048)`
