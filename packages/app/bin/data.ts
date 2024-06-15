@@ -2,19 +2,23 @@ import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "url";
+import fetchApi from "@lib/craft-cms.ts";
 
-interface XEntry {
-  slug: string;
-  uri: string;
+interface Entry {
+  slug?: string;
+  uri?: string;
 }
 
-async function cacheData<Entry>(
-  channel: String,
-  entryType: String
-): Promise<void> {
-  const entries = (await fetchData<Entry>(channel)) as XEntry[];
+// @TODO add a check for whether T actually extends Entry
+async function cacheData<T extends Entry>(query: string): Promise<void> {
+  const entries: Array<T> = await fetchApi<T>(query);
 
   const { slug: exemplarySlug = "", uri: exemplaryUri = "" } = entries[0];
+
+  if (!exemplarySlug || !exemplaryUri) {
+    console.log(`Entry generic must have a slug and a uri.`);
+    return;
+  }
 
   const uriPrefix = exemplaryUri.split(exemplarySlug)[0] || exemplaryUri;
 
@@ -23,9 +27,7 @@ async function cacheData<Entry>(
   }));
 
   const content = [
-    `import type { ${entryType} } from '@env.d.ts';`,
-    "",
-    `const entries: Array<${entryType}> = ${JSON.stringify(entries)};`,
+    `const entries = ${JSON.stringify(entries)};`,
     "",
     `const uriPrefix: string = '${uriPrefix}';`,
     "",
@@ -37,47 +39,15 @@ async function cacheData<Entry>(
   // https://stackoverflow.com/a/71735771/1241736
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const dir = path.resolve(path.join(__dirname, "../src/data"));
+  const dir = path.resolve(path.join(__dirname, `../src/pages/${uriPrefix}`));
 
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });
   }
 
-  const file = path.join(
-    dir,
-    `${uriPrefix.replace(/\/+$/, "")}.ts`
-  );
+  const file = path.join(dir, "_", "data.ts");
 
   writeFileSync(file, content);
 }
 
-// @TODO refactor to something like https://docs.astro.build/en/guides/cms/strapi/#creating-the-api-wrapper
-async function fetchData<Entry>(section: String = "*", uri: String = "*"): Promise<Array<Entry>> {
-  const response = await fetch("http://astro-craftcms.ddev.site/api", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-          query getEntries {
-            entries (section: "${section}", uri: "${uri}") {
-              slug
-              title
-              uri
-            }
-          }
-        `,
-      variables: {
-        section: section,
-        uri: uri,
-      },
-    }),
-  });
-
-  const json = await response.json();
-
-  const { entries }: { entries: Array<Entry> } = json.data;
-
-  return entries;
-}
-
-export { cacheData, fetchData };
+export { cacheData };

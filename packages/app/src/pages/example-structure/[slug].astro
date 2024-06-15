@@ -1,13 +1,13 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
 import getEntry from "@utilities/get-entry.ts";
-import { entries, staticPaths, uriPrefix } from "@data/example-structure.ts";
+import { entries, staticPaths, uriPrefix } from "./data.ts";
+import query from "./query.ts";
 
-type Entry = typeof entries[number];
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 const { slug } = Astro.params as Params;
-const entry = await getEntry<Entry>({entries, slug, uriPrefix});
+const entry = await getEntry<typeof entries[number]>({ entries, query, slug, uriPrefix });
 
 if (!entry) {
   // return a Response rather than use Astro.response to prevent `entry.x` in the template from giving `'entry' is possibly 'undefined'.ts(18048)`
@@ -28,6 +28,8 @@ export const getStaticPaths = (async () => {
     <title>{slug} :: astro-craftcms</title>
   </head>
   <body>
+    This is a page in the Example Structure section
+
     <dl>
       <dt>title</dt>
       <dd>{entry.title}</dd>
