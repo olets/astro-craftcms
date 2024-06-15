@@ -7,19 +7,22 @@ interface Props<Entry> {
   uriPrefix: string;
 }
 
-export default async function getEntry<Entry>({
+interface Entry {
+  slug: string;
+}
+
+export default async function getEntry<T extends Entry>({
   entries,
   query,
   slug,
   uriPrefix,
-}: Props<Entry>): Promise<Entry | undefined> {
+}: Props<T>): Promise<T | undefined> {
   const uri = [uriPrefix, slug].join("");
 
-  // @ts-ignore-next-line // @TODO resolve
-  let entry = entries.find((staticEntry: Entry) => staticEntry.slug === slug);
+  let entry = entries.find((staticEntry) => staticEntry.slug === slug);
 
   if (import.meta.env.DEV) {
-    const dynamicEntries = (await fetchApi(query)) as Array<Entry>;
+    const dynamicEntries = (await fetchApi(query)) as Array<T>;
 
     if (dynamicEntries.length > 0) {
       entry = dynamicEntries[0];
