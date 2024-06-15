@@ -1,27 +1,27 @@
 ---
-interface Entry {
-  title: string
-  uri: string
+import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
+import getEntry from "@utilities/get-entry.ts";
+import queryProps from "./_/query-props.ts"
+import { entries, staticPaths, uriPrefix } from "./_/cache/data.ts";
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+
+const { slug } = Astro.params as Params;
+const entry = await getEntry<(typeof entries)[number]>({
+  entries,
+  queryProps,
+  slug,
+  uriPrefix,
+});
+
+if (!entry) {
+  Astro.response.status = 404;
+  return;
 }
 
-const response = await fetch("http://astro-craftcms.ddev.site/api",
-  {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({
-      query: `
-        query getExampleSingle {
-          entries(section: "exampleSingle") {
-            title
-            uri
-          }
-        }
-      `,
-    }),
-  });
-
-const json = await response.json();
-const { entries: [entry] }: { entries: Array<Entry> } = json.data;
+export const getStaticPaths = (async () => {
+  return staticPaths;
+}) satisfies GetStaticPaths;
 ---
 
 <html lang="en">
@@ -30,9 +30,16 @@ const { entries: [entry] }: { entries: Array<Entry> } = json.data;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{entry.title} :: astro-craftcms</title>
+    <title>{slug} :: astro-craftcms</title>
   </head>
   <body>
-    <h1>{entry.title}</h1>
+    This is a page in the Example Single section
+
+    <dl>
+      <dt>title</dt>
+      <dd>{entry.title}</dd>
+      <dt>slug</dt>
+      <dd>{slug}</dd>
+    </dl>
   </body>
 </html>
