@@ -16,10 +16,10 @@ export default async function getEntry<Entry>({
   const uri = [uriPrefix, slug].join("");
 
   // @ts-ignore-next-line // @TODO resolve
-  let entry = entries.find((staticEntry) => staticEntry.slug === slug);
+  let entry = entries.find((staticEntry: Entry) => staticEntry.slug === slug);
 
   if (import.meta.env.DEV) {
-    const dynamicEntries = (await fetchApi<Entry>(query)) as Array<Entry>;
+    const dynamicEntries = (await fetchApi(query)) as Array<Entry>;
 
     if (dynamicEntries.length > 0) {
       entry = dynamicEntries[0];

@@ -1,4 +1,4 @@
-export default async function fetchApi<Entry>(query: string): Promise<Array<Entry>> {
+export default async function fetchApi(query: string): Promise<Array<object>> {
   const response = await fetch(import.meta.env.CRAFT_CMS_GRAPHQL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -9,7 +9,7 @@ export default async function fetchApi<Entry>(query: string): Promise<Array<Entr
 
   const json = await response.json();
 
-  const { entries }: { entries: Array<Entry> } = json.data;
+  const { entries }: { entries: Array<object> } = json.data;
 
   return entries;
 }

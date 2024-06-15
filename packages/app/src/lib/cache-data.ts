@@ -9,8 +9,8 @@ interface CacheEntry {
   uri: string;
 }
 
-export default async function <T extends CacheEntry>(query: string): Promise<void> {
-  const entries = await fetchApi<T>(query);
+export default async function (query: string): Promise<void> {
+  const entries = await fetchApi(query) as CacheEntry[];
 
   const { slug: exemplarySlug = "", uri: exemplaryUri = "" } = entries[0];
 
