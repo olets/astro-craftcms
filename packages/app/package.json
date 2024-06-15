@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "bun run cache-data && astro dev",
     "start": "bun run cache-data && astro dev",
-    "build": "astro check && bun run cache-data && astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "cache-data": "bun bin/cache-data.ts"
