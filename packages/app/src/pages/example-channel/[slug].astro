@@ -1,8 +1,8 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
 import getEntry from "@utilities/get-entry.ts";
-import { entries, staticPaths, uriPrefix } from "./data.ts";
-import query from "./query.ts";
+import { entries, staticPaths, uriPrefix } from "./_/cache/data.ts";
+import query from "./_/query.ts";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 

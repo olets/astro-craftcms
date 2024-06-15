@@ -19,7 +19,7 @@ export default async function getEntry<Entry>({
   let entry = entries.find((staticEntry) => staticEntry.slug === slug);
 
   if (import.meta.env.DEV) {
-    const dynamicEntries = (await fetchApi(query)) as Array<Entry>;
+    const dynamicEntries = (await fetchApi<Entry>(query)) as Array<Entry>;
 
     if (dynamicEntries.length > 0) {
       entry = dynamicEntries[0];

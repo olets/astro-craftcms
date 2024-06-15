@@ -1,8 +1,7 @@
-import type { ExampleChannelEntry, ExampleStructureEntry } from "@env.d.ts";
-import { cacheData } from "./data.ts";
-import exampleChannelQuery from "@pages/example-channel/query.ts"
-import exampleStructureQuery from "@pages/example-structure/_/query.ts"
+import { $, Glob } from "bun";
 
-cacheData<ExampleChannelEntry>(exampleChannelQuery);
+const glob = new Glob("src/pages/**/cache-data.ts");
 
-cacheData<ExampleStructureEntry>(exampleStructureQuery);
+for await (const file of glob.scan(".")) {
+  await $`bun ${file}`
+}

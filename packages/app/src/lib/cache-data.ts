@@ -2,16 +2,15 @@ import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "url";
-import fetchApi from "@lib/craft-cms.ts";
+import fetchApi from "./craft-cms.ts";
 
-interface Entry {
-  slug?: string;
-  uri?: string;
+interface CacheEntry {
+  slug: string;
+  uri: string;
 }
 
-// @TODO add a check for whether T actually extends Entry
-async function cacheData<T extends Entry>(query: string): Promise<void> {
-  const entries: Array<T> = await fetchApi<T>(query);
+export default async function <T extends CacheEntry>(query: string): Promise<void> {
+  const entries = await fetchApi<T>(query);
 
   const { slug: exemplarySlug = "", uri: exemplaryUri = "" } = entries[0];
 
@@ -39,15 +38,13 @@ async function cacheData<T extends Entry>(query: string): Promise<void> {
   // https://stackoverflow.com/a/71735771/1241736
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const dir = path.resolve(path.join(__dirname, `../src/pages/${uriPrefix}`));
+  const dir = path.resolve(path.join(__dirname, `../pages/${uriPrefix}`));
 
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });
   }
 
-  const file = path.join(dir, "_", "data.ts");
+  const file = path.join(dir, "_/cache", "data.ts");
 
   writeFileSync(file, content);
 }
-
-export { cacheData };
