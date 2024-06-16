@@ -6,17 +6,16 @@ import { entries, staticPaths, uriPrefix } from "./_/cache/data.ts";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
-const { slug } = Astro.params as Params;
+const { path } = Astro.params as Params;
 const entry = await getEntry<(typeof entries)[number]>({
   entries,
   queryProps,
-  slug,
+  path,
   uriPrefix,
 });
 
 if (!entry) {
-  Astro.response.status = 404;
-  return;
+  return new Response(null, { status: 404 });
 }
 
 export const getStaticPaths = (async () => {
@@ -30,16 +29,16 @@ export const getStaticPaths = (async () => {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{slug} :: astro-craftcms</title>
+    <title>{entry.slug} :: astro-craftcms</title>
   </head>
   <body>
-    This is a page in the Example Single section
+    This is a page in the Example Structure section
 
     <dl>
       <dt>title</dt>
       <dd>{entry.title}</dd>
       <dt>slug</dt>
-      <dd>{slug}</dd>
+      <dd>{entry.slug}</dd>
     </dl>
   </body>
 </html>

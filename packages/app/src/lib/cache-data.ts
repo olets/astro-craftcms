@@ -11,27 +11,46 @@ interface CacheEntry {
 }
 
 export default async function (queryProps: Props): Promise<void> {
-  const entries = await fetchApi(queryProps) as CacheEntry[];
+  const entries = (await fetchApi(queryProps)) as CacheEntry[];
 
-  const { slug: exemplarySlug = "", uri: exemplaryUri = "" } = entries[0];
+  const { slug, uri } = entries[0];
 
-  if (!exemplarySlug || !exemplaryUri) {
+  if (!slug || !uri) {
     console.log(`Entry generic must have a slug and a uri.`);
     return;
   }
 
-  const uriPrefix = exemplaryUri.split(exemplarySlug)[0] || exemplaryUri;
+  let uriPrefix: string | undefined = undefined;
 
-  const staticPaths = entries.map((entry) => ({
-    params: { slug: entry.slug },
-  }));
+  if (slug !== uri) {
+    uriPrefix = uri.replace(new RegExp(`/${slug}$`), "");
+  }
+
+  const staticPaths = entries.map((entry) => {
+    let path: string | undefined = undefined;
+
+    if (uriPrefix) {
+      path = entry.uri.replace(new RegExp(`^${uriPrefix}/`), "");
+    }
+
+    return { params: { path: path } };
+    // If uri is "channel/entry" and slug is "channel", path is "entry".
+    // If uri is "single" and slug is "single", path is "".
+  });
+  // const { params } = staticPaths[0]
+  // const statics = JSON.stringify(staticPaths).replace('"params":{}', '"params":{"path":undefined}');
+  // console.log({params, statics});
+  // return
 
   const content = [
     `const entries = ${JSON.stringify(entries)};`,
     "",
-    `const uriPrefix: string = '${uriPrefix}';`,
+    `const uriPrefix = ${JSON.stringify(uriPrefix)};`,
     "",
-    `const staticPaths = ${JSON.stringify(staticPaths)};`,
+    `const staticPaths = ${JSON.stringify(staticPaths).replace(
+      '"params":{}',
+      '"params":{"path":undefined}'
+    )};`,
     "",
     `export { entries, staticPaths, uriPrefix };`,
   ].join("\n");
@@ -39,7 +58,9 @@ export default async function (queryProps: Props): Promise<void> {
   // https://stackoverflow.com/a/71735771/1241736
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const dir = path.resolve(path.join(__dirname, `../pages/${uriPrefix}`));
+  const dir = path.resolve(
+    path.join(__dirname, `../pages/${uriPrefix || uri}`)
+  );
 
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });
