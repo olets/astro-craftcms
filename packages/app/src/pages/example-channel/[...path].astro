@@ -1,16 +1,17 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
-import getEntry from "@utilities/get-entry.ts";
-import queryProps from "./_/query-props.ts"
-import { entries, staticPaths, uriPrefix } from "./_/cache/data.ts";
+import getSectionEntry from "@lib/craft-cms/get-section-entry.ts";
+import queryProps from "@queries/example-channel.ts";
+import staticPaths from "@data/example-channel/static-paths.ts";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
-const { path } = Astro.params as Params;
-const entry = await getEntry<(typeof entries)[number]>({
-  entries,
+const uriPrefix = "example-channel";
+
+const { path: pathParam } = Astro.params as Params;
+const entry = await getSectionEntry({
   queryProps,
-  path,
+  pathParam,
   uriPrefix,
 });
 
@@ -29,7 +30,7 @@ export const getStaticPaths = (async () => {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{entry.slug} :: astro-craftcms</title>
+    <title>{entry.title} :: astro-craftcms</title>
   </head>
   <body>
     This is a page in the Example Channel section
@@ -37,8 +38,6 @@ export const getStaticPaths = (async () => {
     <dl>
       <dt>title</dt>
       <dd>{entry.title}</dd>
-      <dt>slug</dt>
-      <dd>{entry.slug}</dd>
     </dl>
   </body>
 </html>
