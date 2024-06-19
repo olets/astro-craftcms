@@ -10,14 +10,16 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-const pattern = path.join(__dirname, "/../src/pages/**/*.astro");
+const fileSuffix = ".ts"
+
+const pattern = path.join(__dirname, `/../src/queries/**/*${fileSuffix}`);
 
 const glob = new Glob(pattern);
 
 for await (const file of glob.scan(".")) {
-  const uriPrefix = path.basename(path.dirname(file))
+  const uriPrefix = path.basename(file, fileSuffix)
   
-  const queryProps = await import(`../src/queries/${uriPrefix}`)
+  const queryProps = await import(file)
     .then(m => {
       return m.default
     })

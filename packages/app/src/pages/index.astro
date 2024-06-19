@@ -1,0 +1,55 @@
+---
+import getEntries from "@lib/craft-cms/get-entries.ts";
+import queryProps from "@queries/index.ts";
+
+const entries = await getEntries({
+  queryProps,
+  cacheDirectory: "index",
+});
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Homepage Route :: astro-craftcms</title>
+  </head>
+  <body>
+    <h1>Homepage Route</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>sectionHandle</th>
+          <th>sectionId</th>
+          <th>title</th>
+          <th>typeHandle</th>
+          <th>typeId</th>
+          <th>uri</th>
+          <th>visit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          entries.map((entry) => (
+            <tr>
+              <td>{entry.id}</td>
+              <td>{entry.sectionHandle}</td>
+              <td>{entry.sectionId}</td>
+              <td>{entry.title}</td>
+              <td>{entry.typeHandle}</td>
+              <td>{entry.typeId}</td>
+              <td>{entry.uri}</td>
+              <td>
+                <a href={`/${entry.uri}`}>Go</a>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </body>
+</html>
