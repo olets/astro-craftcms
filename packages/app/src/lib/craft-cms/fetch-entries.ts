@@ -1,6 +1,6 @@
 export interface Props {
-  args?: string;
-  fieldsBesidesUri?: string;
+  queryArgs?: string;
+  queryFields?: string;
   url?: string;
 }
 
@@ -10,14 +10,15 @@ export interface Entry {
 }
 
 export default async function fetchEntries({
-  args,
-  fieldsBesidesUri,
+  queryArgs,
+  queryFields,
   url = import.meta.env.CRAFT_CMS_GRAPHQL_URL,
 }: Props): Promise<Array<Entry>> {
   const query = `{
-    entries ${args ? `(${args})` : ""} {
+    entries ${queryArgs ? `(${queryArgs})` : ""} {
+      sectionHandle
       uri
-      ${fieldsBesidesUri || ""}
+      ${queryFields || ""}
     }
   }`;
 

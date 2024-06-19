@@ -1,12 +1,25 @@
 ---
-import getEntries from "@lib/craft-cms/get-entries.ts";
-import queryProps from "@queries/example-route.ts";
-import url from "@lib/craft-cms/url.ts"
+import type { Entry } from "@lib/craft-cms/fetch-entries";
+import fetchEntries from "@lib/craft-cms/fetch-entries";
+import cacheEntries from "@lib/craft-cms/cache-entries";
+import config from "@page-configs/example-route";
+import url from "@lib/craft-cms/url.ts";
 
-const entries = await getEntries({
-  queryProps,
-  dataDirectory: "example-route",
-});
+const { queryFields, uriPrefix } = config;
+
+/**
+ * Near @DUPE layouts/SectionLayout.astro, pages/example-route/index.astro
+ */
+let entries: Array<Entry> = [];
+
+if (import.meta.env.DEV) {
+  entries = await fetchEntries({ queryFields });
+  await cacheEntries({ entries, uriPrefix });
+} else {
+  entries = (await import("@data/example-route/entries.json").then(
+    (m) => m.default
+  )) as Array<Entry>;
+}
 
 const title = "My route";
 ---

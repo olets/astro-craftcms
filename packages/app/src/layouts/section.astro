@@ -1,0 +1,55 @@
+---
+import type { Entry } from "@lib/craft-cms/fetch-entries";
+import fetchEntries from "@lib/craft-cms/fetch-entries";
+import cacheEntries from "@lib/craft-cms/cache-entries";
+import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
+import url from "@lib/craft-cms/url";
+
+interface Config {
+  hasDynamicRoutes?: boolean;
+  queryArgs?: string;
+  queryFields?: string;
+  sectionHandle: string;
+  uriPrefix?: string;
+}
+
+interface Props {
+  config: Config;
+  slug?: string;
+}
+
+const { config, slug }: Props = Astro.props;
+
+const { queryArgs, queryFields, sectionHandle, uriPrefix } = config;
+
+/**
+ * Near @DUPE layouts/SectionLayout.astro, pages/example-route/index.astro
+ */
+let entries: Entry[] = [];
+
+if (import.meta.env.DEV) {
+  entries = await fetchEntries({ queryArgs, queryFields });
+  await cacheEntries({ entries, uriPrefix });
+  await cacheStaticPaths({ entries, uriPrefix });
+} else {
+  const allSectionsEntries = await Astro.glob('@data/**/entries.json')
+
+  entries = allSectionsEntries
+    .map(data => data.default)
+    .find((entries: any) => entries[0].sectionHandle === sectionHandle)
+}
+
+const entry = entries.find(
+  (entry) => url(entry.uri) === "/" + [uriPrefix, slug].filter((v) => v).join("/")
+);
+
+if (!entry) {
+  Astro.redirect('404')
+}
+
+const EntryLayout = await import(`./sections/${sectionHandle}.astro`).then(
+  (m) => m.default
+);
+---
+
+<EntryLayout entry={entry} />

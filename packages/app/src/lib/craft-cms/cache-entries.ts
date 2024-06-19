@@ -4,7 +4,7 @@ import makeCacheDirectory from "@lib/craft-cms/make-cache-directory";
 
 interface Props {
   entries: object;
-  uriPrefix: string;
+  uriPrefix?: string;
 }
 
 export default async function ({ entries, uriPrefix }: Props): Promise<void> {

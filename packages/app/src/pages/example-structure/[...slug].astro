@@ -1,44 +1,16 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
-import getEntries from "@lib/craft-cms/get-entries";
-import queryProps from "@queries/example-structure.ts";
+import SectionLayout from "@layouts/section.astro";
+import config from "@page-configs/example-structure.ts";
 import staticPaths from "@data/example-structure/static-paths.json";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
-const cacheDirectory = "example-structure";
-
-const uriPrefix = cacheDirectory;
-
 const { slug } = Astro.params as Params;
-
-const entries = await getEntries({ queryProps, dataDirectory: cacheDirectory });
-
-const entry = entries.find((staticEntry) => staticEntry.uri === `${uriPrefix}/${slug}`);
-
-if (!entry) {
-  return new Response(null, { status: 404 });
-}
 
 export const getStaticPaths = (async () => {
   return staticPaths;
 }) satisfies GetStaticPaths;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{entry.title} :: astro-craftcms</title>
-  </head>
-  <body>
-    This is a page in the Example Structure section
-
-    <dl>
-      <dt>title</dt>
-      <dd>{entry.title}</dd>
-    </dl>
-  </body>
-</html>
+<SectionLayout config={config} slug={slug} />

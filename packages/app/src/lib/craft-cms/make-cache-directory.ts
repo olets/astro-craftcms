@@ -1,5 +1,6 @@
-import { existsSync, mkdirSync } from "node:fs";
-import path from "node:path";
+import path from "path";
+import { mkdirSync } from "fs";
+import { existsSync } from "node:fs";
 import getCacheDirectory from "@lib/craft-cms/get-cache-directory";
 
 export interface Props {
