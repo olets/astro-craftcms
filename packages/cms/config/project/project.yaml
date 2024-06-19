@@ -1,4 +1,4 @@
-dateModified: 1718332400
+dateModified: 1718758110
 email:
   fromEmail: olets@olets.dev
   fromName: astro-craftcms
@@ -9,7 +9,9 @@ meta:
     31cbaa90-6504-4e89-87f0-d8c2ed3f5f32: 'Example Channel' # Example Channel
     83a107ea-357d-4836-b525-14319446f05c: 'Public Schema' # Public Schema
     95ef0b64-7fa5-4a78-96c8-54053c025f38: 'Example Channel Entry Type' # Example Channel Entry Type
+    721b2b6e-f75a-4e5b-9b43-0de469c9dbb4: Homepage # Homepage
     863cff4f-f659-488d-9614-5d2b915a50ee: astro-craftcms # astro-craftcms
+    87840c86-d676-4511-96cf-bc39bd159b64: Homepage # Homepage
     b34ffb6b-3496-4a01-a7b4-92e89cc74117: 'Example Structure' # Example Structure
     e028dd6d-44ee-41f5-b575-4921ba562311: 'Example Single Entry Type' # Example Single Entry Type
     f527f66e-862e-4c16-8439-cdb3e1f894c3: 'Example Single' # Example Single
