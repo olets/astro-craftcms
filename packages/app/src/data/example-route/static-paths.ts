@@ -1,3 +1,3 @@
-const staticPaths = [{"params":{"path":"__home__"}},{"params":{"path":"example-channel/new-entry"}},{"params":{"path":"example-single"}},{"params":{"path":"example-channel/example-channel-entry"}},{"params":{"path":"example-structure/example-structure-entry-level-1"}},{"params":{"path":"example-structure/example-structure-entry-level-2"}}];
+const staticPaths = [{"params":{"slug":"__home__"}},{"params":{"slug":"example-channel/new-entry"}},{"params":{"slug":"example-single"}},{"params":{"slug":"example-channel/example-channel-entry"}},{"params":{"slug":"example-structure/example-structure-entry-level-1"}},{"params":{"slug":"example-structure/example-structure-entry-level-2"}}];
 
 export default staticPaths;

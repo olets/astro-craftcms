@@ -10,19 +10,19 @@ export interface Props {
 
 export default async function ({ entries, uriPrefix }: Props): Promise<void> {
   const staticPaths = entries.map((entry) => {
-    let path = entry.uri;
+    let slug = entry.uri;
 
     if (uriPrefix) {
-      path = entry.uri.replace(new RegExp(`^${uriPrefix}/`), "");
+      slug = entry.uri.replace(new RegExp(`^${uriPrefix}/`), "");
     }
 
-    return { params: { path: path } };
+    return { params: { slug: slug } };
   });
 
   const fileContent = [
     `const staticPaths = ${JSON.stringify(staticPaths).replace(
       '"params":{}',
-      '"params":{"path":undefined}'
+      '"params":{"slug":undefined}'
     )};`,
     "",
     `export default staticPaths;`,

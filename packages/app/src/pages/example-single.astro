@@ -1,18 +1,12 @@
 ---
 import getEntries from "@lib/craft-cms/get-entries";
-import getEntry from "@lib/craft-cms/get-entry";
 import queryProps from "@queries/example-single.ts";
 
 const cacheDirectory = "example-single";
 
-const uriPrefix = cacheDirectory;
-
 const entries = await getEntries({ queryProps, dataDirectory: cacheDirectory });
 
-const entry = getEntry({
-  entries,
-  uriPrefix,
-});
+const entry = entries[0];
 
 if (!entry) {
   return new Response(null, { status: 404 });

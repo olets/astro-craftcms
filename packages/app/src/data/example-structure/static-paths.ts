@@ -1,3 +1,3 @@
-const staticPaths = [{"params":{"path":"example-structure-entry-level-1"}},{"params":{"path":"example-structure-entry-level-2"}}];
+const staticPaths = [{"params":{"slug":"example-structure-entry-level-1"}},{"params":{"slug":"example-structure-entry-level-2"}}];
 
 export default staticPaths;

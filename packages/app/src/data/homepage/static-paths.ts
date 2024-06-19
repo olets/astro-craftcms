@@ -1,3 +1,3 @@
-const staticPaths = [{"params":{"path":"__home__"}}];
+const staticPaths = [{"params":{"slug":"__home__"}}];
 
 export default staticPaths;

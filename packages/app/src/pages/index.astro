@@ -1,16 +1,12 @@
 ---
 import getEntries from "@lib/craft-cms/get-entries";
-import getEntry from "@lib/craft-cms/get-entry";
 import queryProps from "@queries/homepage.ts";
 
 const cacheDirectory = "homepage";
 
 const entries = await getEntries({ queryProps, dataDirectory: cacheDirectory });
 
-const entry = getEntry({
-  entries,
-  pathParam: "__home__",
-});
+const entry = entries[0];
 
 if (!entry) {
   return new Response(null, { status: 404 });

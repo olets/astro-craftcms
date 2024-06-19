@@ -1,3 +1,3 @@
-const staticPaths = [{"params":{"path":"new-entry"}},{"params":{"path":"example-channel-entry"}}];
+const staticPaths = [{"params":{"slug":"new-entry"}},{"params":{"slug":"example-channel-entry"}}];
 
 export default staticPaths;

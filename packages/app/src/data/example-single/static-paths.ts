@@ -1,3 +1,3 @@
-const staticPaths = [{"params":{"path":"example-single"}}];
+const staticPaths = [{"params":{"slug":"example-single"}}];
 
 export default staticPaths;
