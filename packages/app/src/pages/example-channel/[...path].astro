@@ -1,16 +1,22 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
+import getEntries from "@lib/craft-cms/get-entries";
 import getEntry from "@lib/craft-cms/get-entry";
 import queryProps from "@queries/example-channel.ts";
 import staticPaths from "@data/example-channel/static-paths.ts";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
-const uriPrefix = "example-channel";
+const cacheDirectory = "example-channel";
+
+const uriPrefix = cacheDirectory;
 
 const { path: pathParam } = Astro.params as Params;
-const entry = await getEntry({
-  queryProps,
+
+const entries = await getEntries({ queryProps, dataDirectory: cacheDirectory });
+
+const entry = getEntry({
+  entries,
   pathParam,
   uriPrefix,
 });

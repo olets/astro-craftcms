@@ -1,11 +1,20 @@
 ---
-import getEntries from "@lib/craft-cms/get-entries.ts";
-import queryProps from "@queries/index.ts";
+import getEntries from "@lib/craft-cms/get-entries";
+import getEntry from "@lib/craft-cms/get-entry";
+import queryProps from "@queries/homepage.ts";
 
-const entries = await getEntries({
-  queryProps,
-  cacheDirectory: "index",
+const cacheDirectory = "homepage";
+
+const entries = await getEntries({ queryProps, dataDirectory: cacheDirectory });
+
+const entry = getEntry({
+  entries,
+  pathParam: "__home__",
 });
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
 ---
 
 <html lang="en">
@@ -14,42 +23,14 @@ const entries = await getEntries({
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Homepage Route :: astro-craftcms</title>
+    <title>{entry.title} :: astro-craftcms</title>
   </head>
   <body>
-    <h1>Homepage Route</h1>
+    This is the homepage.
 
-    <table>
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>sectionHandle</th>
-          <th>sectionId</th>
-          <th>title</th>
-          <th>typeHandle</th>
-          <th>typeId</th>
-          <th>uri</th>
-          <th>visit</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          entries.map((entry) => (
-            <tr>
-              <td>{entry.id}</td>
-              <td>{entry.sectionHandle}</td>
-              <td>{entry.sectionId}</td>
-              <td>{entry.title}</td>
-              <td>{entry.typeHandle}</td>
-              <td>{entry.typeId}</td>
-              <td>{entry.uri}</td>
-              <td>
-                <a href={`/${entry.uri}`}>Go</a>
-              </td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
+    <dl>
+      <dt>title</dt>
+      <dd>{entry.title}</dd>
+    </dl>
   </body>
 </html>

@@ -1,10 +1,11 @@
 ---
 import getEntries from "@lib/craft-cms/get-entries.ts";
 import queryProps from "@queries/example-route.ts";
+import url from "@lib/craft-cms/url.ts"
 
 const entries = await getEntries({
   queryProps,
-  cacheDirectory: "example-route",
+  dataDirectory: "example-route",
 });
 
 const title = "My route";
@@ -30,7 +31,7 @@ const title = "My route";
           <th>title</th>
           <th>typeHandle</th>
           <th>typeId</th>
-          <th>uri</th>
+          <th>url</th>
           <th>visit</th>
         </tr>
       </thead>
@@ -44,9 +45,9 @@ const title = "My route";
               <td>{entry.title}</td>
               <td>{entry.typeHandle}</td>
               <td>{entry.typeId}</td>
-              <td>{entry.uri}</td>
+              <td>{url(entry.uri)}</td>
               <td>
-                <a href={`/${entry.uri}`}>Go</a>
+                <a href={url(entry.uri)}>Go</a>
               </td>
             </tr>
           ))

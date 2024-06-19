@@ -6,18 +6,23 @@ import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
 
 interface Props {
   queryProps: FetchEntriesProps;
-  cacheDirectory?: string;
+  dataDirectory?: string;
 }
 
-export default async function getEntries({ queryProps, cacheDirectory = ""}: Props): Promise<Entry[]> {
+/**
+ * In dev mode, fetches and caches entries from local Craft CMS.
+ * In production mode, imports entries from the local filesystem.
+ * @returns
+ */
+export default async function getEntries({ queryProps, dataDirectory = ""}: Props): Promise<Entry[]> {
   let entries: Array<Entry> = [];
 
   if (import.meta.env.DEV) {
     entries = await fetchEntries( queryProps);
-    await cacheEntries({ entries, uriPrefix: cacheDirectory });
-    await cacheStaticPaths({ entries, uriPrefix: cacheDirectory });
+    await cacheEntries({ entries, uriPrefix: dataDirectory });
+    await cacheStaticPaths({ entries, uriPrefix: dataDirectory });
   } else {
-    entries = (await import(`../../data/${cacheDirectory}/entries.ts`).then(
+    entries = (await import(`../../data/${dataDirectory}/entries.ts`).then(
       (m) => m.default
     )) as Entry[];
   }
