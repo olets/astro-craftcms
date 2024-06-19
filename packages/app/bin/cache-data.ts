@@ -1,6 +1,6 @@
-import path from "path";
+import path from "node:path";
 import { Glob } from "bun";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import 'dotenv/config'
 import cacheEntries from "@lib/craft-cms/cache-entries.ts";
 import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
