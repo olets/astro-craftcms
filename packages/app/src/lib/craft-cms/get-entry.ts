@@ -1,8 +1,7 @@
 import type { Props as FetchEntriesProps } from "@lib/craft-cms/fetch-entries";
 import type { Entry } from "@lib/craft-cms/fetch-entries";
-import fetchEntries from "@lib/craft-cms/fetch-entries";
-import cacheEntries from "@lib/craft-cms/cache-entries";
-import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
+import getEntries from "@lib/craft-cms/get-entries";
+
 interface Props {
   queryProps: FetchEntriesProps;
   pathParam?: string;
@@ -17,21 +16,12 @@ export default async function getSectionEntry({
   // @TODO doesn't support root path.
   const uri = [uriPrefix, pathParam].filter((v) => v).join("/");
 
-  let entries: Array<Entry> = [];
-
-  if (import.meta.env.DEV) {
-    entries = await fetchEntries(queryProps);
-    await cacheEntries({ entries, uriPrefix });
-    await cacheStaticPaths({ entries, uriPrefix });
-  } else {
-    entries = (await import(`../../data/${uriPrefix}/entries.ts`).then(
-      (m) => m.default
-    )) as Entry[];
-  }
+  const entries: Array<Entry> = await getEntries({ queryProps, cacheDirectory: uriPrefix });
 
   let entry = entries.find((staticEntry) => staticEntry.uri === uri);
 
   type EntryType = typeof entry;
 
   return entry as EntryType;
+
 }
