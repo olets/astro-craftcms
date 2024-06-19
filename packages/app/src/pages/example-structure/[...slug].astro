@@ -2,7 +2,7 @@
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
 import getEntries from "@lib/craft-cms/get-entries";
 import queryProps from "@queries/example-structure.ts";
-import staticPaths from "@data/example-structure/static-paths.ts";
+import staticPaths from "@data/example-structure/static-paths.json";
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 

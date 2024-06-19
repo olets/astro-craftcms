@@ -9,15 +9,13 @@ interface Props {
 
 export default async function ({ entries, uriPrefix }: Props): Promise<void> {
   const fileContent = [
-    `const entries = ${JSON.stringify(entries)};`,
-    "",
-    `export default entries;`,
+    JSON.stringify(entries),
     "",
   ].join("\n");
 
   const dir = await makeCacheDirectory({ uriPrefix });
 
-  const file = path.join(dir, "entries.ts");
+  const file = path.join(dir, "entries.json");
 
   writeFileSync(file, fileContent);
 }

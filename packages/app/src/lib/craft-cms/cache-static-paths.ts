@@ -20,18 +20,16 @@ export default async function ({ entries, uriPrefix }: Props): Promise<void> {
   });
 
   const fileContent = [
-    `const staticPaths = ${JSON.stringify(staticPaths).replace(
+    JSON.stringify(staticPaths).replace(
       '"params":{}',
       '"params":{"slug":undefined}'
-    )};`,
-    "",
-    `export default staticPaths;`,
+    ),
     "",
   ].join("\n");
 
   const dir = await makeCacheDirectory({ uriPrefix });
 
-  const file = path.join(dir, "static-paths.ts");
+  const file = path.join(dir, "static-paths.json");
 
   writeFileSync(file, fileContent);
 }
