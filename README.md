@@ -1,6 +1,6 @@
 # astro-craftcms
 
-Starter project for [Astro](https://astro.build/) with [Craft CMS](https://craftcms.com/) as the content source.
+Starter project for SSG [Astro](https://astro.build/) with [Craft CMS](https://craftcms.com/) as the content source.
 
 ## Requirements
 

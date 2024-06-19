@@ -1,0 +1,100 @@
+#ddev-generated
+
+http:
+  routers:
+    
+    
+    astro-craftcms-web-80-http:
+      
+      rule: HostRegexp(`astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "astro-craftcms-web-80-http"
+      tls: false
+      entrypoints:
+        - http-80
+    
+    
+    astro-craftcms-web-8025-http:
+      
+      rule: HostRegexp(`astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "astro-craftcms-web-8025-http"
+      tls: false
+      entrypoints:
+        - http-8025
+    
+    
+    
+    
+    
+    
+    astro-craftcms-web-80-https:
+      
+      rule: HostRegexp(`astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "astro-craftcms-web-80-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-443
+    
+    
+    astro-craftcms-web-8025-https:
+      
+      rule: HostRegexp(`astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "astro-craftcms-web-8025-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-8026
+    
+    
+
+  # autodetect won't be needed in Traefik 3 https://github.com/traefik/traefik/pull/9546
+  middlewares:
+    autodetect:
+      contentType:
+        autoDetect: false
+
+  services:
+    
+    astro-craftcms-web-80-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-astro-craftcms-web:80
+    
+    astro-craftcms-web-8025-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-astro-craftcms-web:8025
+    
+    astro-craftcms-web-80-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-astro-craftcms-web:80
+    
+    astro-craftcms-web-8025-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-astro-craftcms-web:8025
+    
+
+
+tls:
+  certificates:
+    - certFile: /mnt/ddev-global-cache/traefik/certs/astro-craftcms.crt
+      keyFile: /mnt/ddev-global-cache/traefik/certs/astro-craftcms.key
+
