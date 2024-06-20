@@ -2,13 +2,15 @@ const hasDynamicRoutes = false;
 
 const sectionHandle = "homepage";
 
-const queryArgs = `section: "${sectionHandle}"`;
+const query = `{
+  entries (section: "${sectionHandle}") {
+    sectionHandle
+    title
+    url
+    uri
+  }
+}`
 
-const queryFields = `
-  title
-  url
-`;
-
-const config = { hasDynamicRoutes, queryArgs, queryFields, sectionHandle };
+const config = { hasDynamicRoutes, query, sectionHandle };
 
 export default config;

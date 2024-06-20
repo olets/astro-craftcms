@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 import makeCacheDirectory from "@lib/craft-cms/make-cache-directory.ts";
-import type { Entry } from "@lib/craft-cms/fetch-entries.ts";
+import type { Entry } from "@lib/craft-cms/fetch-content";
 
 export interface Props {
   entries: Array<Entry>;

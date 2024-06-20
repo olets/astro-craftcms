@@ -1,14 +1,13 @@
 ---
-import type { Entry } from "@lib/craft-cms/fetch-entries";
-import fetchEntries from "@lib/craft-cms/fetch-entries";
+import type { Entry } from "@lib/craft-cms/fetch-content";
+import fetchContent from "@lib/craft-cms/fetch-content";
 import cacheEntries from "@lib/craft-cms/cache-entries";
 import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
 import url from "@lib/craft-cms/url";
 
 interface Config {
   hasDynamicRoutes?: boolean;
-  queryArgs?: string;
-  queryFields?: string;
+  query: string;
   sectionHandle: string;
   uriPrefix?: string;
 }
@@ -20,7 +19,7 @@ interface Props {
 
 const { config, slug }: Props = Astro.props;
 
-const { queryArgs, queryFields, sectionHandle, uriPrefix } = config;
+const { query, sectionHandle, uriPrefix } = config;
 
 /**
  * Near @DUPE layouts/SectionLayout.astro, pages/example-route/index.astro
@@ -28,7 +27,7 @@ const { queryArgs, queryFields, sectionHandle, uriPrefix } = config;
 let entries: Entry[] = [];
 
 if (import.meta.env.DEV) {
-  entries = await fetchEntries({ queryArgs, queryFields });
+  entries = await fetchContent({ query });
   await cacheEntries({ entries, uriPrefix });
   await cacheStaticPaths({ entries, uriPrefix });
 } else {
