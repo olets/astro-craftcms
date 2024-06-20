@@ -1,4 +1,4 @@
-dateModified: 1718920891
+dateModified: 1718921087
 email:
   fromEmail: olets@olets.dev
   fromName: astro-craftcms
@@ -20,7 +20,7 @@ system:
   edition: solo
   live: true
   name: astro-craftcms
-  schemaVersion: 5.0.0.20
+  schemaVersion: 5.0.0.21
   timeZone: America/Los_Angeles
 users:
   allowPublicRegistration: false
