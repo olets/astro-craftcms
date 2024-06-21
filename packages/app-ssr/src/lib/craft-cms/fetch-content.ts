@@ -1,21 +1,41 @@
 export default async function <T>(query: string): Promise<T[]> {
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: query,
-    }),
-  });
+  let json;
+  let response;
 
-  const json = await response.json();
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: query,
+      }),
+    });
 
-  for (const { message } of json.errors || []) {
-    throw new Error(message);
+    json = await response.json();
+  } catch (error) {
+    if (!response?.ok) {
+      console.error(`fetch-content: Fetch attempt returned the status code ${response?.status}`)
+    } else if (error instanceof SyntaxError) {
+      console.error('fetch-content: There was a SyntaxError', error);
+    } else {
+      console.error('fetch-content: There was an error', error);
+    }
   }
 
-  const { entries }: { entries: Array<BaseEntry> } = json.data;
+  if (!json?.data) {
+    console.warn('fetch-content: No data returned')
+    return [];
+  }
 
-  return entries;
+  const { entries }: { entries: T[] } = json.data;
+  
+  // @ts-ignore ts(2339)
+  if (entries?.length > 0 && !entries[0]?.uri) {
+    console.warn('fetch-content: No uri found in entries. Ensure your query returns an array of entries with a uri property')
+    return [];
+  }
+
+  return entries || [];
 }
