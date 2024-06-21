@@ -1,5 +1,5 @@
 {
-  "name": "ssg-astro-craftcms-app",
+  "name": "astro-craftcms-app-ssg",
   "version": "0.0.1",
   "dependencies": {
     "astro": "^4.10.2",

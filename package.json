@@ -3,12 +3,12 @@
   "packageManager": "bun@1.1.13",
   "private": true,
   "scripts": {
-    "app": "bun run --filter ssg-astro-craftcms-app",
-    "build": "bun run app build",
-    "cms": "bun run --filter ssg-astro-craftcms-cms", 
-    "dev": "bun run cms restart && bun run app dev",
-    "preview": "bun run app preview",
-    "start": "bun run cms restart && bun run app start"
+    "cms": "bun run --filter astro-craftcms-cms", 
+    "ssg:app": "bun run --filter astro-craftcms-app-ssg",
+    "ssg:build": "bun run app-ssg build",
+    "ssg:dev": "bun run cms restart && bun run app-ssg dev",
+    "ssg:preview": "bun run app-ssg preview",
+    "ssg:start": "bun run cms restart && bun run app-ssg start"
   },
   "workspaces": [
     "packages/*"
