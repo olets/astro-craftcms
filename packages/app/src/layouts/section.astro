@@ -4,6 +4,7 @@ import fetchContent from "@lib/craft-cms/fetch-content";
 import cacheEntries from "@lib/craft-cms/cache-entries";
 import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
 import url from "@lib/craft-cms/url";
+import FourOhFour from "@components/404.astro";
 
 interface Config {
   hasDynamicRoutes?: boolean;
@@ -44,13 +45,18 @@ const entry = entries.find(
     url(entry.uri) === "/" + [uriPrefix, slug].filter((v) => v).join("/")
 );
 
-if (!entry) {
-  Astro.redirect("404");
-}
-
 const EntryLayout = await import(`./sections/${sectionHandle}.astro`).then(
   (m) => m.default
 );
 ---
 
-<EntryLayout entry={entry} />
+{
+  entry ? (
+    <EntryLayout entry={entry} />
+  ) : import.meta.env.SSR ? (
+    // Response has already been sent so can't truly 404, but can render the frontend 404 page
+    <FourOhFour />
+  ) : (
+    Astro.redirect("404")
+  )
+}
