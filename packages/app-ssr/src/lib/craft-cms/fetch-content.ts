@@ -1,18 +1,10 @@
-export interface Props {
-  query: string;
-  url?: string;
-}
-
-export interface Entry {
-  sectionHandle: string;
+export interface BaseEntry {
   uri: string;
-  [key: string]: string | number | boolean | null;
 }
 
-export default async function fetchContent({
-  query,
-  url = import.meta.env.CRAFT_CMS_GRAPHQL_URL,
-}: Props): Promise<Array<Entry>> {
+export default async function fetchContent(query: string): Promise<Array<BaseEntry>> {
+  const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
+
   const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -27,7 +19,7 @@ export default async function fetchContent({
     throw new Error(message);
   }
 
-  const { entries }: { entries: Array<Entry> } = json.data;
+  const { entries }: { entries: Array<BaseEntry> } = json.data;
 
   return entries;
 }

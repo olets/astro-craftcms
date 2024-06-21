@@ -1,5 +1,9 @@
 ---
-import type { Entry } from "@page-configs/homepage.ts";
+import type { BaseEntry } from "@lib/craft-cms/fetch-content";
+
+interface Entry extends BaseEntry {
+  title: string;
+}
 
 const entry: Entry = Astro.props.entry;
 ---

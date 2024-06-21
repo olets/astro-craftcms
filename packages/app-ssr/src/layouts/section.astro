@@ -1,5 +1,5 @@
 ---
-import type { Entry } from "@lib/craft-cms/fetch-content";
+import type { BaseEntry } from "@lib/craft-cms/fetch-content";
 import fetchContent from "@lib/craft-cms/fetch-content";
 import url from "@lib/craft-cms/url";
 import FourOhFour from "@components/404.astro";
@@ -20,7 +20,7 @@ const {
   slug,
 }: Props = Astro.props;
 
-const entries: Entry[] = await fetchContent({ query });
+const entries: BaseEntry[] = await fetchContent(query);
 
 const entry = entries.find(
   (entry) =>

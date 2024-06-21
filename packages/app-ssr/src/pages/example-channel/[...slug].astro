@@ -1,6 +1,19 @@
 ---
 import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/example-channel.ts";
+
+const sectionHandle = "exampleChannel";
+
+// @SYNC
+const query = `{
+  entries (section: "${sectionHandle}") {
+    title
+    uri
+  }
+}`
+
+const uriPrefix = "example-channel";
+
+const config = { query, sectionHandle, uriPrefix };
 
 const { slug } = Astro.params;
 ---

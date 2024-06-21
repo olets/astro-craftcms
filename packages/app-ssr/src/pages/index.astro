@@ -1,6 +1,17 @@
 ---
 import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/homepage";
+
+const sectionHandle = "homepage";
+
+const query = `{
+  entries (section: "${sectionHandle}") {
+    title
+    uri
+  }
+}`
+
+
+const config = { query, sectionHandle };
 ---
 
 <SectionLayout config={config} />

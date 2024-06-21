@@ -1,6 +1,26 @@
 ---
 import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/example-structure.ts";
+
+const sectionHandle = "exampleStructure";
+
+const query = `{
+  entries (section: "${sectionHandle}") {
+    children {
+      title
+      uri
+    }
+    parent {
+      title
+      uri
+    }
+    title
+    uri
+  }
+}`
+
+const uriPrefix = "example-structure";
+
+const config = { query, sectionHandle, uriPrefix };
 
 const { slug } = Astro.params;
 ---

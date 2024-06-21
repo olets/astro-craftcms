@@ -1,12 +1,30 @@
 ---
-import type { Entry } from "@lib/craft-cms/fetch-content";
+import type { BaseEntry } from "@lib/craft-cms/fetch-content";
 import fetchContent from "@lib/craft-cms/fetch-content";
-import config from "@page-configs/example-route";
 import url from "@lib/craft-cms/url.ts";
 
-const { query } = config;
+const query = `{
+  entries {
+    id
+    sectionHandle
+    sectionId
+    title
+    typeHandle
+    typeId
+    uri
+  }
+}`
 
-const entries: Array<Entry> = await fetchContent({ query });
+interface Entry extends BaseEntry {
+  id: number;
+  sectionHandle: string;
+  sectionId: string;
+  title: string;
+  typeHandle: string;
+  typeId: string;
+}
+
+const entries = await fetchContent(query) as Array<Entry>;
 
 const title = "My route";
 ---

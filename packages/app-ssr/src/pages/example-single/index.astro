@@ -1,6 +1,19 @@
 ---
 import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/example-single.ts";
+
+const sectionHandle = "exampleSingle";
+
+// @SYNC
+const query = `{
+  entries (section: "${sectionHandle}") {
+    title
+    uri
+  }
+}`
+
+const uriPrefix = "example-single";
+
+const config = { query, sectionHandle, uriPrefix };
 ---
 
 <SectionLayout config={config} />
