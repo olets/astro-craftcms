@@ -1,8 +1,4 @@
-export interface BaseEntry {
-  uri: string;
-}
-
-export default async function fetchContent(query: string): Promise<Array<BaseEntry>> {
+export default async function <T>(query: string): Promise<T[]> {
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   const response = await fetch(url, {

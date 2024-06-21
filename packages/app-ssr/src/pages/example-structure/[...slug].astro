@@ -1,28 +1,47 @@
 ---
-import SectionLayout from "@layouts/section.astro";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
 
-const sectionHandle = "exampleStructure";
+interface Child {
+  title: string;
+  uri: string;
+}
 
-const query = `{
-  entries (section: "${sectionHandle}") {
-    children {
+interface Parent {
+  title: string;
+  uri: string;
+}
+
+interface Entry extends BaseEntry {
+  children: Child[];
+  parent: Parent;
+  title: string;
+}
+
+const { slug = "" } = Astro.params;
+
+const entry = await getEntry<Entry>({
+  query: `{
+    entries(section: "exampleStructure") {
+      children {
+        title
+        uri
+      }
+      parent {
+        title
+        uri
+      }
       title
       uri
     }
-    parent {
-      title
-      uri
-    }
-    title
-    uri
-  }
-}`
+  }`,
+  slug,
+  uriPrefix: "example-structure",
+})
 
-const uriPrefix = "example-structure";
-
-const config = { query, sectionHandle, uriPrefix };
-
-const { slug } = Astro.params;
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
 ---
 
-<SectionLayout config={config} slug={slug} />
+{entry.title}
