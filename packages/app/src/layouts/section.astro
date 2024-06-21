@@ -17,9 +17,10 @@ interface Props {
   slug?: string;
 }
 
-const { config, slug }: Props = Astro.props;
-
-const { query, sectionHandle, uriPrefix } = config;
+const {
+  config: { query, sectionHandle, uriPrefix },
+  slug,
+}: Props = Astro.props;
 
 /**
  * Near @DUPE layouts/SectionLayout.astro, pages/example-route/index.astro
