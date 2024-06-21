@@ -106,3 +106,34 @@ admin | changeme | changeme@example.com
     ```
 
 To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssg` and run `bun` commands (e.g. `bun add …`).
+
+#### SSR
+
+- Run `packages/app-ssr/package.json` scripts from the project root or from `packages` with
+
+    ```shell
+    bun run app-ssr <replace with the script> # e.g. `bun run app-ssr dev` or `bun run app-ssr start` to start the app
+    ```
+
+    For example, to start the SSR app run
+
+    ```shell
+    bun run app-ssr dev # or `bun run app-ssr start`
+    ```
+
+- Or run `packages/app-ssr/package.json` scripts from the `packages/app-ssr` directory or one of its subdirectories with
+
+    ```shell
+    bun run <replace with the script>
+    ```
+
+    > [!TIP]
+    > The `dev`/`start` script has nicer terminal output when run this way than when run from the project root or `packages`.
+
+    For example, to start the app run
+
+    ```shell
+    bun run dev # or `bun run app-ssr start`
+    ```
+
+To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssr` and run `bun` commands (e.g. `bun add …`).

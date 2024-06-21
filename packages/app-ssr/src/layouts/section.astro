@@ -1,0 +1,44 @@
+---
+import type { Entry } from "@lib/craft-cms/fetch-content";
+import fetchContent from "@lib/craft-cms/fetch-content";
+import url from "@lib/craft-cms/url";
+import FourOhFour from "@components/404.astro";
+
+interface Config {
+  query: string;
+  sectionHandle: string;
+  uriPrefix?: string;
+}
+
+interface Props {
+  config: Config;
+  slug?: string;
+}
+
+const {
+  config: { query, sectionHandle, uriPrefix },
+  slug,
+}: Props = Astro.props;
+
+const entries: Entry[] = await fetchContent({ query });
+
+const entry = entries.find(
+  (entry) =>
+    url(entry.uri) === "/" + [uriPrefix, slug].filter((v) => v).join("/")
+);
+
+const EntryLayout = await import(`./sections/${sectionHandle}.astro`).then(
+  (m) => m.default
+);
+---
+
+{
+  entry ? (
+    <EntryLayout entry={entry} />
+  ) : import.meta.env.SSR ? (
+    // Response has already been sent so can't truly 404, but can render the frontend 404 page
+    <FourOhFour />
+  ) : (
+    ""
+  )
+}

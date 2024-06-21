@@ -1,0 +1,8 @@
+---
+import SectionLayout from "@layouts/section.astro";
+import config from "@page-configs/example-channel.ts";
+
+const { slug } = Astro.params;
+---
+
+<SectionLayout config={config} slug={slug} />
