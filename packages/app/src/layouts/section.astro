@@ -32,19 +32,20 @@ if (import.meta.env.DEV) {
   await cacheEntries({ entries, uriPrefix });
   await cacheStaticPaths({ entries, uriPrefix });
 } else {
-  const allSectionsEntries = await Astro.glob('@data/**/entries.json')
+  const allSectionsEntries = await Astro.glob("@data/**/entries.json");
 
   entries = allSectionsEntries
-    .map(data => data.default)
-    .find((entries: any) => entries[0].sectionHandle === sectionHandle)
+    .map((data) => data.default)
+    .find((entries: any) => entries[0].sectionHandle === sectionHandle);
 }
 
 const entry = entries.find(
-  (entry) => url(entry.uri) === "/" + [uriPrefix, slug].filter((v) => v).join("/")
+  (entry) =>
+    url(entry.uri) === "/" + [uriPrefix, slug].filter((v) => v).join("/")
 );
 
 if (!entry) {
-  Astro.redirect('404')
+  Astro.redirect("404");
 }
 
 const EntryLayout = await import(`./sections/${sectionHandle}.astro`).then(
