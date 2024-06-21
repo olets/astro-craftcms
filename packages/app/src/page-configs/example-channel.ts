@@ -11,6 +11,13 @@ const query = `{
   }
 }`
 
+export interface Entry {
+  sectionHandle: string;
+  title: string;
+  uri: string;
+  url: string;
+}
+
 const uriPrefix = "example-channel";
 
 const config = { hasDynamicRoutes, query, sectionHandle, uriPrefix };
