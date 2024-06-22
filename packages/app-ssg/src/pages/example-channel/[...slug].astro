@@ -1,0 +1,30 @@
+---
+import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+import config from "@page-configs/example-channel";
+import staticPaths from "@data/example-channel/static-paths.json";
+
+interface Entry extends BaseEntry {
+  title: string;
+  url: string;
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+
+const { slug } = Astro.params as Params;
+
+const { query, uriPrefix } = config;
+const entry = await getEntry<Entry>({ query, uriPrefix, slug });
+
+if (!entry) {
+  Astro.response.status = 404;
+  return;
+}
+
+export const getStaticPaths = (async () => {
+  return staticPaths;
+}) satisfies GetStaticPaths;
+---
+
+{entry.title}

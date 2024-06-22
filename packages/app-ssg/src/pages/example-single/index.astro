@@ -1,0 +1,21 @@
+---
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+import config from "@page-configs/example-single";
+
+interface Entry extends BaseEntry {
+  title: string;
+  uri: string;
+}
+
+const { query, uriPrefix } = config;
+const entry = await getEntry<Entry>({ query, uriPrefix });
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
+---
+
+Example Single
+
+{entry.title}

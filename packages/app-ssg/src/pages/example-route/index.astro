@@ -1,0 +1,77 @@
+---
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import fetchContent from "@lib/craft-cms/fetch-content";
+import cacheEntries from "@lib/craft-cms/cache-entries";
+import config from "@page-configs/example-route";
+import url from "@lib/craft-cms/url.ts";
+
+interface Entry extends BaseEntry {
+  id: number;
+  sectionHandle: string;
+  sectionId: string;
+  title: string;
+  typeHandle: string;
+  typeId: string;
+}
+
+const { query, uriPrefix } = config;
+
+let entries: Array<Entry> = [];
+
+if (import.meta.env.DEV) {
+  entries = await fetchContent({ query });
+  await cacheEntries({ entries, uriPrefix });
+} else {
+  entries = (await import("@data/example-route/entries.json").then(
+    (m) => m.default
+  )) as Array<Entry>;
+}
+
+const title = "My route";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} :: astro-craftcms</title>
+  </head>
+  <body>
+    <h1>{title}</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>sectionHandle</th>
+          <th>sectionId</th>
+          <th>title</th>
+          <th>typeHandle</th>
+          <th>typeId</th>
+          <th>url</th>
+          <th>visit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          entries.map((entry) => (
+            <tr>
+              <td>{entry.id}</td>
+              <td>{entry.sectionHandle}</td>
+              <td>{entry.sectionId}</td>
+              <td>{entry.title}</td>
+              <td>{entry.typeHandle}</td>
+              <td>{entry.typeId}</td>
+              <td>{url(entry.uri)}</td>
+              <td>
+                <a href={url(entry.uri)}>Go</a>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </body>
+</html>

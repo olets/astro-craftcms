@@ -1,0 +1,47 @@
+---
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+
+interface Child {
+  title: string;
+  uri: string;
+}
+
+interface Parent {
+  title: string;
+  uri: string;
+}
+
+interface Entry extends BaseEntry {
+  children: Child[];
+  parent: Parent;
+  title: string;
+}
+
+const { slug = "" } = Astro.params;
+
+const entry = await getEntry<Entry>({
+  query: `{
+    entries(section: "exampleStructure") {
+      children {
+        title
+        uri
+      }
+      parent {
+        title
+        uri
+      }
+      title
+      uri
+    }
+  }`,
+  slug,
+  uriPrefix: "example-structure",
+})
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
+---
+
+{entry.title}

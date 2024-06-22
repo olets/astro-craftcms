@@ -1,5 +1,5 @@
 {
-  "name": "ssg-astro-craftcms-cms",
+  "name": "astro-craftcms-cms",
   "version": "0.0.1",
   "packageManager": "bun@1.1.13",
   "scripts": {

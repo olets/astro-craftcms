@@ -1,4 +1,4 @@
-name: ssg-astro-craftcms
+name: astro-craftcms
 type: craftcms
 docroot: web
 php_version: "8.2"

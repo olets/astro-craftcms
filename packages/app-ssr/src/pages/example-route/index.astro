@@ -1,0 +1,63 @@
+---
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import fetchContent from "@lib/craft-cms/fetch-content";
+import url from "@lib/craft-cms/url.ts";
+
+const query = `{
+  entries {
+    id
+    sectionHandle
+    sectionId
+    title
+    typeHandle
+    typeId
+    uri
+  }
+}`
+
+interface Entry extends BaseEntry {
+  id: number;
+  sectionHandle: string;
+  sectionId: string;
+  title: string;
+  typeHandle: string;
+  typeId: string;
+}
+
+const entries: Entry[] = await fetchContent(query);
+---
+
+<h1>My route</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>sectionHandle</th>
+      <th>sectionId</th>
+      <th>title</th>
+      <th>typeHandle</th>
+      <th>typeId</th>
+      <th>url</th>
+      <th>visit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      entries.map((entry) => (
+        <tr>
+          <td>{entry.id}</td>
+          <td>{entry.sectionHandle}</td>
+          <td>{entry.sectionId}</td>
+          <td>{entry.title}</td>
+          <td>{entry.typeHandle}</td>
+          <td>{entry.typeId}</td>
+          <td>{url(entry.uri)}</td>
+          <td>
+            <a href={url(entry.uri)}>Go</a>
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

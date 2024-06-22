@@ -1,0 +1,26 @@
+---
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+
+interface Entry extends BaseEntry {
+  title: string;
+}
+
+const { slug = "" } = Astro.params;
+
+const entry = await getEntry<Entry>({
+  query: `{
+    entries (section: "homepage") {
+      title
+      uri
+    }
+  }`,
+  slug,
+})
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
+---
+
+{entry.title}
