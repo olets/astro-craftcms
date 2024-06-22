@@ -4,6 +4,7 @@ import fetchContent from "@lib/craft-cms/fetch-content";
 import url from "@lib/craft-cms/url";
 
 export interface BaseEntry {
+  sectionHandle: string;
   uri: string;
 }
 
@@ -29,13 +30,18 @@ export default async function <T extends BaseEntry>({
   } else {
     // Vite's glob import, because Astro.glob isn't available here.
     // https://vitejs.dev/guide/features.html#glob-import
-    const allSectionsEntries = import.meta.glob("@data/**/entries.json",{
-      import: 'default',
+    const allCachedData = import.meta.glob("@data/**/entries.json", {
+      import: "default",
       eager: true,
     });
-  
-    entries = (Object.values(allSectionsEntries) as Array<T[]>)
-      .find((entries: any) => entries[0].sectionHandle === sectionHandle);
+
+    entries = (Object.values(allCachedData) as T[][]).filter((arr) =>
+      arr.every((entry) => entry.sectionHandle === sectionHandle)
+    )[0];
+  }
+
+  if (!entries || entries.length === 0) {
+    return undefined;
   }
 
   const needleUrl = url([uriPrefix, slug].filter((v) => v).join("/"));

@@ -37,9 +37,17 @@ export default async function fetchContent<T>({
 
   const { entries }: { entries: T[] } = json.data;
   
-  // @ts-ignore ts(2339)
-  if (entries?.length > 0 && !entries[0]?.uri) {
-    console.warn('fetch-content: No uri found in entries. Ensure your query returns an array of entries with a uri property')
+  if (entries?.length > 0) {
+    // @ts-ignore ts(2339)
+    if (!entries[0]?.sectionHandle) {
+      console.warn('fetch-content: No sectionHandle found in entries. Ensure your query returns an array of entries with a sectionHandle property')
+    }
+
+    // @ts-ignore ts(2339)
+    if (!entries[0]?.uri) {
+      console.warn('fetch-content: No uri found in entries. Ensure your query returns an array of entries with a uri property')
+    }
+    
     return [];
   }
 
