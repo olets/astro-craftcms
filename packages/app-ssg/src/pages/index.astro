@@ -1,6 +1,22 @@
 ---
-import SectionLayout from "@layouts/section.astro";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
 import config from "@page-configs/homepage";
+
+interface Entry extends BaseEntry {
+  sectionHandle: string;
+  title: string;
+  url: string;
+}
+
+const { query, sectionHandle } = config;
+const entry = await getEntry<Entry>({ query, sectionHandle });
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
 ---
 
-<SectionLayout config={config} />
+Homepage
+
+{entry.title}

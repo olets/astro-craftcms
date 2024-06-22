@@ -20,26 +20,6 @@ const query = `{
   }
 }`
 
-interface Child {
-  id: number;
-  title: string;
-  uri: string;
-}
-
-interface Parent {
-  id: number;
-  title: string;
-  uri: string;
-}
-
-export interface Entry {
-  children: Child[];
-  parent: Parent;
-  sectionHandle: string;
-  title: string;
-  uri: string;
-}
-
 const uriPrefix = "example-structure";
 
 const config = { hasDynamicRoutes, query, sectionHandle, uriPrefix };

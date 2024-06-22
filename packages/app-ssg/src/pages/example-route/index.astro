@@ -1,15 +1,21 @@
 ---
-import type { Entry } from "@lib/craft-cms/fetch-content";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
 import fetchContent from "@lib/craft-cms/fetch-content";
 import cacheEntries from "@lib/craft-cms/cache-entries";
 import config from "@page-configs/example-route";
 import url from "@lib/craft-cms/url.ts";
 
+interface Entry extends BaseEntry {
+  id: number;
+  sectionHandle: string;
+  sectionId: string;
+  title: string;
+  typeHandle: string;
+  typeId: string;
+}
+
 const { query, uriPrefix } = config;
 
-/**
- * Near @DUPE layouts/SectionLayout.astro, pages/example-route/index.astro
- */
 let entries: Array<Entry> = [];
 
 if (import.meta.env.DEV) {

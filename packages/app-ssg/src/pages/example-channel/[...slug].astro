@@ -1,16 +1,31 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
-import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/example-channel.ts";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+import config from "@page-configs/example-channel";
 import staticPaths from "@data/example-channel/static-paths.json";
+
+interface Entry extends BaseEntry {
+  sectionHandle: string;
+  title: string;
+  url: string;
+}
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 const { slug } = Astro.params as Params;
+
+const { query, sectionHandle, uriPrefix } = config;
+const entry = await getEntry<Entry>({ query, sectionHandle, uriPrefix, slug });
+
+if (!entry) {
+  Astro.response.status = 404;
+  return;
+}
 
 export const getStaticPaths = (async () => {
   return staticPaths;
 }) satisfies GetStaticPaths;
 ---
 
-<SectionLayout config={config} slug={slug} />
+{entry.title}

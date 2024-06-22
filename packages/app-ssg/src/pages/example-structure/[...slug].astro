@@ -1,16 +1,46 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
-import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/example-structure.ts";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+import config from "@page-configs/example-structure";
 import staticPaths from "@data/example-structure/static-paths.json";
+
+interface Child {
+  id: number;
+  title: string;
+  uri: string;
+}
+
+interface Parent {
+  id: number;
+  title: string;
+  uri: string;
+}
+
+interface Entry extends BaseEntry {
+  children: Child[];
+  parent: Parent;
+  sectionHandle: string;
+  title: string;
+  uri: string;
+}
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 const { slug } = Astro.params as Params;
+
+const { query, sectionHandle, uriPrefix } = config;
+const entry = await getEntry<Entry>({ query, sectionHandle, uriPrefix, slug });
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
 
 export const getStaticPaths = (async () => {
   return staticPaths;
 }) satisfies GetStaticPaths;
 ---
 
-<SectionLayout config={config} slug={slug} />
+Example Structure
+
+{entry.title}

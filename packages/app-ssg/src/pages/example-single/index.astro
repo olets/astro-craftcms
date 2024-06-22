@@ -1,6 +1,22 @@
 ---
-import SectionLayout from "@layouts/section.astro";
-import config from "@page-configs/example-single.ts";
+import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import getEntry from "@lib/craft-cms/get-entry";
+import config from "@page-configs/example-single";
+
+interface Entry extends BaseEntry {
+  sectionHandle: string;
+  title: string;
+  uri: string;
+}
+
+const { query, sectionHandle, uriPrefix } = config;
+const entry = await getEntry<Entry>({ query, sectionHandle, uriPrefix });
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
 ---
 
-<SectionLayout config={config} />
+Example Single
+
+{entry.title}

@@ -10,12 +10,6 @@ const query = `{
   }
 }`
 
-export interface Entry {
-  sectionHandle: string;
-  title: string;
-  uri: string;
-}
-
 const uriPrefix = "example-single";
 
 const config = { hasDynamicRoutes, query, sectionHandle, uriPrefix };
