@@ -4,13 +4,12 @@ import getEntry from "@lib/craft-cms/get-entry";
 import config from "@page-configs/homepage";
 
 interface Entry extends BaseEntry {
-  sectionHandle: string;
   title: string;
   url: string;
 }
 
-const { query, sectionHandle } = config;
-const entry = await getEntry<Entry>({ query, sectionHandle });
+const { query } = config;
+const entry = await getEntry<Entry>({ query });
 
 if (!entry) {
   return new Response(null, { status: 404 });

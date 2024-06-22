@@ -1,9 +1,7 @@
 const hasDynamicRoutes = true;
 
-const sectionHandle = "exampleStructure";
-
 const query = `{
-  entries (section: "${sectionHandle}") {
+  entries (section: "exampleStructure") {
     children {
       id
       title
@@ -14,7 +12,6 @@ const query = `{
       title
       uri
     }
-    sectionHandle
     title
     uri
   }
@@ -22,6 +19,6 @@ const query = `{
 
 const uriPrefix = "example-structure";
 
-const config = { hasDynamicRoutes, query, sectionHandle, uriPrefix };
+const config = { hasDynamicRoutes, query, uriPrefix };
 
 export default config;

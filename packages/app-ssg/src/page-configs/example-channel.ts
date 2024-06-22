@@ -1,10 +1,7 @@
 const hasDynamicRoutes = true;
 
-const sectionHandle = "exampleChannel";
-
 const query = `{
-  entries (section: "${sectionHandle}") {
-    sectionHandle
+  entries (section: "exampleChannel") {
     title
     uri
     url
@@ -13,6 +10,6 @@ const query = `{
 
 const uriPrefix = "example-channel";
 
-const config = { hasDynamicRoutes, query, sectionHandle, uriPrefix };
+const config = { hasDynamicRoutes, query, uriPrefix };
 
 export default config;

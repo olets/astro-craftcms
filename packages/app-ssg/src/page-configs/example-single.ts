@@ -1,10 +1,7 @@
 const hasDynamicRoutes = false;
 
-const sectionHandle = "exampleSingle";
-
 const query = `{
-  entries (section: "${sectionHandle}") {
-    sectionHandle
+  entries (section: "exampleSingle") {
     title
     uri
   }
@@ -12,6 +9,6 @@ const query = `{
 
 const uriPrefix = "example-single";
 
-const config = { hasDynamicRoutes, query, sectionHandle, uriPrefix };
+const config = { hasDynamicRoutes, query, uriPrefix };
 
 export default config;

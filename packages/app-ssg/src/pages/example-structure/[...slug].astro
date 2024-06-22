@@ -20,7 +20,6 @@ interface Parent {
 interface Entry extends BaseEntry {
   children: Child[];
   parent: Parent;
-  sectionHandle: string;
   title: string;
   uri: string;
 }
@@ -29,8 +28,8 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 const { slug } = Astro.params as Params;
 
-const { query, sectionHandle, uriPrefix } = config;
-const entry = await getEntry<Entry>({ query, sectionHandle, uriPrefix, slug });
+const { query, uriPrefix } = config;
+const entry = await getEntry<Entry>({ query, uriPrefix, slug });
 
 if (!entry) {
   return new Response(null, { status: 404 });
