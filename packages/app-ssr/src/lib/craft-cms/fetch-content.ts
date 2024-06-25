@@ -1,4 +1,6 @@
-export default async function <T>(query: string): Promise<T[]> {
+import type { BaseEntry } from "@lib/craft-cms/types";
+
+export default async function <T extends BaseEntry>(query: string): Promise<T[]> {
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   let json;
@@ -31,7 +33,6 @@ export default async function <T>(query: string): Promise<T[]> {
 
   const { entries }: { entries: T[] } = json.data;
   
-  // @ts-ignore ts(2339)
   if (entries?.length > 0 && !entries[0]?.uri) {
     console.warn('fetch-content: No uri found in entries. Ensure your query returns an array of entries with a uri property')
     return [];
