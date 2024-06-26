@@ -1,0 +1,59 @@
+---
+import { z } from 'zod';
+import fetchAPI from '@lib/craft-cms/fetch-api';
+import url from '@lib/craft-cms/url.ts';
+
+const query = `{
+  entries {
+    sectionHandle
+    title
+    typeHandle
+    uri
+  }
+}`;
+
+const schema = z.object({
+  entries: z
+    .object({
+      sectionHandle: z.string(),
+      title: z.string(),
+      typeHandle: z.string(),
+      uri: z.string(),
+    })
+    .array(),
+});
+
+const data = await fetchAPI({
+  query,
+  schema,
+});
+---
+
+<h1>My route</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>sectionHandle</th>
+      <th>title</th>
+      <th>typeHandle</th>
+      <th>url</th>
+      <th>visit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      data?.entries?.map((entry) => (
+        <tr>
+          <td>{entry.sectionHandle}</td>
+          <td>{entry.title}</td>
+          <td>{entry.typeHandle}</td>
+          <td>{url(entry.uri)}</td>
+          <td>
+            <a href={url(entry.uri)}>Go</a>
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

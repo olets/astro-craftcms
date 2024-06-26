@@ -1,0 +1,50 @@
+color: null
+fieldLayouts:
+  0072b5a5-fa19-442b-a142-b708534fc1e3:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
+            elementCondition: null
+            id: null
+            includeInCards: false
+            inputType: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: 11263d96-3f07-4eb3-8d6a-742709a84a47
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: e61acb8a-41ef-405c-abd1-61d4f74c4a54
+        userCondition: null
+handle: exampleStructureEntryType
+hasTitleField: true
+icon: ''
+name: 'Example Structure Entry Type'
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: ''
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

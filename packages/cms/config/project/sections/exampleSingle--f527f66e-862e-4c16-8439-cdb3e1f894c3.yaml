@@ -1,0 +1,27 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - e028dd6d-44ee-41f5-b575-4921ba562311 # Example Single Entry Type
+handle: exampleSingle
+maxAuthors: 1
+name: 'Example Single'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  0bda1c6b-607d-4b82-8274-4bdc4f5a2a78: # ssg-astro-craftcms
+    enabledByDefault: true
+    hasUrls: true
+    template: null
+    uriFormat: example-single
+type: single
