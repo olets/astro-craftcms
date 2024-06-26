@@ -4,6 +4,10 @@ export default function url(uri?: string): string|undefined {
   if (!uri) {
     return undefined;
   }
+
+  if (uri === "__home__") {
+    return "/";
+  }
   
-  return path.normalize(`/${uri}`.replace("__home__", ""));
+  return path.normalize(`/${uri}`);
 }

@@ -1,6 +1,13 @@
-
 import path from "node:path";
 
-export default function url(uri: string): string {
-  return path.normalize(`/${uri}`.replace("__home__", ""));
+export default function url(uri?: string): string|undefined {
+  if (!uri) {
+    return undefined;
+  }
+
+  if (uri === "__home__") {
+    return "/";
+  }
+  
+  return path.normalize(`/${uri}`);
 }
