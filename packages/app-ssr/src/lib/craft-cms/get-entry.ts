@@ -4,7 +4,7 @@ import url from "@lib/craft-cms/url";
 
 interface Props {
   query: string;
-  slug: string;
+  slug?: string;
   uriPrefix?: string;
 }
 
