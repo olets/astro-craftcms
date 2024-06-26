@@ -1,6 +1,7 @@
 ---
-import type { BaseEntry } from "@lib/craft-cms/types";
-import getEntry from "@lib/craft-cms/get-entry";
+import path from "node:path";
+import fetchContent from "@lib/craft-cms/fetch-content";
+import url from "@lib/craft-cms/url.ts";
 
 interface Child {
   title: string;
@@ -12,7 +13,7 @@ interface Parent {
   uri: string;
 }
 
-interface Entry extends BaseEntry {
+interface Entry {
   children: Child[];
   parent: Parent;
   title: string;
@@ -20,28 +21,52 @@ interface Entry extends BaseEntry {
 
 const { slug = "" } = Astro.params;
 
-const entry = await getEntry<Entry>({
-  query: `{
-    entries(section: "exampleStructure") {
-      children {
-        title
-        uri
-      }
-      parent {
-        title
-        uri
-      }
+const entries = await fetchContent<Entry>(`{
+  entries(section: "exampleStructure", uri: "${path.join("example-structure", slug)}") {
+    children {
       title
       uri
     }
-  }`,
-  slug,
-  uriPrefix: "example-structure",
-})
+    parent {
+      title
+      uri
+    }
+    title
+  }
+}`);
 
-if (!entry) {
+if (entries.length === 0) {
   return new Response(null, { status: 404 });
 }
+
+const entry = entries[0];
 ---
 
-{entry.title}
+<dl>
+  <dt>title</dt>
+  <dd>{entry.title}</dd>
+
+  <dt>parent title</dt>
+  <dd>{entry.parent?.title}</dd>
+
+  <dt>parent URL</dt>
+  <dd>{url(entry.parent?.uri)}</dd>
+  
+  <dt>children</dt>
+  <dd>
+    <ul>
+      {entry.children.map((child) => (
+        <li>
+          <dl>
+            <dt>title</dt>
+            <dd>{child.title}</dd>
+
+            <dt>URL</dt>
+            <dd>{url(child.uri)}</dd>
+          </dl>
+        </li>
+      ))}
+    </ul>
+  </dd>
+</dl>
+

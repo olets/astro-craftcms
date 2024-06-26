@@ -1,9 +1,18 @@
 ---
-import type { BaseEntry } from "@lib/craft-cms/types";
 import fetchContent from "@lib/craft-cms/fetch-content";
 import url from "@lib/craft-cms/url.ts";
 
-const query = `{
+interface Entry {
+  id: number;
+  sectionHandle: string;
+  sectionId: string;
+  title: string;
+  typeHandle: string;
+  typeId: string;
+  uri: string;
+}
+
+const entries = await fetchContent<Entry>(`{
   entries {
     id
     sectionHandle
@@ -13,18 +22,7 @@ const query = `{
     typeId
     uri
   }
-}`
-
-interface Entry extends BaseEntry {
-  id: number;
-  sectionHandle: string;
-  sectionId: string;
-  title: string;
-  typeHandle: string;
-  typeId: string;
-}
-
-const entries: Entry[] = await fetchContent(query);
+}`);
 ---
 
 <h1>My route</h1>

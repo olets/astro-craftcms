@@ -1,27 +1,21 @@
 ---
-import type { BaseEntry } from "@lib/craft-cms/types";
-import getEntry from "@lib/craft-cms/get-entry";
+import fetchContent from "@lib/craft-cms/fetch-content";
 
-interface Entry extends BaseEntry {
+interface Entry {
   title: string;
 }
 
-const { slug = "" } = Astro.params;
+const entries = await fetchContent<Entry>(`{
+  entries (section: "exampleSingle") {
+    title
+  }
+}`)
 
-const entry = await getEntry<Entry>({
-  query: `{
-    entries (section: "exampleSingle") {
-      title
-      uri
-    }
-  }`,
-  slug,
-  uriPrefix: "example-single",
-})
-
-if (!entry) {
+if (entries.length === 0) {
   return new Response(null, { status: 404 });
 }
+
+const entry = entries[0]
 ---
 
 {entry.title}
