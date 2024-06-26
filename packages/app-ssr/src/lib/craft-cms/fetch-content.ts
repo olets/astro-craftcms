@@ -24,19 +24,22 @@ export default async function <T extends BaseEntry>(query: string): Promise<T[]>
     } else {
       console.error('fetch-content: There was an error', error);
     }
-  }
 
-  if (!json?.data) {
-    console.warn('fetch-content: No data returned')
     return [];
   }
 
-  const { entries }: { entries: T[] } = json.data;
+  if (!json?.data) {
+    console.warn('fetch-content: No data returned');
+    return [];
+  }
+
+  const { entries = [] }: { entries: T[] } = json.data;
   
-  if (entries?.length > 0 && !entries[0]?.uri) {
+  // @SYNC src/lib/craft-cms/fetch-content.ts, src/lib/craft-cms/types.ts
+  if (entries.length > 0 && !entries[0]?.uri) {
     console.warn('fetch-content: No uri found in entries. Ensure your query returns an array of entries with a uri property')
     return [];
   }
 
-  return entries || [];
+  return entries;
 }
