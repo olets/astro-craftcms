@@ -1,0 +1,30 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - fb3e2e8c-14ef-4f19-90b3-64d37d6ea29f # Example Structure Entry Type
+handle: exampleStructure
+maxAuthors: 1
+name: 'Example Structure'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  0bda1c6b-607d-4b82-8274-4bdc4f5a2a78: # ssg-astro-craftcms
+    enabledByDefault: true
+    hasUrls: true
+    template: null
+    uriFormat: 'example-structure/{slug}'
+structure:
+  maxLevels: null
+  uid: c72b261c-2184-4610-b38e-84dc3cdfce9d
+type: structure

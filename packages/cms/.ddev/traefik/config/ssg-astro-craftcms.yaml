@@ -1,0 +1,100 @@
+#ddev-generated
+
+http:
+  routers:
+    
+    
+    ssg-astro-craftcms-web-80-http:
+      
+      rule: HostRegexp(`ssg-astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ssg-astro-craftcms-web-80-http"
+      tls: false
+      entrypoints:
+        - http-80
+    
+    
+    ssg-astro-craftcms-web-8025-http:
+      
+      rule: HostRegexp(`ssg-astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ssg-astro-craftcms-web-8025-http"
+      tls: false
+      entrypoints:
+        - http-8025
+    
+    
+    
+    
+    
+    
+    ssg-astro-craftcms-web-80-https:
+      
+      rule: HostRegexp(`ssg-astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ssg-astro-craftcms-web-80-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-443
+    
+    
+    ssg-astro-craftcms-web-8025-https:
+      
+      rule: HostRegexp(`ssg-astro-craftcms.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ssg-astro-craftcms-web-8025-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-8026
+    
+    
+
+  # autodetect won't be needed in Traefik 3 https://github.com/traefik/traefik/pull/9546
+  middlewares:
+    autodetect:
+      contentType:
+        autoDetect: false
+
+  services:
+    
+    ssg-astro-craftcms-web-80-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-ssg-astro-craftcms-web:80
+    
+    ssg-astro-craftcms-web-8025-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-ssg-astro-craftcms-web:8025
+    
+    ssg-astro-craftcms-web-80-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-ssg-astro-craftcms-web:80
+    
+    ssg-astro-craftcms-web-8025-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-ssg-astro-craftcms-web:8025
+    
+
+
+tls:
+  certificates:
+    - certFile: /mnt/ddev-global-cache/traefik/certs/ssg-astro-craftcms.crt
+      keyFile: /mnt/ddev-global-cache/traefik/certs/ssg-astro-craftcms.key
+
