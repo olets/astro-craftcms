@@ -34,6 +34,11 @@ async function cacheData() {
       url: process.env.CRAFT_CMS_GRAPHQL_URL,
     });
 
+    if (!entries || entries.length === 0) {
+      console.warn(`No entries found for ${file}`);
+      continue;
+    }
+
     const dir = await makeCacheDirectory(uriPrefix);
 
     await cacheEntries({ dir, entries });
