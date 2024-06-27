@@ -7,12 +7,12 @@ import fetchContent from "@lib/craft-cms/fetch-content";
 
 interface CacheEntriesProps {
   dir: string;
-  entries: object;
+  entries: any[];
 }
 
 export interface CacheStaticPathsProps {
   dir: string;
-  entries: Array<any>;
+  entries: any[];
   uriPrefix?: string;
 }
 
