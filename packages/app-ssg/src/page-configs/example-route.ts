@@ -1,6 +1,7 @@
-const hasDynamicRoutes = false;
 
-const query = `{
+export const hasDynamicRoutes = false;
+
+export const query = `{
   entries {
     id
     sectionHandle
@@ -10,10 +11,6 @@ const query = `{
     typeId
     uri
   }
-}`
+}`;
 
-const uriPrefix = "example-route";
-
-const config = { hasDynamicRoutes, query, uriPrefix };
-
-export default config;
+export const uriPrefix = "example-route";

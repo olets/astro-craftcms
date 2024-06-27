@@ -1,13 +1,9 @@
-const hasDynamicRoutes = false;
+export const hasDynamicRoutes = false;
 
-const query = `{
+export const query = `{
   entries (section: "homepage") {
     title
     url
     uri
   }
-}`
-
-const config = { hasDynamicRoutes, query };
-
-export default config;
+}`;

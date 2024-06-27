@@ -1,15 +1,12 @@
-const hasDynamicRoutes = true;
 
-const query = `{
+export const hasDynamicRoutes = true;
+
+export const query = `{
   entries (section: "exampleChannel") {
     title
     uri
     url
   }
-}`
+}`;
 
-const uriPrefix = "example-channel";
-
-const config = { hasDynamicRoutes, query, uriPrefix };
-
-export default config;
+export const uriPrefix = "example-channel";

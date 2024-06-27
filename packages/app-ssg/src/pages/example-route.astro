@@ -1,7 +1,6 @@
 ---
 import type { BaseEntry } from "@lib/craft-cms/get-entry";
 import fetchContent from "@lib/craft-cms/fetch-content";
-import config from "@page-configs/example-route";
 import url from "@lib/craft-cms/url.ts";
 
 interface Entry extends BaseEntry {
@@ -13,7 +12,7 @@ interface Entry extends BaseEntry {
   typeId: string;
 }
 
-const { query } = config;
+import { query } from "@page-configs/example-route";
 
 let entries: Array<Entry> = [];
 

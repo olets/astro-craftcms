@@ -1,14 +1,13 @@
 ---
 import type { BaseEntry } from "@lib/craft-cms/get-entry";
 import getEntry from "@lib/craft-cms/get-entry";
-import config from "@page-configs/homepage";
+import { query } from "@page-configs/homepage";
 
 interface Entry extends BaseEntry {
   title: string;
   url: string;
 }
 
-const { query } = config;
 const entry = await getEntry<Entry>({ query });
 
 if (!entry) {

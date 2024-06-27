@@ -27,11 +27,7 @@ async function cacheData() {
   const glob = new Glob(pattern);
 
   for await (const file of glob.scan(".")) {
-    const { hasDynamicRoutes, query, uriPrefix } = await import(file).then(
-      (m) => {
-        return m.default;
-      }
-    );
+    const { hasDynamicRoutes, query, uriPrefix } = await import(file);
 
     const entries = await fetchContent({
       query,
