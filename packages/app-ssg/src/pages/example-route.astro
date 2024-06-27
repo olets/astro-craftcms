@@ -1,7 +1,6 @@
 ---
 import type { BaseEntry } from "@lib/craft-cms/get-entry";
 import fetchContent from "@lib/craft-cms/fetch-content";
-import cacheEntries from "@lib/craft-cms/cache-entries";
 import config from "@page-configs/example-route";
 import url from "@lib/craft-cms/url.ts";
 
@@ -14,13 +13,12 @@ interface Entry extends BaseEntry {
   typeId: string;
 }
 
-const { query, uriPrefix } = config;
+const { query } = config;
 
 let entries: Array<Entry> = [];
 
 if (import.meta.env.DEV) {
   entries = await fetchContent({ query });
-  await cacheEntries({ entries, uriPrefix });
 } else {
   entries = (await import("@data/example-route/entries.json").then(
     (m) => m.default

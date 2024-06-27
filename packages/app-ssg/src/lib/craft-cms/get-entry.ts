@@ -1,5 +1,3 @@
-import cacheEntries from "@lib/craft-cms/cache-entries";
-import cacheStaticPaths from "@lib/craft-cms/cache-static-paths";
 import fetchContent from "@lib/craft-cms/fetch-content";
 import url from "@lib/craft-cms/url";
 
@@ -22,8 +20,6 @@ export default async function <T extends BaseEntry>({
 
   if (import.meta.env.DEV) {
     entries = await fetchContent<T>({ query });
-    await cacheEntries({ entries, uriPrefix });
-    await cacheStaticPaths({ entries, uriPrefix });
   } else {
     // Vite's glob import, because Astro.glob isn't available here and dynamic import doesn't resolve tsconfig path aliases here.
     // https://vitejs.dev/guide/features.html#glob-import
