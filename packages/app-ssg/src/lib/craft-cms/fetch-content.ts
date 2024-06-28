@@ -1,4 +1,4 @@
-import type { BaseEntry } from "@lib/craft-cms/get-entry";
+import type { BaseEntry } from "@lib/craft-cms/types";
 
 export interface Props {
   query: string;

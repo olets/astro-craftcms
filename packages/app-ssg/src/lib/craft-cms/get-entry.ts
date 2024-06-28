@@ -1,9 +1,6 @@
 import fetchContent from "@lib/craft-cms/fetch-content";
 import url from "@lib/craft-cms/url";
-
-export interface BaseEntry {
-  uri: string;
-}
+import type { BaseEntry } from "@lib/craft-cms/types";
 
 interface Props {
   query: string;
