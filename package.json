@@ -4,16 +4,8 @@
   "private": true,
   "scripts": {
     "cms": "bun run --filter astro-craftcms-cms", 
-    "ssg:app": "bun run --filter astro-craftcms-app-ssg",
-    "ssg:build": "bun run app-ssg build",
-    "ssg:dev": "bun run cms restart && bun run ssg:app dev",
-    "ssg:preview": "bun run ssg:app preview",
-    "ssg:start": "bun run cms restart && bun run ssg:app start",
-    "ssr:app": "bun run --filter astro-craftcms-app-ssr",
-    "ssr:build": "bun run ssr:app build",
-    "ssr:dev": "bun run cms restart && bun run ssr:app dev",
-    "ssr:preview": "bun run ssr:app preview",
-    "ssr:start": "bun run cms restart && bun run ssr:app start"
+    "app-ssg": "bun run --filter astro-craftcms-app-ssg",
+    "app-ssr": "bun run --filter astro-craftcms-app-ssr"
   },
   "workspaces": [
     "packages/*"
