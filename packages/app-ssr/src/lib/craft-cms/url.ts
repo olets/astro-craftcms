@@ -1,7 +1,7 @@
 import path from "node:path";
 
 export default function url(uri?: string): string|undefined {
-  if (!uri) {
+  if (uri === undefined) {
     return undefined;
   }
 
