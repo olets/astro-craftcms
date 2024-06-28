@@ -30,6 +30,13 @@ Starter project for SSG or SSR [Astro](https://astro.build/) with [Craft CMS](ht
 
 1. Start and log into Craft CMS (see below) and click on the avatar in the upper right. Update the admin name, email, and password.
 
+1. Create the apps' env files
+
+    ```shell
+    cp packages/app-ssg/.env{.example,}
+    cp packages/app-ssr/.env{.example,}
+    ```
+
 ## Development
 
 From the project root, run
