@@ -1,4 +1,3 @@
-
 export const hasDynamicRoutes = true;
 
 export const query = `{
@@ -9,4 +8,4 @@ export const query = `{
   }
 }`;
 
-export const uriPrefix = "example-channel";
+export const uriPrefix = 'example-channel';
