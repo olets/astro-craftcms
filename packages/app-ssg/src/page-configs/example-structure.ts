@@ -1,4 +1,3 @@
-
 export const hasDynamicRoutes = true;
 
 export const query = `{
@@ -18,4 +17,4 @@ export const query = `{
   }
 }`;
 
-export const uriPrefix = "example-structure";
+export const uriPrefix = 'example-structure';

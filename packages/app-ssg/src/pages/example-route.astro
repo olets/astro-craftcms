@@ -14,14 +14,14 @@ interface Entry extends BaseEntry {
 
 import { query } from "@page-configs/example-route";
 
-let entries: Array<Entry> = [];
+let entries: Entry[] = [];
 
 if (import.meta.env.DEV) {
   entries = await fetchContent({ query });
 } else {
   entries = (await import("@data/example-route/entries.json").then(
     (m) => m.default
-  )) as Array<Entry>;
+  )) as Entry[];
 }
 ---
 

@@ -2,10 +2,19 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": false,
+    "noImplicitAny": true,
     "paths": {
       "@*": ["src/*"],
       "@@*": ["./*"]
     },
+    "skipLibCheck": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "stripInternal": true,
     "types": ["bun-types"],
+    "useDefineForClassFields": true
   }
 }

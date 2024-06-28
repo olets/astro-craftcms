@@ -1,1 +1,4 @@
-[{"params":{"slug":"example-structure-entry-level-1"}},{"params":{"slug":"example-structure-entry-level-2"}}]
+[
+  { "params": { "slug": "example-structure-entry-level-1" } },
+  { "params": { "slug": "example-structure-entry-level-2" } }
+]

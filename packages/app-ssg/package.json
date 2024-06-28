@@ -12,12 +12,24 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cache-data": "bun bin/cache-data.ts"
+    "cache-data": "bun bin/cache-data.ts && prettier --write src/data",
+    "format": "prettier --write .",
+    "lint": "eslint . --fix --max-warnings 0"
   },
   "type": "module",
   "devDependencies": {
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.6.0",
     "@types/node": "^20.14.2",
+    "@typescript-eslint/parser": "^7.14.1",
     "bun-types": "^1.1.13",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "eslint": "9.x",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-astro": "^1.2.2",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "typescript-eslint": "^7.14.1"
   }
 }

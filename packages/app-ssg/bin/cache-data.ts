@@ -1,32 +1,32 @@
-import { Glob } from "bun";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import "dotenv/config";
-import fetchContent from "@lib/craft-cms/fetch-content";
+import { Glob } from 'bun';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import 'dotenv/config';
+import fetchContent from '@lib/craft-cms/fetch-content';
 
 interface CacheEntriesProps {
   dir: string;
-  entries: any[];
+  entries: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface CacheStaticPathsProps {
   dir: string;
-  entries: any[];
+  entries: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   uriPrefix?: string;
 }
 
 await cacheData();
 
 async function cacheData() {
-  const fileSuffix = ".ts";
+  const fileSuffix = '.ts';
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const pattern = path.join(__dirname, `/../src/page-configs/*${fileSuffix}`);
   const glob = new Glob(pattern);
 
-  for await (const file of glob.scan(".")) {
+  for await (const file of glob.scan('.')) {
     const { hasDynamicRoutes, query, uriPrefix } = await import(file);
 
     const entries = await fetchContent({
@@ -47,7 +47,7 @@ async function cacheData() {
       await cacheStaticPaths({ dir, entries, uriPrefix });
     }
 
-    console.log(`Data fetched and cached for ${uriPrefix || "index"}`);
+    console.log(`Data fetched and cached for ${uriPrefix || 'index'}`);
   }
 }
 
@@ -55,9 +55,9 @@ async function cacheEntries({
   dir,
   entries,
 }: CacheEntriesProps): Promise<void> {
-  const file = path.join(dir, "entries.json");
+  const file = path.join(dir, 'entries.json');
 
-  const data = [JSON.stringify(entries), ""].join("\n");
+  const data = [JSON.stringify(entries), ''].join('\n');
 
   writeFileSync(file, data);
 }
@@ -71,27 +71,27 @@ async function cacheStaticPaths({
     let slug = entry.uri;
 
     if (uriPrefix) {
-      slug = entry.uri.replace(new RegExp(`^${uriPrefix}/`), "");
+      slug = entry.uri.replace(new RegExp(`^${uriPrefix}/`), '');
     }
 
     return { params: { slug: slug } };
   });
 
-  const file = path.join(dir, "static-paths.json");
+  const file = path.join(dir, 'static-paths.json');
 
   const data = [
     JSON.stringify(staticPaths).replace(
       '"params":{}',
-      '"params":{"slug":undefined}'
+      '"params":{"slug":undefined}',
     ),
-    "",
-  ].join("\n");
+    '',
+  ].join('\n');
 
   writeFileSync(file, data);
 }
 
-async function makeCacheDirectory(uriPrefix: string = ""): Promise<string> {
-  const dir = path.join("src/data", uriPrefix);
+async function makeCacheDirectory(uriPrefix = ''): Promise<string> {
+  const dir = path.join('src/data', uriPrefix);
 
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });

@@ -3,7 +3,7 @@
   "packageManager": "bun@1.1.13",
   "private": true,
   "scripts": {
-    "cms": "bun run --filter astro-craftcms-cms", 
+    "cms": "bun run --filter astro-craftcms-cms",
     "app-ssg": "bun run --filter astro-craftcms-app-ssg",
     "app-ssr": "bun run --filter astro-craftcms-app-ssr"
   },
