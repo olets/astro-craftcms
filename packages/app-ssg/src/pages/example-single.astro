@@ -1,12 +1,7 @@
 ---
-import type { BaseEntry } from "@lib/craft-cms/types";
-import getEntry from "@lib/craft-cms/get-entry";
-import { query, uriPrefix } from "@page-configs/example-single";
-
-interface Entry extends BaseEntry {
-  title: string;
-  uri: string;
-}
+import getEntry from '@lib/craft-cms/get-entry';
+import type { Entry } from '@page-configs/example-single';
+import { query, uriPrefix } from '@page-configs/example-single';
 
 const entry = await getEntry<Entry>({ query, uriPrefix });
 

@@ -1,26 +1,16 @@
 ---
-import type { BaseEntry } from "@lib/craft-cms/types";
-import fetchContent from "@lib/craft-cms/fetch-content";
-import url from "@lib/craft-cms/url.ts";
-
-interface Entry extends BaseEntry {
-  id: number;
-  sectionHandle: string;
-  sectionId: string;
-  title: string;
-  typeHandle: string;
-  typeId: string;
-}
-
-import { query } from "@page-configs/example-route";
+import fetchContent from '@lib/craft-cms/fetch-content';
+import url from '@lib/craft-cms/url.ts';
+import type { Entry } from '@page-configs/example-route';
+import { query } from '@page-configs/example-route';
 
 let entries: Entry[] = [];
 
 if (import.meta.env.DEV) {
   entries = await fetchContent({ query });
 } else {
-  entries = (await import("@data/example-route/entries.json").then(
-    (m) => m.default
+  entries = (await import('@data/example-route/entries.json').then(
+    (m) => m.default,
   )) as Entry[];
 }
 ---
