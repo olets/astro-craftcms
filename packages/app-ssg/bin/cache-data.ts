@@ -3,16 +3,21 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import 'dotenv/config';
+import type { BaseEntry } from '@lib/craft-cms/types';
 import fetchContent from '@lib/craft-cms/fetch-content';
+
+interface Entry extends BaseEntry {
+  [key: string]: unknown;
+}
 
 interface CacheEntriesProps {
   dir: string;
-  entries: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  entries: Entry[];
 }
 
 export interface CacheStaticPathsProps {
   dir: string;
-  entries: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  entries: Entry[];
   uriPrefix?: string;
 }
 
@@ -29,7 +34,7 @@ async function cacheData() {
   for await (const file of glob.scan('.')) {
     const { hasDynamicRoutes, query, uriPrefix } = await import(file);
 
-    const entries = await fetchContent({
+    const entries: Entry[] = await fetchContent({
       query,
       url: process.env.CRAFT_CMS_GRAPHQL_URL,
     });
