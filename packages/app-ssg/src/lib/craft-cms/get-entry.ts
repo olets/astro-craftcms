@@ -1,6 +1,13 @@
 import fetchContent from '@lib/craft-cms/fetch-content';
 import url from '@lib/craft-cms/url';
-import type { BaseEntry } from '@lib/craft-cms/types';
+
+interface BaseEntry {
+  uri: string;
+}
+
+interface BaseData<T> {
+  entries: T[];
+}
 
 interface Props {
   query: string;
@@ -13,28 +20,42 @@ export default async function <T extends BaseEntry>({
   slug = '',
   uriPrefix = '',
 }: Props): Promise<T | undefined> {
-  let entries: T[] = [] as T[];
+  let entries: T[] = [];
+
+  interface Data extends BaseData<T> {
+    [key: string]: unknown;
+  }
 
   if (import.meta.env.DEV) {
-    entries = await fetchContent<T>({ query });
+    const data = await fetchContent<Data>(query);
+
+    if (data === undefined) {
+      return undefined;
+    }
+
+    entries = data.entries;
   } else {
     // Vite's glob import, because Astro.glob isn't available here and dynamic import doesn't resolve tsconfig path aliases here.
     // https://vitejs.dev/guide/features.html#glob-import
-    const allCachedData = import.meta.glob('@data/**/entries.json', {
-      import: 'default',
-      eager: true,
-    });
+    const allCachedData: Record<string, Data> = import.meta.glob(
+      '@cache/**/data.json',
+      {
+        import: 'default',
+        eager: true,
+      },
+    );
 
     const key = Object.keys(allCachedData).find((k) => {
-      return k.replace(/.*\/data\/([^/]*)\/?entries.json/, '$1') === uriPrefix;
+      return k.replace(/.*\/cache\/([^/]*)\/?data.json/, '$1') === uriPrefix;
     });
 
     if (key) {
-      entries = allCachedData[key] as T[];
+      const { entries: cachedEntries } = allCachedData[key];
+      entries = cachedEntries;
     }
   }
 
-  if (!entries || entries.length === 0) {
+  if (entries.length === 0) {
     return undefined;
   }
 

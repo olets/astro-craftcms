@@ -5,7 +5,7 @@ import { query, uriPrefix } from '@page-configs/example-single';
 
 const entry = await getEntry<Entry>({ query, uriPrefix });
 
-if (!entry) {
+if (entry === undefined) {
   return new Response(null, { status: 404 });
 }
 ---

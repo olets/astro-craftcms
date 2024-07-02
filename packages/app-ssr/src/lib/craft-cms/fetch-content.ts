@@ -1,8 +1,13 @@
-export default async function <T>(query: string): Promise<T[]> {
-  const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
-
+export default async function <T>(query: string): Promise<T | undefined> {
   let json;
   let response;
+
+  const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
+
+  if (url === undefined) {
+    console.warn('fetch-content: CRAFT_CMS_GRAPHQL_URL is not defined');
+    return undefined;
+  }
 
   try {
     response = await fetch(url, {
@@ -25,15 +30,10 @@ export default async function <T>(query: string): Promise<T[]> {
       console.error('fetch-content: There was an error', error);
     }
 
-    return [];
+    return undefined;
   }
 
-  if (!json?.data) {
-    console.warn('fetch-content: No data returned');
-    return [];
-  }
+  const { data }: { data: T } = json;
 
-  const { entries = [] }: { entries: T[] } = json.data;
-
-  return entries;
+  return data;
 }

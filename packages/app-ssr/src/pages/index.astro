@@ -1,21 +1,27 @@
 ---
-import fetchContent from "@lib/craft-cms/fetch-content";
+import fetchContent from '@lib/craft-cms/fetch-content';
 
 interface Entry {
   title: string;
 }
 
-const entries = await fetchContent<Entry>(`{
+interface Data {
+  entries: Entry[];
+}
+
+const data = await fetchContent<Data>(`{
   entries (section: "homepage") {
     title
   }
-}`)
+}`);
 
-if (entries.length === 0) {
+const entries = data?.entries;
+
+if (entries === undefined || entries.length === 0) {
   return new Response(null, { status: 404 });
 }
 
-const entry = entries[0]
+const entry = entries[0];
 ---
 
 {entry.title}

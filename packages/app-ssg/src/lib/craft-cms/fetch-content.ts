@@ -1,16 +1,15 @@
-import type { BaseEntry } from '@lib/craft-cms/types';
-
-export interface Props {
-  query: string;
-  url?: string;
-}
-
-export default async function fetchContent<T extends BaseEntry>({
-  query,
-  url = import.meta.env.CRAFT_CMS_GRAPHQL_URL,
-}: Props): Promise<T[]> {
+export default async function fetchContent<T>(
+  query: string,
+): Promise<T | undefined> {
   let json;
   let response;
+
+  const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
+
+  if (url === undefined) {
+    console.warn('fetch-content: CRAFT_CMS_GRAPHQL_URL is not defined');
+    return undefined;
+  }
 
   try {
     response = await fetch(url, {
@@ -36,18 +35,10 @@ export default async function fetchContent<T extends BaseEntry>({
 
   if (!json?.data) {
     console.warn('fetch-content: No data returned');
-    return [];
+    return undefined;
   }
 
-  const { entries }: { entries: T[] } = json.data;
+  const { data }: { data: T } = json;
 
-  if (entries?.length > 0 && !entries[0]?.uri) {
-    console.warn(
-      'fetch-content: No uri found in entries. Ensure your query returns an array of entries with a uri property',
-    );
-
-    return [];
-  }
-
-  return entries;
+  return data;
 }

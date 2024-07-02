@@ -1,5 +1,3 @@
-import type { BaseEntry } from '@lib/craft-cms/types';
-
 interface Child {
   id: number;
   title: string;
@@ -12,7 +10,7 @@ interface Parent {
   uri: string;
 }
 
-export interface Entry extends BaseEntry {
+export interface Entry {
   children: Child[];
   parent: Parent;
   title: string;

@@ -1,6 +1,4 @@
-import type { BaseEntry } from '@lib/craft-cms/types';
-
-export interface Entry extends BaseEntry {
+export interface Entry {
   title: string;
   uri: string;
 }
@@ -13,5 +11,9 @@ export const query = `{
     uri
   }
 }`;
+
+export interface Data {
+  entries: Entry[];
+}
 
 export const uriPrefix = 'example-single';

@@ -1,17 +1,20 @@
 ---
 import fetchContent from '@lib/craft-cms/fetch-content';
 import url from '@lib/craft-cms/url.ts';
-import type { Entry } from '@page-configs/example-route';
+import type { Data } from '@page-configs/example-route';
 import { query } from '@page-configs/example-route';
 
-let entries: Entry[] = [];
+let data: Data | undefined;
 
 if (import.meta.env.DEV) {
-  entries = await fetchContent({ query });
+  const fetchedData = await fetchContent<Data>(query);
+  if (fetchedData) {
+    data = fetchedData as Data;
+  }
 } else {
-  entries = (await import('@data/example-route/entries.json').then(
+  data = (await import('@cache/example-route/data.json').then(
     (m) => m.default,
-  )) as Entry[];
+  )) as Data;
 }
 ---
 
@@ -30,7 +33,7 @@ if (import.meta.env.DEV) {
   </thead>
   <tbody>
     {
-      entries.map((entry) => (
+      data?.entries.map((entry) => (
         <tr>
           <td>{entry.id}</td>
           <td>{entry.sectionHandle}</td>

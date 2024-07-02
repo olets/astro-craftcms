@@ -1,20 +1,26 @@
 ---
-import path from "node:path";
-import fetchContent from "@lib/craft-cms/fetch-content";
+import path from 'node:path';
+import fetchContent from '@lib/craft-cms/fetch-content';
 
 interface Entry {
   title: string;
 }
 
-const { slug = "" } = Astro.params;
+interface Data {
+  entries: Entry[];
+}
 
-const entries = await fetchContent<Entry>(`{
-  entries (section: "exampleChannel", uri: "${path.join("example-channel", slug)}") {
+const { slug = '' } = Astro.params;
+
+const data = await fetchContent<Data>(`{
+  entries (section: "exampleChannel", uri: "${path.join('example-channel', slug)}") {
     title
   }
 }`);
 
-if (entries.length === 0) {
+const entries = data?.entries;
+
+if (entries === undefined || entries.length === 0) {
   return new Response(null, { status: 404 });
 }
 

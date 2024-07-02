@@ -1,8 +1,6 @@
-import type { BaseEntry } from '@lib/craft-cms/types';
-
-export interface Entry extends BaseEntry {
+export interface Entry {
   title: string;
-  url: string;
+  uri: string;
 }
 
 export const hasDynamicRoutes = false;

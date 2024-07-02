@@ -1,6 +1,6 @@
 ---
-import fetchContent from "@lib/craft-cms/fetch-content";
-import url from "@lib/craft-cms/url.ts";
+import fetchContent from '@lib/craft-cms/fetch-content';
+import url from '@lib/craft-cms/url.ts';
 
 interface Entry {
   id: number;
@@ -12,7 +12,11 @@ interface Entry {
   uri: string;
 }
 
-const entries = await fetchContent<Entry>(`{
+interface Data {
+  entries: Entry[];
+}
+
+const data = await fetchContent<Data>(`{
   entries {
     id
     sectionHandle
@@ -23,6 +27,8 @@ const entries = await fetchContent<Entry>(`{
     uri
   }
 }`);
+
+const entries = data?.entries;
 ---
 
 <h1>My route</h1>
@@ -42,7 +48,7 @@ const entries = await fetchContent<Entry>(`{
   </thead>
   <tbody>
     {
-      entries.map((entry) => (
+      entries?.map((entry) => (
         <tr>
           <td>{entry.id}</td>
           <td>{entry.sectionHandle}</td>

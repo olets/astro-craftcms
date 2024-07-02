@@ -1,16 +1,11 @@
 ---
-import type { BaseEntry } from '@lib/craft-cms/types';
 import getEntry from '@lib/craft-cms/get-entry';
+import type { Entry } from '@page-configs/homepage';
 import { query } from '@page-configs/homepage';
-
-interface Entry extends BaseEntry {
-  title: string;
-  url: string;
-}
 
 const entry = await getEntry<Entry>({ query });
 
-if (!entry) {
+if (entry === undefined) {
   return new Response(null, { status: 404 });
 }
 ---
