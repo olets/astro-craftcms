@@ -3,6 +3,12 @@ export interface Entry {
   uri: string;
 }
 
+export interface Data {
+  entries: Entry[];
+}
+
+export const cacheDirectory = 'example-single';
+
 export const hasDynamicRoutes = false;
 
 export const query = `{

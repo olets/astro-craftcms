@@ -1,24 +1,36 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from 'astro';
+import type { Data } from '@page-configs/example-channel';
+import CraftCMSFetch from '@lib/craft-cms/fetch';
 import getEntry from '@lib/craft-cms/get-entry';
-import type { Entry } from '@page-configs/example-channel';
-import { query, uriPrefix } from '@page-configs/example-channel';
+import {
+  cacheDirectory,
+  query,
+  uriPrefix,
+} from '@page-configs/example-channel';
 import staticPaths from '@cache/example-channel/static-paths.json';
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
-const { slug } = Astro.params as Params;
-
-const entry = await getEntry<Entry>({ query, uriPrefix, slug });
-
-if (entry === undefined) {
-  Astro.response.status = 404;
-  return;
-}
-
 export const getStaticPaths = (async () => {
   return staticPaths;
 }) satisfies GetStaticPaths;
+
+const { slug } = Astro.params as Params;
+
+const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+
+const entries = data?.entries;
+
+if (entries === undefined) {
+  return new Response(null, { status: 404 });
+}
+
+const entry = await getEntry<Data['entries']>({ entries, slug, uriPrefix });
+
+if (entry === undefined) {
+  return new Response(null, { status: 404 });
+}
 ---
 
 {entry.title}

@@ -2,7 +2,7 @@ import { Glob } from 'bun';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import fetchApi from '@lib/craft-cms/fetch-api';
+import { fetchAPI } from '@lib/craft-cms/fetch';
 
 interface Entry {
   uri?: string;
@@ -36,16 +36,18 @@ async function cache() {
   const glob = new Glob(pattern);
 
   for await (const file of glob.scan('.')) {
-    const { hasDynamicRoutes, query, uriPrefix } = await import(file);
+    const { cacheDirectory, hasDynamicRoutes, query, uriPrefix } = await import(
+      file
+    );
 
-    const data = (await fetchApi(query)) as Data;
+    const data = (await fetchAPI(query)) as Data;
 
     if (data === undefined) {
       console.warn(`No data returned for ${file}`);
       continue;
     }
 
-    const dir = await makeCacheDirectory(uriPrefix);
+    const dir = await makeCacheDirectory(cacheDirectory);
 
     await cacheData({ dir, data });
 
@@ -57,7 +59,7 @@ async function cache() {
       });
     }
 
-    console.log(`Data fetched and cached for ${uriPrefix || 'index'}`);
+    console.log(`Data fetched and cached for ${file}`);
   }
 }
 
@@ -104,8 +106,8 @@ async function cacheStaticPaths({
   );
 }
 
-async function makeCacheDirectory(uriPrefix = ''): Promise<string> {
-  const dir = path.join('src/cache', uriPrefix);
+async function makeCacheDirectory(cacheDirectory = ''): Promise<string> {
+  const dir = path.join('src/cache', cacheDirectory);
 
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });

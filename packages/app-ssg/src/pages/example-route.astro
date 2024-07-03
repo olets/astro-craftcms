@@ -1,21 +1,10 @@
 ---
-import fetchApi from '@lib/craft-cms/fetch-api';
-import url from '@lib/craft-cms/url.ts';
+import CraftCMSFetch from '@lib/craft-cms/fetch';
+import url from '@lib/craft-cms/url';
 import type { Data } from '@page-configs/example-route';
-import { query } from '@page-configs/example-route';
+import { cacheDirectory, query } from '@page-configs/example-route';
 
-let data: Data | undefined;
-
-if (import.meta.env.DEV) {
-  const fetchedData = await fetchApi<Data>(query);
-  if (fetchedData) {
-    data = fetchedData as Data;
-  }
-} else {
-  data = (await import('@cache/example-route/data.json').then(
-    (m) => m.default,
-  )) as Data;
-}
+const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
 ---
 
 <table>

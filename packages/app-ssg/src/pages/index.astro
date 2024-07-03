@@ -1,9 +1,18 @@
 ---
+import CraftCMSFetch from '@lib/craft-cms/fetch';
 import getEntry from '@lib/craft-cms/get-entry';
-import type { Entry } from '@page-configs/homepage';
-import { query } from '@page-configs/homepage';
+import type { Data } from '@page-configs/homepage';
+import { cacheDirectory, query } from '@page-configs/homepage';
 
-const entry = await getEntry<Entry>({ query });
+const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+
+const entries = data?.entries;
+
+if (entries === undefined) {
+  return new Response(null, { status: 404 });
+}
+
+const entry = await getEntry<Data['entries']>({ entries });
 
 if (entry === undefined) {
   return new Response(null, { status: 404 });

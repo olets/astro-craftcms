@@ -10,12 +10,18 @@ interface Parent {
   uri: string;
 }
 
-export interface Entry {
+interface Entry {
   children: Child[];
   parent: Parent;
   title: string;
   uri: string;
 }
+
+export interface Data {
+  entries: Entry[];
+}
+
+export const cacheDirectory = 'example-structure';
 
 export const hasDynamicRoutes = true;
 
@@ -25,15 +31,15 @@ export const query = `{
       id
       title
       uri
-    }
+    }  
     parent {
       id
       title
       uri
-    }
+    }  
     title
     uri
-  }
+  }  
 }`;
 
 export const uriPrefix = 'example-structure';
