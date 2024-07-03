@@ -3,6 +3,7 @@ import type { InferGetStaticParamsType, GetStaticPaths } from 'astro';
 import type { Data } from '@page-configs/example-structure';
 import CraftCMSFetch from '@lib/craft-cms/fetch';
 import getEntry from '@lib/craft-cms/get-entry';
+import url from '@lib/craft-cms/url';
 import {
   cacheDirectory,
   query,
@@ -33,4 +34,32 @@ if (entry === undefined) {
 }
 ---
 
-{entry.title}
+<dl>
+  <dt>title</dt>
+  <dd>{entry.title}</dd>
+
+  <dt>parent title</dt>
+  <dd>{entry.parent?.title}</dd>
+
+  <dt>parent URL</dt>
+  <dd>{url(entry.parent?.uri)}</dd>
+
+  <dt>children</dt>
+  <dd>
+    <ul>
+      {
+        entry.children.map((child) => (
+          <li>
+            <dl>
+              <dt>title</dt>
+              <dd>{child.title}</dd>
+
+              <dt>URL</dt>
+              <dd>{url(child.uri)}</dd>
+            </dl>
+          </li>
+        ))
+      }
+    </ul>
+  </dd>
+</dl>
