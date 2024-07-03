@@ -1,5 +1,5 @@
 ---
-import fetchContent from '@lib/craft-cms/fetch-content';
+import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url.ts';
 
 interface Entry {
@@ -16,7 +16,7 @@ interface Data {
   entries: Entry[];
 }
 
-const data = await fetchContent<Data>(`{
+const data = await fetchApi<Data>(`{
   entries {
     id
     sectionHandle

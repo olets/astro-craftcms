@@ -1,6 +1,6 @@
 ---
 import path from 'node:path';
-import fetchContent from '@lib/craft-cms/fetch-content';
+import fetchApi from '@lib/craft-cms/fetch-api';
 
 interface Entry {
   title: string;
@@ -12,7 +12,7 @@ interface Data {
 
 const { slug = '' } = Astro.params;
 
-const data = await fetchContent<Data>(`{
+const data = await fetchApi<Data>(`{
   entries (section: "exampleChannel", uri: "${path.join('example-channel', slug)}") {
     title
   }

@@ -1,6 +1,4 @@
-export default async function fetchContent<T>(
-  query: string,
-): Promise<T | undefined> {
+export default async function <T>(query: string): Promise<T | undefined> {
   let json;
   let response;
 

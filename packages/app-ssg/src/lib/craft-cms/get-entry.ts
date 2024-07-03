@@ -1,4 +1,4 @@
-import fetchContent from '@lib/craft-cms/fetch-content';
+import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
 
 interface BaseEntry {
@@ -27,7 +27,7 @@ export default async function <T extends BaseEntry>({
   }
 
   if (import.meta.env.DEV) {
-    const data = await fetchContent<Data>(query);
+    const data = await fetchApi<Data>(query);
 
     if (data === undefined) {
       return undefined;

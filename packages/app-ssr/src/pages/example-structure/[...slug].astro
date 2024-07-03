@@ -1,6 +1,6 @@
 ---
 import path from 'node:path';
-import fetchContent from '@lib/craft-cms/fetch-content';
+import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url.ts';
 
 interface Child {
@@ -25,7 +25,7 @@ interface Data {
 
 const { slug = '' } = Astro.params;
 
-const data = await fetchContent<Data>(`{
+const data = await fetchApi<Data>(`{
   entries(section: "exampleStructure", uri: "${path.join('example-structure', slug)}") {
     children {
       title

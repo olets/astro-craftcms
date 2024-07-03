@@ -2,7 +2,7 @@ import { Glob } from 'bun';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import fetchContent from '@lib/craft-cms/fetch-content';
+import fetchApi from '@lib/craft-cms/fetch-api';
 
 interface Entry {
   uri?: string;
@@ -38,7 +38,7 @@ async function cache() {
   for await (const file of glob.scan('.')) {
     const { hasDynamicRoutes, query, uriPrefix } = await import(file);
 
-    const data = (await fetchContent(query)) as Data;
+    const data = (await fetchApi(query)) as Data;
 
     if (data === undefined) {
       console.warn(`No data returned for ${file}`);
