@@ -1,14 +1,12 @@
-interface Props {
-  cacheDirectory?: string;
-  dev?: boolean;
-  query: string;
-}
-
 export default async function CraftCMSFetch<T>({
   query,
   cacheDirectory = '',
   dev = import.meta.env.DEV,
-}: Props): Promise<T | undefined> {
+}: {
+  cacheDirectory?: string;
+  dev?: boolean;
+  query: string;
+}): Promise<T | undefined> {
   if (dev) {
     return await fetchAPI<T>(query);
   }

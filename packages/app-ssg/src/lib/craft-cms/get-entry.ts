@@ -4,17 +4,15 @@ interface BaseEntry {
   uri: string;
 }
 
-interface Props<T> {
-  entries: T;
-  slug?: string;
-  uriPrefix?: string;
-}
-
 export default async function <T extends BaseEntry[]>({
   entries,
   slug = '',
   uriPrefix = '',
-}: Props<T>): Promise<T[number] | undefined> {
+}: {
+  entries: T;
+  slug?: string;
+  uriPrefix?: string;
+}): Promise<T[number] | undefined> {
   const needleUrl = url([uriPrefix, slug].filter((v) => v).join('/'));
 
   const entry = entries.find((entry) => {
