@@ -1,10 +1,10 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from 'astro';
-import type { Data } from '@config/sections/exampleStructure';
 import CraftCMSFetch from '@lib/craft-cms/fetch';
 import getEntry from '@lib/craft-cms/get-entry';
 import url from '@lib/craft-cms/url';
 import {
+  type Data,
   cacheDirectory,
   query,
   uriPrefix,
