@@ -23,7 +23,7 @@ export async function fetchAPI<T>(query: string): Promise<T | undefined> {
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   if (url === undefined) {
-    console.warn('fetch-content: CRAFT_CMS_GRAPHQL_URL is not defined');
+    console.warn('fetchAPI: CRAFT_CMS_GRAPHQL_URL is not defined');
     return undefined;
   }
 
@@ -40,17 +40,17 @@ export async function fetchAPI<T>(query: string): Promise<T | undefined> {
   } catch (error) {
     if (!response?.ok) {
       console.error(
-        `fetch-content: Fetch attempt returned the status code ${response?.status}`,
+        `fetchAPI: Fetch attempt returned the status code ${response?.status}`,
       );
     } else if (error instanceof SyntaxError) {
-      console.error('fetch-content: There was a SyntaxError', error);
+      console.error('fetchAPI: There was a SyntaxError', error);
     } else {
-      console.error('fetch-content: There was an error', error);
+      console.error('fetchAPI: There was an error', error);
     }
   }
 
   if (!json?.data) {
-    console.warn('fetch-content: No data returned');
+    console.warn('fetchAPI: No data returned');
     return undefined;
   }
 
@@ -75,6 +75,7 @@ async function fetchCache<T>(cacheDirectory: string): Promise<T | undefined> {
   });
 
   if (!key) {
+    console.warn('fetchCache: No data found', cacheDirectory);
     return undefined;
   }
 
