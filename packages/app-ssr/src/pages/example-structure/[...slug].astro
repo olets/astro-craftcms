@@ -30,7 +30,7 @@ interface Data {
 const { slug = '' } = Astro.params;
 
 const data = await fetchApi<Data>(`{
-  entries(section: "exampleStructure", uri: "${path.join('example-structure', slug)}") {
+  entries(uri: "${path.join('example-structure', slug)}") {
     children {
       title
       uri

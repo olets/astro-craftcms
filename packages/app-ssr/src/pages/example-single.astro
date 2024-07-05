@@ -14,7 +14,7 @@ interface Data {
 }
 
 const data = await fetchApi<Data>(`{
-  entries (section: "exampleSingle") {
+  entries (uri: "example-single") {
     title
   }
 }`);
