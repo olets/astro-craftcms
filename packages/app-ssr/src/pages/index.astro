@@ -1,5 +1,6 @@
 ---
 import fetchApi from '@lib/craft-cms/fetch-api';
+import { homepageUrl } from '@lib/craft-cms/url';
 
 interface Entry {
   title: string;
@@ -10,7 +11,7 @@ interface Data {
 }
 
 const data = await fetchApi<Data>(`{
-  entries (section: "homepage") {
+  entries (uri: "${homepageUrl}") {
     title
   }
 }`);
