@@ -5,7 +5,7 @@ export default async function <T>(query: string): Promise<T | undefined> {
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   if (url === undefined) {
-    console.warn('fetch-content: CRAFT_CMS_GRAPHQL_URL is not defined');
+    console.warn('fetch-api: CRAFT_CMS_GRAPHQL_URL is not defined');
     return undefined;
   }
 
@@ -22,12 +22,12 @@ export default async function <T>(query: string): Promise<T | undefined> {
   } catch (error) {
     if (!response?.ok) {
       console.error(
-        `fetch-content: Fetch attempt returned the status code ${response?.status}`,
+        `fetch-api: Fetch attempt returned the status code ${response?.status}`,
       );
     } else if (error instanceof SyntaxError) {
-      console.error('fetch-content: There was a SyntaxError', error);
+      console.error('fetch-api: There was a SyntaxError', error);
     } else {
-      console.error('fetch-content: There was an error', error);
+      console.error('fetch-api: There was an error', error);
     }
 
     return undefined;
