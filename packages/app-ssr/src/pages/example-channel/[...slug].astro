@@ -3,7 +3,6 @@
  * Pages for "Example Channel" Craft section
  */
 
-import path from 'node:path';
 import fetchApi from '@lib/craft-cms/fetch-api';
 
 interface Entry {
@@ -17,7 +16,7 @@ interface Data {
 const { slug = '' } = Astro.params;
 
 const data = await fetchApi<Data>(`{
-  entries (uri: "${path.join('example-channel', slug)}") {
+  entries(uri: "example-channel/${slug}") {
     title
   }
 }`);

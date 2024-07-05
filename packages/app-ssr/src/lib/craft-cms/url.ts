@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 export const homepageUrl = '__home__';
 
 export default function url(uri?: string): string | undefined {
@@ -11,5 +9,5 @@ export default function url(uri?: string): string | undefined {
     return '/';
   }
 
-  return path.normalize(`/${uri}`);
+  return `/${uri.replace(/^\//, '')}`;
 }
