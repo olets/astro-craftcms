@@ -7,7 +7,7 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'example-channel';
+export const cacheDirectory = 'sections__exampleChannel';
 
 export const hasDynamicRoutes = true;
 

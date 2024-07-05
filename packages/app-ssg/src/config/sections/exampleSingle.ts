@@ -7,7 +7,7 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'example-single';
+export const cacheDirectory = 'sections__exampleSingle';
 
 export const hasDynamicRoutes = false;
 

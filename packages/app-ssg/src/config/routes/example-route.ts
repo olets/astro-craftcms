@@ -12,7 +12,7 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'example-route';
+export const cacheDirectory = 'routes__example-route';
 
 export const hasDynamicRoutes = false;
 

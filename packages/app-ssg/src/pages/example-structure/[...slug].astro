@@ -1,6 +1,6 @@
 ---
 import type { InferGetStaticParamsType, GetStaticPaths } from 'astro';
-import type { Data } from '@page-configs/example-structure';
+import type { Data } from '@config/sections/exampleStructure';
 import CraftCMSFetch from '@lib/craft-cms/fetch';
 import getEntry from '@lib/craft-cms/get-entry';
 import url from '@lib/craft-cms/url';
@@ -8,8 +8,8 @@ import {
   cacheDirectory,
   query,
   uriPrefix,
-} from '@page-configs/example-structure';
-import staticPaths from '@cache/example-structure/static-paths.json';
+} from '@config/sections/exampleStructure';
+import staticPaths from '@cache/sections__exampleStructure/static-paths.json';
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 

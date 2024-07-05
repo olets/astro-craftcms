@@ -21,7 +21,7 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'example-structure';
+export const cacheDirectory = 'sections__exampleStructure';
 
 export const hasDynamicRoutes = true;
 

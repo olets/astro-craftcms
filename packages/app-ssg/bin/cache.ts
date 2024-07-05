@@ -32,7 +32,7 @@ async function cache() {
 
   const filename = fileURLToPath(import.meta.url);
   const dirname = path.dirname(filename);
-  const pattern = path.join(dirname, `/../src/page-configs/*${fileSuffix}`);
+  const pattern = path.join(dirname, `/../src/page-configs/**/*${fileSuffix}`);
   const glob = new Glob(pattern);
 
   for await (const file of glob.scan('.')) {

@@ -9,7 +9,7 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'homepage';
+export const cacheDirectory = 'sections__homepage';
 
 export const hasDynamicRoutes = false;
 
