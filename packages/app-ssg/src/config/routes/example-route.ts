@@ -1,6 +1,6 @@
 import type { Config } from '@lib/craft-cms/types';
 
-export interface Entry {
+interface Entry {
   id: number;
   sectionHandle: string;
   sectionId: string;
