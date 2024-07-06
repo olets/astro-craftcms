@@ -20,5 +20,3 @@ export const query = `{
     uri
   }  
 }`;
-
-export const uriPrefix = '';

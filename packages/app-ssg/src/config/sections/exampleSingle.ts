@@ -12,14 +12,7 @@ export const cacheDirectory = 'sections__exampleSingle';
 export const hasDynamicRoutes = false;
 
 export const query = `{
-  entries (section: "exampleSingle") {
+  entries (uri: "example-single") {
     title
-    uri
   }
 }`;
-
-export interface Data {
-  entries: Entry[];
-}
-
-export const uriPrefix = 'example-single';
