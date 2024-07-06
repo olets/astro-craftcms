@@ -1,3 +1,4 @@
+import type { Config } from '@lib/craft-cms/types';
 import { homepageUrl } from '@lib/craft-cms/url';
 
 interface Entry {
@@ -9,14 +10,16 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'sections__homepage';
+const config: Config = {
+  cacheDirectory: 'sections__homepage',
+  hasDynamicRoutes: false,
+  query: `{
+    entries (uri: "${homepageUrl}") {
+      title
+      url
+      uri
+    }
+  }`,
+};
 
-export const hasDynamicRoutes = false;
-
-export const query = `{
-  entries (uri: "${homepageUrl}") {
-    title
-    url
-    uri
-  }  
-}`;
+export default config;

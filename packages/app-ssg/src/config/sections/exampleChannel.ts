@@ -1,4 +1,6 @@
-export interface Entry {
+import type { Config } from '@lib/craft-cms/types';
+
+interface Entry {
   title: string;
   uri: string;
 }
@@ -7,16 +9,17 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'sections__exampleChannel';
+const config: Config = {
+  cacheDirectory: 'sections__exampleChannel',
+  hasDynamicRoutes: true,
+  query: `{
+    entries (section: "exampleChannel") {
+      title
+      uri
+      url
+    }
+  }`,
+  uriPrefix: 'example-channel',
+};
 
-export const hasDynamicRoutes = true;
-
-export const query = `{
-  entries (section: "exampleChannel") {
-    title
-    uri
-    url
-  }
-}`;
-
-export const uriPrefix = 'example-channel';
+export default config;

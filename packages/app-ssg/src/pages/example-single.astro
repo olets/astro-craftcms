@@ -1,10 +1,8 @@
 ---
 import CraftCMSFetch from '@lib/craft-cms/fetch';
-import {
-  type Data,
-  cacheDirectory,
-  query,
-} from '@config/sections/exampleSingle';
+import config, { type Data } from '@config/sections/exampleSingle';
+
+const { cacheDirectory, query } = config;
 
 const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
 

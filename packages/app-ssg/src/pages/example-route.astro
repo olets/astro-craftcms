@@ -1,7 +1,9 @@
 ---
 import CraftCMSFetch from '@lib/craft-cms/fetch';
 import url from '@lib/craft-cms/url';
-import { type Data, cacheDirectory, query } from '@config/routes/example-route';
+import config, { type Data } from '@config/routes/example-route';
+
+const { cacheDirectory, query } = config;
 
 const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
 ---

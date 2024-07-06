@@ -1,3 +1,5 @@
+import type { Config } from '@lib/craft-cms/types';
+
 export interface Entry {
   title: string;
   uri: string;
@@ -7,12 +9,15 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'sections__exampleSingle';
+const config: Config = {
+  cacheDirectory: 'sections__exampleSingle',
+  hasDynamicRoutes: false,
+  query: `{
+    entries (uri: "example-single") {
+      title
+    }
+  }`,
+  uriPrefix: 'example-channel',
+};
 
-export const hasDynamicRoutes = false;
-
-export const query = `{
-  entries (uri: "example-single") {
-    title
-  }
-}`;
+export default config;

@@ -1,3 +1,5 @@
+import type { Config } from '@lib/craft-cms/types';
+
 interface Child {
   id: number;
   title: string;
@@ -21,25 +23,26 @@ export interface Data {
   entries: Entry[];
 }
 
-export const cacheDirectory = 'sections__exampleStructure';
-
-export const hasDynamicRoutes = true;
-
-export const query = `{
-  entries (section: "exampleStructure") {
-    children {
-      id
+const config: Config = {
+  cacheDirectory: 'sections__exampleStructure',
+  hasDynamicRoutes: true,
+  query: `{
+    entries (section: "exampleStructure") {
+      children {
+        id
+        title
+        uri
+      }  
+      parent {
+        id
+        title
+        uri
+      }  
       title
       uri
     }  
-    parent {
-      id
-      title
-      uri
-    }  
-    title
-    uri
-  }  
-}`;
+  }`,
+  uriPrefix: 'example-structure',
+};
 
-export const uriPrefix = 'example-structure';
+export default config;

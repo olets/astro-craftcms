@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchAPI } from '@lib/craft-cms/fetch';
+import type { Config } from '@lib/craft-cms/types';
 
 interface Entry {
   uri?: string;
@@ -32,13 +33,16 @@ async function cache() {
 
   const filename = fileURLToPath(import.meta.url);
   const dirname = path.dirname(filename);
-  const pattern = path.join(dirname, `/../src/page-configs/**/*${fileSuffix}`);
+  const pattern = path.join(dirname, `/../src/config/**/*${fileSuffix}`);
   const glob = new Glob(pattern);
 
   for await (const file of glob.scan('.')) {
-    const { cacheDirectory, hasDynamicRoutes, query, uriPrefix } = await import(
-      file
-    );
+    const {
+      cacheDirectory,
+      hasDynamicRoutes,
+      query,
+      uriPrefix = '',
+    } = await import(file).then((m) => m.default as Config);
 
     const data = (await fetchAPI(query)) as Data;
 
