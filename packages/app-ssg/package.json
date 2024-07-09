@@ -12,7 +12,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cache": "rm -rf src/cache && mkdir src/cache && dotenvx run -- bun bin/cache.ts && prettier --write src/cache",
+    "cache": "rm -rf src/cache && dotenvx run -- bun bin/cache.ts && prettier --write src/cache",
     "format": "prettier --write .",
     "lint": "eslint . --fix --max-warnings 0"
   },
