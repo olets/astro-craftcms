@@ -1,19 +1,33 @@
+/**
+ * In SSR mode, fetches data from a GraphQL endpoint.
+ * In production, fetches data from local cache.
+ *
+ * @template T the response's data's type
+ * @param cacheDirectory the directory in which to look for cache data
+ * @param query the GraphQL query
+ * @returns {Promise<T|undefined>}
+ */
 export default async function CraftCMSFetch<T>({
-  query,
   cacheDirectory = '',
-  dev = import.meta.env.DEV,
+  query,
 }: {
   cacheDirectory?: string;
-  dev?: boolean;
   query: string;
 }): Promise<T | undefined> {
-  if (dev) {
+  if (import.meta.env.SSR) {
     return await fetchAPI<T>(query);
   }
 
   return await fetchCache<T>(cacheDirectory);
 }
 
+/**
+ * Fetches data from a GraphQL endpoint.
+ *
+ * @template T the response's data's type
+ * @param query the GraphQL query
+ * @returns {Promise<T|undefined>}
+ */
 export async function fetchAPI<T>(query: string): Promise<T | undefined> {
   let json;
   let response;
@@ -37,9 +51,7 @@ export async function fetchAPI<T>(query: string): Promise<T | undefined> {
     json = await response.json();
   } catch (error) {
     if (!response?.ok) {
-      console.error(
-        `fetchAPI: Fetch attempt returned the status code ${response?.status}`,
-      );
+      console.error('fetchAPI: response not ok', response?.status);
     } else if (error instanceof SyntaxError) {
       console.error('fetchAPI: There was a SyntaxError', error);
     } else {
@@ -47,7 +59,7 @@ export async function fetchAPI<T>(query: string): Promise<T | undefined> {
     }
   }
 
-  if (!json?.data) {
+  if (json?.data === undefined) {
     console.warn('fetchAPI: No data returned');
     return undefined;
   }
@@ -57,15 +69,25 @@ export async function fetchAPI<T>(query: string): Promise<T | undefined> {
   return data;
 }
 
+/**
+ * Fetches data from local cache.
+ *
+ * @template T — the response's data's type
+ * @param cacheDirectory the directory in which to look for cache data
+ * @returns {Promise<T|undefined>}
+ */
 async function fetchCache<T>(cacheDirectory: string): Promise<T | undefined> {
   // Vite's glob import, because Astro.glob isn't available here and dynamic import doesn't resolve tsconfig path aliases here.
   // https://vitejs.dev/guide/features.html#glob-import
+
+  // Maintenance note: `@<dir>` here and `\/<dir>\/` below must be kept in sync.
   const allCachedData: Record<string, T> =
     import.meta.glob('@cache/**/data.json', {
       import: 'default',
       eager: true,
     }) || {};
 
+  // Maintenance note: `\/<dir>\/` here and `@<dir>` above must be kept in sync.
   const key = Object.keys(allCachedData).find((k) => {
     const dir = k.replace(/.*\/cache\/([^/]*)\/?data.json/, '$1');
 

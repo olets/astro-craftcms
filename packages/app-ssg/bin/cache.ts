@@ -15,19 +15,11 @@ interface Data {
   [key: string]: unknown;
 }
 
-interface CacheDataProps {
-  dir: string;
-  data: Data;
-}
-
-export interface CacheStaticPathsProps {
-  dir: string;
-  data: Data;
-  uriPrefix?: string;
-}
-
 await cache();
 
+/**
+ * Fetch and cache Craft CMS data.
+ */
 async function cache() {
   const fileSuffix = '.ts';
 
@@ -67,17 +59,39 @@ async function cache() {
   }
 }
 
-async function cacheData({ dir, data }: CacheDataProps): Promise<void> {
+/**
+ * Save JSON data to a file.
+ *
+ * @param dir The directory in which to save the file
+ * @param data CMS data
+ */
+async function cacheData({
+  dir,
+  data,
+}: {
+  dir: string;
+  data: Data;
+}): Promise<void> {
   const file = path.join(dir, 'data.json');
 
   writeFileSync(file, [JSON.stringify(data), ''].join('\n'));
 }
 
+/**
+ * Save Astro static path data to a file as JSON.
+ *
+ * @param dir The directory in which to save the file
+ * @param data CMS data from which to build static paths
+ */
 async function cacheStaticPaths({
   dir,
   data,
   uriPrefix,
-}: CacheStaticPathsProps): Promise<void> {
+}: {
+  dir: string;
+  data: Data;
+  uriPrefix?: string;
+}): Promise<void> {
   const { entries = [] } = data;
 
   const staticPaths = entries
@@ -94,22 +108,19 @@ async function cacheStaticPaths({
 
       return { params: { slug: slug } };
     })
-    .filter((v) => v !== undefined);
+    .filter(Boolean);
 
   const file = path.join(dir, 'static-paths.json');
 
-  writeFileSync(
-    file,
-    [
-      JSON.stringify(staticPaths).replace(
-        '"params":{}',
-        '"params":{"slug":undefined}',
-      ),
-      '',
-    ].join('\n'),
-  );
+  writeFileSync(file, [JSON.stringify(staticPaths), ''].join('\n'));
 }
 
+/**
+ * Make a directory for cache data
+ *
+ * @param cacheDirectory the directory to create in the parent caches' directory
+ * @returns
+ */
 async function makeCacheDirectory(cacheDirectory = ''): Promise<string> {
   const dir = path.join('src/cache', cacheDirectory);
 
