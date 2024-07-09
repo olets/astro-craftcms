@@ -17,7 +17,6 @@ const config: Config = {
       title
     }
   }`,
-  uriPrefix: 'example-channel',
 };
 
 export default config;

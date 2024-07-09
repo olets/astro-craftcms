@@ -19,11 +19,14 @@ const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
 
 const entries = data?.entries;
 
-if (entries === undefined) {
+if (entries === undefined || entries.length === 0) {
   return new Response(null, { status: 404 });
 }
 
-const entry = await getEntry<Data['entries']>({ entries, slug, uriPrefix });
+const entry = await getEntry<(typeof entries)[number]>({
+  entries,
+  uri: [uriPrefix, slug].join('/'),
+});
 
 if (entry === undefined) {
   return new Response(null, { status: 404 });
