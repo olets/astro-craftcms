@@ -57,10 +57,7 @@ export async function fetchAPI<T>(query: string): Promise<T | undefined> {
     } else {
       console.error('fetchAPI: There was an error', error);
     }
-  }
 
-  if (json?.data === undefined) {
-    console.warn('fetchAPI: No data returned');
     return undefined;
   }
 
