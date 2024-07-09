@@ -1,4 +1,11 @@
-export default async function <T>(query: string): Promise<T | undefined> {
+/**
+ * Fetches data from a GraphQL endpoint.
+ *
+ * @template T the response's data's type
+ * @param query the GraphQL query
+ * @returns {Promise<T|undefined>}
+ */
+export async function fetchAPI<T>(query: string): Promise<T | undefined> {
   let json;
   let response;
 
@@ -21,9 +28,7 @@ export default async function <T>(query: string): Promise<T | undefined> {
     json = await response.json();
   } catch (error) {
     if (!response?.ok) {
-      console.error(
-        `fetch-api: Fetch attempt returned the status code ${response?.status}`,
-      );
+      console.error('fetch-api: response not ok', response?.status);
     } else if (error instanceof SyntaxError) {
       console.error('fetch-api: There was a SyntaxError', error);
     } else {
