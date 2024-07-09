@@ -1,10 +1,23 @@
 ---
-import CraftCMSFetch from '@lib/craft-cms/fetch';
-import config, { type Data } from '@config/sections/homepage';
+import fetchAPI from '@lib/craft-cms/fetch';
+import { homepageUrl } from '@lib/craft-cms/url';
 
-const { cacheDirectory, query } = config;
+interface Entry {
+  title: string;
+  uri: string;
+}
 
-const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+interface Data {
+  entries: Entry[];
+}
+
+const data = await fetchAPI<Data>(`{
+  entries (uri: "${homepageUrl}") {
+    title
+    url
+    uri
+  }
+}`);
 
 if (data?.entries === undefined || data.entries.length === 0) {
   return new Response(null, { status: 404 });

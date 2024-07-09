@@ -1,37 +1,67 @@
 ---
-import type { InferGetStaticParamsType, GetStaticPaths } from 'astro';
-import CraftCMSFetch from '@lib/craft-cms/fetch';
-import getEntry from '@lib/craft-cms/get-entry';
+// import type { GetStaticPaths } from 'astro';
+import fetchAPI from '@lib/craft-cms/fetch';
+import staticPaths from '@lib/craft-cms/static-paths';
 import url from '@lib/craft-cms/url';
-import config, { type Data } from '@config/sections/exampleStructure';
-import staticPaths from '@cache/sections__exampleStructure/static-paths.json';
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+interface Child {
+  id: number;
+  title: string;
+  uri: string;
+}
 
-export const getStaticPaths = (async () => {
-  return staticPaths;
-}) satisfies GetStaticPaths;
+interface Parent {
+  id: number;
+  title: string;
+  uri: string;
+}
 
-const { cacheDirectory, query, uriPrefix } = config;
+interface Entry {
+  children: Child[];
+  parent: Parent;
+  title: string;
+  uri: string;
+}
 
-const { slug } = Astro.params as Params;
+interface Data {
+  entries: Entry[];
+}
 
-const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+export const getStaticPaths = async () => {
+  const data = await fetchAPI<Data>(`{
+    entries (section: "exampleStructure") {
+      children {
+        id
+        title
+        uri
+      }
+      parent {
+        id
+        title
+        uri
+      }
+      title
+      uri
+    }
+  }`);
 
-const entries = data?.entries;
+  return await staticPaths<Entry>({
+    entries: data?.entries,
+    uriPrefix: 'example-structure',
+  });
+}; // satisfies GetStaticPaths; @TODO
 
-if (entries === undefined || entries.length === 0) {
+/**
+ * @TODO if `satisfies GetStaticPaths` were working
+ * I think wouldn't need this entry -> entryProp -> entry redirection
+ */
+const { entry: entryProp } = Astro.props;
+
+if (entryProp === undefined) {
   return new Response(null, { status: 404 });
 }
 
-const entry = await getEntry<(typeof entries)[number]>({
-  entries,
-  uri: [uriPrefix, slug].join('/'),
-});
-
-if (entry === undefined) {
-  return new Response(null, { status: 404 });
-}
+const entry = entryProp as Entry;
 ---
 
 <dl>

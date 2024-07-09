@@ -1,36 +1,51 @@
 ---
-import type { InferGetStaticParamsType, GetStaticPaths } from 'astro';
-import CraftCMSFetch from '@lib/craft-cms/fetch';
-import getEntry from '@lib/craft-cms/get-entry';
-import config, { type Data } from '@config/sections/exampleChannel';
-import staticPaths from '@cache/sections__exampleChannel/static-paths.json';
+// import type { GetStaticPaths } from 'astro';
+import fetchAPI from '@lib/craft-cms/fetch';
+// import routeConfig, {
+//   type Data as RouteData,
+// } from '@config/routes/example-route';
+import staticPaths from '@lib/craft-cms/static-paths';
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+interface Entry {
+  title: string;
+  uri: string;
+}
 
-export const getStaticPaths = (async () => {
-  return staticPaths;
-}) satisfies GetStaticPaths;
+interface Data {
+  entries: Entry[];
+}
 
-const { cacheDirectory, query, uriPrefix } = config;
+export const getStaticPaths = async () => {
+  const data = await fetchAPI<Data>(`{
+    entries (section: "exampleChannel") {
+      title
+      uri
+      url
+    }
+  }`);
 
-const { slug } = Astro.params as Params;
+  return await staticPaths<Entry>({
+    entries: data?.entries,
+    uriPrefix: 'example-channel',
+  });
+}; // satisfies GetStaticPaths; @TODO
 
-const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+/**
+ * @TODO if `satisfies GetStaticPaths` were working
+ * I think wouldn't need this entry -> entryProp -> entry redirection
+ */
+const { entry: entryProp } = Astro.props;
 
-const entries = data?.entries;
-
-if (entries === undefined || entries.length === 0) {
+if (entryProp === undefined) {
   return new Response(null, { status: 404 });
 }
 
-const entry = await getEntry<(typeof entries)[number]>({
-  entries,
-  uri: [uriPrefix, slug].join('/'),
-});
+const entry = entryProp as Entry;
 
-if (entry === undefined) {
-  return new Response(null, { status: 404 });
-}
+// const { cacheDirectory, query } = routeConfig;
+
+// const routeData = await fetchAPI<RouteData>({ cacheDirectory, query });
 ---
 
 {entry.title}
+<!-- {JSON.stringify(routeData)} -->
