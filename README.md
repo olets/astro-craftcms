@@ -1,6 +1,6 @@
 # astro-craftcms
 
-Starter project for SSG or SSR [Astro](https://astro.build/) with [Craft CMS](https://craftcms.com/) as the content source.
+Demonstration of three approaches to [Astro](https://astro.build/) with content modelled and managed in headless [Craft CMS](https://craftcms.com/).
 
 ## Requirements
 
@@ -38,12 +38,6 @@ Starter project for SSG or SSR [Astro](https://astro.build/) with [Craft CMS](ht
     ```
 
 ## Development
-
-From the project root, run
-
-- `bun run dev` or `bun run start` (they do the same thing) to start the CMS and the app
-- `bun run build` to build the app
-- `bun run preview` to preview the built app
 
 ### CMS
 
@@ -83,21 +77,21 @@ admin | changeme | changeme@example.com
 
 ### App
 
-#### SSG
+#### SSG with prebuilt site
 
-- Run `packages/app-ssg/package.json` scripts from the project root or from `packages` with
+- Run `packages/app-ssg-no-cache/package.json` scripts from the project root or from `packages` with
 
     ```shell
-    bun run app-ssg <replace with the script> # e.g. `bun run app-ssg dev` or `bun run app-ssg start` to start the app
+    bun run app-ssg-no-cache <replace with the script> # e.g. `bun run app-ssg-no-cache dev` or `bun run app-ssg-no-cache start` to start the app
     ```
 
     For example, to start the SSG app run
 
     ```shell
-    bun run app-ssg dev # or `bun run app-ssg start`
+    bun run app-ssg-no-cache dev # or `bun run app-ssg-no-cache start`
     ```
 
-- Or run `packages/app-ssg/package.json` scripts from the `packages/app-ssg` directory or one of its subdirectories with
+- Or run `packages/app-ssg-no-cache/package.json` scripts from the `packages/app-ssg-no-cache` directory or one of its subdirectories with
 
     ```shell
     bun run <replace with the script>
@@ -109,10 +103,49 @@ admin | changeme | changeme@example.com
     For example, to start the app run
 
     ```shell
-    bun run dev # or `bun run app-ssg start`
+    bun run dev # or `bun run app-ssg-no-cache start`
     ```
 
-To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssg` and run `bun` commands (e.g. `bun add …`).
+To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssg-no-cache` and run `bun` commands (e.g. `bun add …`).
+
+##### Deploying
+
+Run the `build` script, and then upload and serve `packages/app-ssg-no-cache/dist`.
+
+#### SSG with cached data
+
+- Run `packages/app-ssg-cache-cache/package.json` scripts from the project root or from `packages` with
+
+    ```shell
+    bun run app-ssg-cache <replace with the script> # e.g. `bun run app-ssg-cache dev` or `bun run app-ssg-cache start` to start the app
+    ```
+
+    For example, to start the SSG app run
+
+    ```shell
+    bun run app-ssg-cache dev # or `bun run app-ssg-cache start`
+    ```
+
+- Or run `packages/app-ssg-cache/package.json` scripts from the `packages/app-ssg-cache` directory or one of its subdirectories with
+
+    ```shell
+    bun run <replace with the script>
+    ```
+
+    > [!TIP]
+    > The `dev`/`start` script has nicer terminal output when run this way than when run from the project root or `packages`.
+
+    For example, to start the app run
+
+    ```shell
+    bun run dev # or `bun run app-ssg-cache start`
+    ```
+
+To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssg-cache` and run `bun` commands (e.g. `bun add …`).
+
+##### Deploying
+
+Run the `cache` script, commit and push, and then on the server run the `build` script and serve `packages/app-cache/dist`.
 
 #### SSR
 
