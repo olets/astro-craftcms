@@ -3,27 +3,32 @@
  * Pages for Craft's "Example Channel" section
  */
 
+import { z } from 'zod';
 import fetchApi from '@lib/craft-cms/fetch-api';
-
-interface Data {
-  entries: {
-    title: string;
-  }[];
-}
 
 const { slug = '' } = Astro.params;
 
-const data = await fetchApi<Data>(`{
+const query = `{
   entries(uri: "example-channel/${slug}") {
     title
   }
-}`);
+}`;
 
-if (
-  data === undefined ||
-  data?.entries === undefined ||
-  data.entries.length === 0
-) {
+const schema = z.object({
+  entries: z
+    .object({
+      title: z.string(),
+    })
+    .array()
+    .nonempty(),
+});
+
+const data = await fetchApi({
+  query,
+  schema,
+});
+
+if (data === undefined) {
   return new Response(null, { status: 404 });
 }
 

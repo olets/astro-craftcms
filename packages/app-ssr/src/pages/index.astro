@@ -3,22 +3,11 @@
  * Page for Craft's "Homepage" section
  */
 
+import { z } from 'zod';
 import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
-interface Data {
-  entries: {
-    exampleField: string;
-    title: string;
-  }[];
-  otherEntries: {
-    sectionHandle: string;
-    title: string;
-    typeHandle: string;
-    uri: string;
-  }[];
-}
 
-const data = await fetchApi<Data>(`{
+const query = `{
   entries(section: "homepage") {
     title
     ... on homepage_Entry {
@@ -31,13 +20,31 @@ const data = await fetchApi<Data>(`{
     typeHandle
     uri
   }
-}`);
+}`;
 
-if (
-  data === undefined ||
-  data?.entries === undefined ||
-  data.entries.length === 0
-) {
+const schema = z.object({
+  entries: z
+    .object({
+      exampleField: z.string(),
+      title: z.string(),
+    })
+    .array(),
+  otherEntries: z
+    .object({
+      sectionHandle: z.string(),
+      title: z.string(),
+      typeHandle: z.string(),
+      uri: z.string(),
+    })
+    .array(),
+});
+
+const data = await fetchApi({
+  query,
+  schema,
+});
+
+if (data === undefined) {
   return new Response(null, { status: 404 });
 }
 

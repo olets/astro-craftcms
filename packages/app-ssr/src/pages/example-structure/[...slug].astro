@@ -3,26 +3,13 @@
  * Pages for Craft's "Example Structure" section
  */
 
+import { z } from 'zod';
 import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url.ts';
 
-interface Data {
-  entries: {
-    children: {
-      title: string;
-      uri: string;
-    }[];
-    parent: {
-      title: string;
-      uri: string;
-    };
-    title: string;
-  }[];
-}
-
 const { slug = '' } = Astro.params;
 
-const data = await fetchApi<Data>(`{
+const query = `{
   entries(uri: "example-structure/${slug}") {
     children {
       title
@@ -34,13 +21,35 @@ const data = await fetchApi<Data>(`{
     }
     title
   }
-}`);
+}`;
 
-if (
-  data === undefined ||
-  data?.entries === undefined ||
-  data.entries.length === 0
-) {
+const schema = z.object({
+  entries: z
+    .object({
+      children: z
+        .object({
+          title: z.string(),
+          uri: z.string(),
+        })
+        .array(),
+      parent: z
+        .object({
+          title: z.string(),
+          uri: z.string(),
+        })
+        .nullable(),
+      title: z.string(),
+    })
+    .array()
+    .nonempty(),
+});
+
+const data = await fetchApi({
+  query,
+  schema,
+});
+
+if (data === undefined) {
   return new Response(null, { status: 404 });
 }
 

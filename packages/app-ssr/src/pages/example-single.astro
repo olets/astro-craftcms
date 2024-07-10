@@ -3,25 +3,29 @@
  * Page for Craft's "Example Single" section
  */
 
+import { z } from 'zod';
 import fetchApi from '@lib/craft-cms/fetch-api';
 
-interface Data {
-  entries: {
-    title: string;
-  }[];
-}
-
-const data = await fetchApi<Data>(`{
+const query = `{
   entries (uri: "example-single") {
     title
   }
-}`);
+}`;
 
-if (
-  data === undefined ||
-  data?.entries === undefined ||
-  data.entries.length === 0
-) {
+const schema = z.object({
+  entries: z
+    .object({
+      title: z.string(),
+    })
+    .array(),
+});
+
+const data = await fetchApi({
+  query,
+  schema,
+});
+
+if (data === undefined) {
   return new Response(null, { status: 404 });
 }
 

@@ -1,13 +1,20 @@
+import { z } from 'zod';
+import { fromZodError } from 'zod-validation-error';
+
 /**
- * Fetches data from a GraphQL endpoint.
+ * Fetches data from a GraphQL endpoint, and validates it.
  *
- * @template T the response's data's type
  * @param query the GraphQL query
+ * @param schema the response's data's schema
  * @returns
  */
-export default async function fetchAPI<T>(
-  query: string,
-): Promise<T | undefined> {
+export default async function fetchAPI<T extends z.ZodTypeAny>({
+  query,
+  schema,
+}: {
+  query: string;
+  schema: T;
+}): Promise<z.infer<T> | undefined> {
   let json;
   let response;
 
@@ -40,7 +47,19 @@ export default async function fetchAPI<T>(
     return undefined;
   }
 
-  const { data }: { data: T } = json;
+  const result = schema.safeParse(json.data);
 
-  return data;
+  if (!result.success) {
+    const message = `fetch-api: ${fromZodError(result.error).toString()}`;
+
+    if (import.meta.env.DEV) {
+      throw new Error(message);
+    } else {
+      console.log(message);
+
+      return undefined;
+    }
+  }
+
+  return result.data;
 }

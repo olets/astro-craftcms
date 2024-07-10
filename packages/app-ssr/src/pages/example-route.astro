@@ -1,24 +1,32 @@
 ---
+import { z } from 'zod';
 import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url.ts';
 
-interface Data {
-  entries: {
-    sectionHandle: string;
-    title: string;
-    typeHandle: string;
-    uri: string;
-  }[];
-}
-
-const data = await fetchApi<Data>(`{
+const query = `{
   entries {
     sectionHandle
     title
     typeHandle
     uri
   }
-}`);
+}`;
+
+const schema = z.object({
+  entries: z
+    .object({
+      sectionHandle: z.string(),
+      title: z.string(),
+      typeHandle: z.string(),
+      uri: z.string(),
+    })
+    .array(),
+});
+
+const data = await fetchApi({
+  query,
+  schema,
+});
 ---
 
 <h1>My route</h1>
