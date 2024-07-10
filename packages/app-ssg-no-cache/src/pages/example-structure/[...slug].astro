@@ -76,13 +76,7 @@ const { entry } = Astro.props;
       {
         entry.children.map((child) => (
           <li>
-            <dl>
-              <dt>title</dt>
-              <dd>{child.title}</dd>
-
-              <dt>URL</dt>
-              <dd>{url(child.uri)}</dd>
-            </dl>
+            <a href={url(child.uri)}>{child.title}</a>
           </li>
         ))
       }
