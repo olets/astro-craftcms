@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "cms": "bun run --filter astro-craftcms-cms",
+    "app-ssg-cache": "bun run --filter astro-craftcms-app-ssg-cache",
     "app-ssg-no-cache": "bun run --filter astro-craftcms-app-ssg-no-cache",
     "app-ssr": "bun run --filter astro-craftcms-app-ssr"
   },

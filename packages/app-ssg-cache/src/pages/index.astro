@@ -1,0 +1,16 @@
+---
+import CraftCMSFetch from '@lib/craft-cms/fetch';
+import config, { type Data } from '@config/sections/homepage';
+
+const { cacheDirectory, query } = config;
+
+const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+
+if (data?.entries === undefined || data.entries.length === 0) {
+  return new Response(null, { status: 404 });
+}
+
+const entry = data.entries[0];
+---
+
+{entry.title}

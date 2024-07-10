@@ -1,0 +1,12 @@
+---
+import type { GetStaticPaths } from 'astro';
+import staticPaths from '@cache/sections__exampleChannel/static-paths.json';
+
+export const getStaticPaths = (async () => {
+  return staticPaths;
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+---
+
+{entry.title}
