@@ -1,13 +1,22 @@
 ---
 import fetchAPI from '@lib/craft-cms/fetch';
+import url from '@lib/craft-cms/url';
 
 interface Entry {
+  exampleField: string;
   title: string;
+}
+
+interface OtherEntry {
+  sectionHandle: string;
+  title: string;
+  typeHandle: string;
   uri: string;
 }
 
 interface Data {
   entries: Entry[];
+  otherEntries: OtherEntry[];
 }
 
 const data = await fetchAPI<Data>(`{
@@ -16,6 +25,12 @@ const data = await fetchAPI<Data>(`{
     ... on homepage_Entry {
       exampleField
     }
+  }
+  otherEntries: entries {
+    sectionHandle
+    title
+    typeHandle
+    uri
   }
 }`);
 
@@ -26,4 +41,54 @@ if (data?.entries === undefined || data.entries.length === 0) {
 const entry = data.entries[0];
 ---
 
-{entry.title}
+<section>
+  <h2>Entry</h2>
+
+  <dl>
+    <dt>title</dt>
+    <dd>{entry.title}</dd>
+    <dt>exampleField</dt>
+    <dd>{entry.exampleField}</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Other Entries</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>sectionHandle</th>
+        <th>title</th>
+        <th>typeHandle</th>
+        <th>url</th>
+        <th>visit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        data?.otherEntries
+          .filter((otherEntry) => otherEntry.sectionHandle !== 'homepage')
+          .map((otherEntry) => (
+            <tr>
+              <td>{otherEntry.sectionHandle}</td>
+              <td>{otherEntry.title}</td>
+              <td>{otherEntry.typeHandle}</td>
+              <td>{url(otherEntry.uri)}</td>
+              <td>
+                <a href={url(otherEntry.uri)}>Go</a>
+              </td>
+            </tr>
+          ))
+      }
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Routes</h2>
+  <ul>
+    <li>
+      <a href="/example-route">Example Route</a>
+    </li>
+  </ul>
+</section>

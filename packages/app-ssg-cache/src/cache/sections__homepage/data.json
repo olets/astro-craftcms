@@ -1,9 +1,35 @@
 {
-  "entries": [
+  "entries": [{ "title": "Homepage", "exampleField": "Field content" }],
+  "otherEntries": [
     {
+      "sectionHandle": "homepage",
       "title": "Homepage",
-      "url": "https://astro-craftcms.ddev.site/",
+      "typeHandle": "homepage",
       "uri": "__home__"
+    },
+    {
+      "sectionHandle": "exampleSingle",
+      "title": "Example Single",
+      "typeHandle": "exampleSingleEntryType",
+      "uri": "example-single"
+    },
+    {
+      "sectionHandle": "exampleChannel",
+      "title": "Example Channel Entry",
+      "typeHandle": "exampleChannelEntryType",
+      "uri": "example-channel/example-channel-entry"
+    },
+    {
+      "sectionHandle": "exampleStructure",
+      "title": "Example Structure Entry, Level 1",
+      "typeHandle": "exampleStructureEntryType",
+      "uri": "example-structure/example-structure-entry-level-1"
+    },
+    {
+      "sectionHandle": "exampleStructure",
+      "title": "Example Structure Entry, Level 2",
+      "typeHandle": "exampleStructureEntryType",
+      "uri": "example-structure/example-structure-entry-level-2"
     }
   ]
 }
