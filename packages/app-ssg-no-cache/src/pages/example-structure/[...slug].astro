@@ -1,12 +1,20 @@
 ---
-// import type { GetStaticPaths } from 'astro';
 /**
  * Pages for Craft's "Example Structure" section
  */
 
+import type { GetStaticPaths } from 'astro';
 import fetchAPI from '@lib/craft-cms/fetch';
 import staticPaths from '@lib/craft-cms/static-paths';
 import url from '@lib/craft-cms/url';
+
+/**
+ * `Props` interface is tied to Astro.props
+ * https://docs.astro.build/en/guides/typescript/#component-props
+ */
+interface Props {
+  entry: Entry;
+}
 
 interface Entry {
   children: {
@@ -27,7 +35,7 @@ interface Data {
   entries: Entry[];
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = (async () => {
   const data = await fetchAPI<Data>(`{
     entries (section: "exampleStructure") {
       children {
@@ -49,19 +57,9 @@ export const getStaticPaths = async () => {
     entries: data?.entries,
     uriPrefix: 'example-structure',
   });
-}; // satisfies GetStaticPaths; @TODO
+}) satisfies GetStaticPaths;
 
-/**
- * @TODO if `satisfies GetStaticPaths` were working
- * I think wouldn't need this entry -> entryProp -> entry redirection
- */
-const { entry: entryProp } = Astro.props;
-
-if (entryProp === undefined) {
-  return new Response(null, { status: 404 });
-}
-
-const entry = entryProp as Entry;
+const { entry } = Astro.props;
 ---
 
 <dl>
