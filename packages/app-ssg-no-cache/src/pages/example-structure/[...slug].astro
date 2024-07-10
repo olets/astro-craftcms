@@ -39,12 +39,10 @@ export const getStaticPaths = (async () => {
   const data = await fetchAPI<Data>(`{
     entries (section: "exampleStructure") {
       children {
-        id
         title
         uri
       }
       parent {
-        id
         title
         uri
       }
