@@ -2,6 +2,14 @@
 
 Demonstration of three approaches to [Astro](https://astro.build/) with content modelled and managed in headless [Craft CMS](https://craftcms.com/).
 
+Read the related articles (more in progress):
+
+1. [Monorepo Setup for Headless Craft CMS
+](https://www.olets.dev/posts/monorepo-setup-for-headless-craft-cms/)
+
+2. [SSR Astro With Headless Craft CMS
+](https://www.olets.dev/posts/ssr-astro-with-headless-craft-cms/)
+
 ## Requirements
 
 - A Node.js version manager. [asdf](https://asdf-vm.com/) is supported out of the box. If you use something else, add the appropriate config file using the Node.js version specified in `.tool-versions`.
@@ -79,6 +87,9 @@ admin | changeme | changeme@example.com
 
 #### SSG with prebuilt site
 
+> [!WARNING]  
+> Still a work in progress
+
 - Run `packages/app-ssg-no-cache/package.json` scripts from the project root or from `packages` with
 
     ```shell
@@ -113,6 +124,9 @@ To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssg-no-cac
 Run the `build` script, and then upload and serve `packages/app-ssg-no-cache/dist`.
 
 #### SSG with cached data
+
+> [!WARNING]  
+> Still a work in progress
 
 - Run `packages/app-ssg-cache-cache/package.json` scripts from the project root or from `packages` with
 
