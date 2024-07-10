@@ -5,7 +5,9 @@
  * @param query the GraphQL query
  * @returns {Promise<T|undefined>}
  */
-export async function fetchAPI<T>(query: string): Promise<T | undefined> {
+export default async function fetchAPI<T>(
+  query: string,
+): Promise<T | undefined> {
   let json;
   let response;
 
