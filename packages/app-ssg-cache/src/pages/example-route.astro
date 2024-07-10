@@ -11,12 +11,9 @@ const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
 <table>
   <thead>
     <tr>
-      <th>id</th>
       <th>sectionHandle</th>
-      <th>sectionId</th>
       <th>title</th>
       <th>typeHandle</th>
-      <th>typeId</th>
       <th>url</th>
       <th>visit</th>
     </tr>
@@ -25,12 +22,9 @@ const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
     {
       data?.entries.map((entry) => (
         <tr>
-          <td>{entry.id}</td>
           <td>{entry.sectionHandle}</td>
-          <td>{entry.sectionId}</td>
           <td>{entry.title}</td>
           <td>{entry.typeHandle}</td>
-          <td>{entry.typeId}</td>
           <td>{url(entry.uri)}</td>
           <td>
             <a href={url(entry.uri)}>Go</a>

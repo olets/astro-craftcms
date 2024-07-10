@@ -3,12 +3,9 @@ import fetchAPI from '@lib/craft-cms/fetch';
 import url from '@lib/craft-cms/url';
 
 interface Entry {
-  id: number;
   sectionHandle: string;
-  sectionId: string;
   title: string;
   typeHandle: string;
-  typeId: string;
   uri: string;
 }
 
@@ -18,12 +15,9 @@ interface Data {
 
 const data = await fetchAPI<Data>(`{
   entries {
-    id
     sectionHandle
-    sectionId
     title
     typeHandle
-    typeId
     uri
   }
 }`);
@@ -32,12 +26,9 @@ const data = await fetchAPI<Data>(`{
 <table>
   <thead>
     <tr>
-      <th>id</th>
       <th>sectionHandle</th>
-      <th>sectionId</th>
       <th>title</th>
       <th>typeHandle</th>
-      <th>typeId</th>
       <th>url</th>
       <th>visit</th>
     </tr>
@@ -46,12 +37,9 @@ const data = await fetchAPI<Data>(`{
     {
       data?.entries.map((entry) => (
         <tr>
-          <td>{entry.id}</td>
           <td>{entry.sectionHandle}</td>
-          <td>{entry.sectionId}</td>
           <td>{entry.title}</td>
           <td>{entry.typeHandle}</td>
-          <td>{entry.typeId}</td>
           <td>{url(entry.uri)}</td>
           <td>
             <a href={url(entry.uri)}>Go</a>
