@@ -1,5 +1,4 @@
 import type { Config } from '@lib/craft-cms/types';
-import { homepageUrl } from '@lib/craft-cms/url';
 
 interface Entry {
   title: string;
@@ -14,7 +13,7 @@ const config: Config = {
   cacheDirectory: 'sections__homepage',
   hasDynamicRoutes: false,
   query: `{
-    entries (uri: "${homepageUrl}") {
+    entries(section: "homepage") {
       title
       url
       uri

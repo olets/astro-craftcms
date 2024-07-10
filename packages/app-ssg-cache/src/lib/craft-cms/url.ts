@@ -1,5 +1,3 @@
-export const homepageUrl = '__home__';
-
 /**
  * Format a Craft entry's URI for use a local front end URL.
  *
@@ -11,7 +9,7 @@ export default function url(uri?: string): string | undefined {
     return undefined;
   }
 
-  if (uri === homepageUrl) {
+  if (uri === '__home__') {
     return '/';
   }
 
