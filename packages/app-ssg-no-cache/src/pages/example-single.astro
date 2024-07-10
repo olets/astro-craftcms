@@ -5,13 +5,11 @@
 
 import fetchAPI from '@lib/craft-cms/fetch';
 
-interface Entry {
-  title: string;
-  uri: string;
-}
-
 interface Data {
-  entries: Entry[];
+  entries: {
+    title: string;
+    uri: string;
+  }[];
 }
 
 const data = await fetchAPI<Data>(`{

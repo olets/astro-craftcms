@@ -6,24 +6,18 @@
 import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url.ts';
 
-interface Child {
-  title: string;
-  uri: string;
-}
-
-interface Parent {
-  title: string;
-  uri: string;
-}
-
-interface Entry {
-  children: Child[];
-  parent: Parent;
-  title: string;
-}
-
 interface Data {
-  entries: Entry[];
+  entries: {
+    children: {
+      title: string;
+      uri: string;
+    }[];
+    parent: {
+      title: string;
+      uri: string;
+    };
+    title: string;
+  }[];
 }
 
 const { slug = '' } = Astro.params;

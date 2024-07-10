@@ -1,20 +1,15 @@
 import type { Config } from '@lib/craft-cms/types';
-
-interface Child {
-  id: number;
-  title: string;
-  uri: string;
-}
-
-interface Parent {
-  id: number;
-  title: string;
-  uri: string;
-}
-
 export interface Entry {
-  children: Child[];
-  parent: Parent;
+  children: {
+    id: number;
+    title: string;
+    uri: string;
+  }[];
+  parent: {
+    id: number;
+    title: string;
+    uri: string;
+  };
   title: string;
   uri: string;
 }

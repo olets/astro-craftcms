@@ -5,22 +5,17 @@
 
 import fetchApi from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
-
-interface Entry {
-  exampleField: string;
-  title: string;
-}
-
-interface OtherEntry {
-  sectionHandle: string;
-  title: string;
-  typeHandle: string;
-  uri: string;
-}
-
 interface Data {
-  entries: Entry[];
-  otherEntries: OtherEntry[];
+  entries: {
+    exampleField: string;
+    title: string;
+  }[];
+  otherEntries: {
+    sectionHandle: string;
+    title: string;
+    typeHandle: string;
+    uri: string;
+  }[];
 }
 
 const data = await fetchApi<Data>(`{

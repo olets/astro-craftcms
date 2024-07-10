@@ -4,14 +4,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchAPI } from '@lib/craft-cms/fetch';
 import type { Config } from '@lib/craft-cms/types';
-
-interface Entry {
-  uri?: string;
-  [key: string]: unknown;
-}
-
 interface Data {
-  entries?: Entry[];
+  entries?: {
+    uri?: string;
+    [key: string]: unknown;
+  }[];
   [key: string]: unknown;
 }
 
@@ -96,10 +93,6 @@ async function cacheStaticPaths({
 
   const staticPaths = entries
     .map((entry) => {
-      if (entry.uri === undefined) {
-        return undefined;
-      }
-
       let slug = entry.uri;
 
       if (uriPrefix) {
