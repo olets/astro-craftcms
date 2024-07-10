@@ -1,12 +1,8 @@
 import type { Config } from '@lib/craft-cms/types';
 
-interface Entry {
+export interface Entry {
   title: string;
   uri: string;
-}
-
-export interface Data {
-  entries: Entry[];
 }
 
 const config: Config = {

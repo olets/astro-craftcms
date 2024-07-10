@@ -4,7 +4,16 @@
  */
 
 import type { GetStaticPaths } from 'astro';
+import type { Entry } from '@config/sections/exampleChannel';
 import staticPaths from '@cache/sections__exampleChannel/static-paths.json';
+
+/**
+ * `Props` interface is tied to Astro.props
+ * https://docs.astro.build/en/guides/typescript/#component-props
+ */
+interface Props {
+  entry: Entry;
+}
 
 export const getStaticPaths = (async () => {
   return staticPaths;

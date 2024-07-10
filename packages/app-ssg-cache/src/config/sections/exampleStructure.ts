@@ -14,10 +14,6 @@ export interface Entry {
   uri: string;
 }
 
-export interface Data {
-  entries: Entry[];
-}
-
 const config: Config = {
   cacheDirectory: 'sections__exampleStructure',
   hasDynamicRoutes: true,
