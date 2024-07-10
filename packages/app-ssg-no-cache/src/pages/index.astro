@@ -13,8 +13,9 @@ interface Data {
 const data = await fetchAPI<Data>(`{
   entries(section: "homepage") {
     title
-    url
-    uri
+    ... on homepage_Entry {
+      exampleField
+    }
   }
 }`);
 

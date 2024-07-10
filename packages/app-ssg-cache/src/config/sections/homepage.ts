@@ -15,8 +15,9 @@ const config: Config = {
   query: `{
     entries(section: "homepage") {
       title
-      url
-      uri
+      ... on homepage_Entry {
+        exampleField
+      }
     }
   }`,
 };
