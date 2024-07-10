@@ -16,6 +16,9 @@ interface Props {
 }
 
 export const getStaticPaths = (async () => {
+  /**
+   * @TODO use app-ssg-no-cache solution when in DEV mode
+   */
   return staticPaths;
 }) satisfies GetStaticPaths;
 
