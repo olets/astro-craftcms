@@ -6,7 +6,7 @@ import { fetchAPI } from '@lib/craft-cms/fetch';
 import type { Config } from '@lib/craft-cms/types';
 interface Data {
   entries?: {
-    uri?: string;
+    uri: string;
     [key: string]: unknown;
   }[];
   [key: string]: unknown;
