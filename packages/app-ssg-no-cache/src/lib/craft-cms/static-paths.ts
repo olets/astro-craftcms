@@ -4,6 +4,14 @@ interface BaseT {
   uri: string;
 }
 
+/**
+ * Builds Astro static paths from fetched data.
+ *
+ * @template T the response's data's type
+ * @augments T BaseT { uri: string  };
+ * @param query the GraphQL query
+ * @returns
+ */
 export default async function <T extends BaseT>({
   entries,
   uriPrefix,
