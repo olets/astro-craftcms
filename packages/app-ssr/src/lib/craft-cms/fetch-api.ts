@@ -3,7 +3,7 @@
  *
  * @template T the response's data's type
  * @param query the GraphQL query
- * @returns {Promise<T|undefined>}
+ * @returns
  */
 export default async function fetchAPI<T>(
   query: string,
