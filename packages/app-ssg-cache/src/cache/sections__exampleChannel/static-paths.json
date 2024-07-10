@@ -1,15 +1,5 @@
 [
   {
-    "params": { "slug": "new-entry" },
-    "props": {
-      "entry": {
-        "title": "new entry",
-        "uri": "example-channel/new-entry",
-        "url": "https://astro-craftcms.ddev.site/example-channel/new-entry"
-      }
-    }
-  },
-  {
     "params": { "slug": "example-channel-entry" },
     "props": {
       "entry": {
