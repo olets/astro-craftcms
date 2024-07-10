@@ -19,8 +19,6 @@ const data = await fetchApi<Data>(`{
     uri
   }
 }`);
-
-const entries = data?.entries;
 ---
 
 <h1>My route</h1>
@@ -37,7 +35,7 @@ const entries = data?.entries;
   </thead>
   <tbody>
     {
-      entries?.map((entry) => (
+      data?.entries?.map((entry) => (
         <tr>
           <td>{entry.sectionHandle}</td>
           <td>{entry.title}</td>

@@ -33,13 +33,15 @@ const data = await fetchApi<Data>(`{
   }
 }`);
 
-const entries = data?.entries;
-
-if (entries === undefined || entries.length === 0) {
+if (
+  data === undefined ||
+  data?.entries === undefined ||
+  data.entries.length === 0
+) {
   return new Response(null, { status: 404 });
 }
 
-const entry = entries[0];
+const entry = data.entries[0];
 ---
 
 <section>
