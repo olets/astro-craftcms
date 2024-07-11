@@ -1,11 +1,12 @@
 ---
-import CraftCMSFetch from '@lib/craft-cms/fetch';
-import url from '@lib/craft-cms/url';
+import cachedData from '@cache/routes__example-route/data.json';
 import config, { type Data } from '@config/routes/example-route';
+import url from '@lib/craft-cms/url';
+import fetchAPI from '@lib/craft-cms/fetch-api';
 
-const { cacheDirectory, query } = config;
+const { query } = config;
 
-const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+const data = import.meta.env.PROD ? cachedData : await fetchAPI<Data>(query);
 ---
 
 <table>

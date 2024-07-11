@@ -3,12 +3,13 @@
  * Page for Craft's "Example Single" section
  */
 
-import CraftCMSFetch from '@lib/craft-cms/fetch';
+import cachedData from '@cache/sections__exampleSingle/data.json';
 import config, { type Data } from '@config/sections/exampleSingle';
+import fetchAPI from '@lib/craft-cms/fetch-api';
 
-const { cacheDirectory, query } = config;
+const { query } = config;
 
-const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+const data = import.meta.env.PROD ? cachedData : await fetchAPI<Data>(query);
 
 if (data?.entries === undefined || data.entries.length === 0) {
   return new Response(null, { status: 404 });

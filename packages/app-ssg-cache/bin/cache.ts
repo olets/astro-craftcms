@@ -2,7 +2,7 @@ import { Glob } from 'bun';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { fetchAPI } from '@lib/craft-cms/fetch';
+import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 import type { Config } from '@lib/craft-cms/types';
 

@@ -3,13 +3,14 @@
  * Page for Craft's "Homepage" section
  */
 
-import CraftCMSFetch from '@lib/craft-cms/fetch';
-import url from '@lib/craft-cms/url';
+import fetchAPI from '@lib/craft-cms/fetch-api';
+import cachedData from '@cache/sections__homepage/data.json';
 import config, { type Data } from '@config/sections/homepage';
+import url from '@lib/craft-cms/url';
 
-const { cacheDirectory, query } = config;
+const { query } = config;
 
-const data = await CraftCMSFetch<Data>({ cacheDirectory, query });
+const data = import.meta.env.PROD ? cachedData : await fetchAPI<Data>(query);
 
 if (data?.entries === undefined || data.entries.length === 0) {
   return new Response(null, { status: 404 });

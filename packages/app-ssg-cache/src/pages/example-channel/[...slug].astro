@@ -6,7 +6,7 @@
 import type { GetStaticPaths } from 'astro';
 import cachedStaticPaths from '@cache/sections__exampleChannel/static-paths.json';
 import config, { type Entry } from '@config/sections/exampleChannel';
-import { fetchAPI } from '@lib/craft-cms/fetch';
+import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 
 /**
