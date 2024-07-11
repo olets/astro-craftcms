@@ -1,20 +1,27 @@
+import { z } from 'zod';
+import { fromZodError } from 'zod-validation-error';
+
 /**
- * Fetches data from a GraphQL endpoint.
+ * Fetches and validates data from a GraphQL endpoint.
  *
- * @template T the response's data's type
  * @param query the GraphQL query
- * @returns {Promise<T|undefined>}
+ * @param schema the response's data's schema
+ * @returns
  */
-export default async function fetchAPI<T>(
-  query: string,
-): Promise<T | undefined> {
+export default async function fetchAPI<T extends z.ZodTypeAny>({
+  query,
+  schema,
+}: {
+  query: string;
+  schema: T;
+}): Promise<z.infer<T> | undefined> {
   let json;
   let response;
 
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   if (url === undefined) {
-    console.warn('fetchAPI: CRAFT_CMS_GRAPHQL_URL is not defined');
+    console.warn('fetch-api: CRAFT_CMS_GRAPHQL_URL is not defined');
     return undefined;
   }
 
@@ -30,17 +37,29 @@ export default async function fetchAPI<T>(
     json = await response.json();
   } catch (error) {
     if (!response?.ok) {
-      console.error('fetchAPI: response not ok', response?.status);
+      console.error('fetch-api: response not ok', response?.status);
     } else if (error instanceof SyntaxError) {
-      console.error('fetchAPI: There was a SyntaxError', error);
+      console.error('fetch-api: There was a SyntaxError', error);
     } else {
-      console.error('fetchAPI: There was an error', error);
+      console.error('fetch-api: There was an error', error);
     }
 
     return undefined;
   }
 
-  const { data }: { data: T } = json;
+  const result = schema.safeParse(json.data);
 
-  return data;
+  if (!result.success) {
+    const message = `fetch-api: ${fromZodError(result.error).toString()}`;
+
+    if (import.meta.env.DEV) {
+      throw new Error(message);
+    } else {
+      console.log(message);
+
+      return undefined;
+    }
+  }
+
+  return result.data;
 }

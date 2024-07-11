@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 
 /**
- * Fetches data from a GraphQL endpoint, and validates it.
+ * Fetches and validates data from a GraphQL endpoint.
  *
  * @param query the GraphQL query
  * @param schema the response's data's schema
