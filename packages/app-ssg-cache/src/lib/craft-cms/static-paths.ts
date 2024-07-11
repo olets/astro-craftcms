@@ -5,7 +5,7 @@ interface BaseT {
 }
 
 /**
- * Builds Astro static paths from fetched data.
+ * Builds Astro static paths from entries.
  *
  * @template T the response's data's type
  * @augments T BaseT { uri: string  };

@@ -4,8 +4,10 @@
  */
 
 import type { GetStaticPaths } from 'astro';
-import type { Entry } from '@config/sections/exampleChannel';
-import staticPaths from '@cache/sections__exampleChannel/static-paths.json';
+import cachedStaticPaths from '@cache/sections__exampleChannel/static-paths.json';
+import config, { type Entry } from '@config/sections/exampleChannel';
+import { fetchAPI } from '@lib/craft-cms/fetch';
+import staticPaths from '@lib/craft-cms/static-paths';
 
 /**
  * `Props` interface is tied to Astro.props
@@ -16,10 +18,17 @@ interface Props {
 }
 
 export const getStaticPaths = (async () => {
-  /**
-   * @TODO use app-ssg-no-cache solution when in DEV mode
-   */
-  return staticPaths;
+  if (import.meta.env.PROD) {
+    return cachedStaticPaths;
+  }
+
+  const { query, uriPrefix } = config;
+
+  const data = (await fetchAPI(query)) satisfies
+    | undefined
+    | { entries: Entry[] };
+
+  return await staticPaths({ entries: data?.entries, uriPrefix });
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;

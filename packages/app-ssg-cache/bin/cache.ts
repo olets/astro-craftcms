@@ -3,7 +3,9 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchAPI } from '@lib/craft-cms/fetch';
+import staticPaths from '@lib/craft-cms/static-paths';
 import type { Config } from '@lib/craft-cms/types';
+
 interface Data {
   entries?: {
     uri: string;
@@ -33,7 +35,7 @@ async function cache() {
       uriPrefix = '',
     } = await import(file).then((m) => m.default as Config);
 
-    const data = (await fetchAPI(query)) as Data;
+    const data = await fetchAPI<Data>(query);
 
     if (data === undefined) {
       console.warn(`No data returned for ${file}`);
@@ -42,73 +44,31 @@ async function cache() {
 
     const dir = await makeCacheDirectory(cacheDirectory);
 
-    await cacheData({ dir, data });
+    /**
+     * Cache fetched data
+     */
+    writeFileSync(
+      path.join(dir, 'data.json'),
+      [JSON.stringify(data), ''].join('\n'),
+    );
 
     if (hasDynamicRoutes) {
-      await cacheStaticPaths({
-        dir,
-        data,
-        uriPrefix,
-      });
+      /**
+       * Cache static paths for dynamic routes
+       */
+      writeFileSync(
+        path.join(dir, 'static-paths.json'),
+        [
+          JSON.stringify(
+            await staticPaths({ entries: data?.entries, uriPrefix }),
+          ),
+          '',
+        ].join('\n'),
+      );
     }
 
     console.log(`Data fetched and cached for ${file}`);
   }
-}
-
-/**
- * Save JSON data to a file.
- *
- * @param dir The directory in which to save the file
- * @param data CMS data
- */
-async function cacheData({
-  dir,
-  data,
-}: {
-  dir: string;
-  data: Data;
-}): Promise<void> {
-  const file = path.join(dir, 'data.json');
-
-  writeFileSync(file, [JSON.stringify(data), ''].join('\n'));
-}
-
-/**
- * Save Astro static path data to a file as JSON.
- *
- * @param dir The directory in which to save the file
- * @param data CMS data from which to build static paths
- */
-async function cacheStaticPaths({
-  dir,
-  data,
-  uriPrefix,
-}: {
-  dir: string;
-  data: Data;
-  uriPrefix?: string;
-}): Promise<void> {
-  const { entries = [] } = data;
-
-  const staticPaths = entries
-    .map((entry) => {
-      let slug = entry.uri;
-
-      if (uriPrefix) {
-        slug = slug.replace(new RegExp(`^${uriPrefix}/`), '');
-      }
-
-      return {
-        params: { slug: slug },
-        props: { entry },
-      };
-    })
-    .filter(Boolean);
-
-  const file = path.join(dir, 'static-paths.json');
-
-  writeFileSync(file, [JSON.stringify(staticPaths), ''].join('\n'));
 }
 
 /**
