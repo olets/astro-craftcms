@@ -1,5 +1,5 @@
 import { Glob } from 'bun';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { exists, mkdir } from 'node:fs/promises';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 
@@ -37,20 +37,17 @@ async function cache() {
     /**
      * Cache fetched data
      */
-    writeFileSync(`${dir}/data.json`, [JSON.stringify(data), ''].join('\n'));
+    await Bun.write(`${dir}/data.json`, JSON.stringify(data));
 
     if (hasDynamicRoutes) {
       /**
        * Cache static paths for dynamic routes
        */
-      writeFileSync(
+      await Bun.write(
         `${dir}/static-paths.json`,
-        [
-          JSON.stringify(
-            await staticPaths({ entries: data?.entries, uriPrefix }),
-          ),
-          '',
-        ].join('\n'),
+        JSON.stringify(
+          await staticPaths({ entries: data?.entries, uriPrefix }),
+        ),
       );
     }
 
@@ -67,9 +64,11 @@ async function cache() {
 async function makeCacheDirectory(cacheDirectory = ''): Promise<string> {
   const dir = `src/cache/${cacheDirectory}`;
 
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
+  if (await exists(dir)) {
+    return dir;
   }
+
+  await mkdir(dir, { recursive: true });
 
   return dir;
 }
