@@ -1,22 +1,5 @@
 import { z } from 'zod';
 
-const entrySchema = z.object({
-  children: z
-    .object({
-      title: z.string(),
-      uri: z.string(),
-    })
-    .array(),
-  parent: z
-    .object({
-      title: z.string(),
-      uri: z.string(),
-    })
-    .nullable(),
-  title: z.string(),
-  uri: z.string(),
-});
-
 const query = `{
   entries (section: "exampleStructure") {
     children {
@@ -33,7 +16,25 @@ const query = `{
 }`;
 
 const querySchema = z.object({
-  entries: entrySchema.array().nonempty(),
+  entries: z
+    .object({
+      children: z
+        .object({
+          title: z.string(),
+          uri: z.string(),
+        })
+        .array(),
+      parent: z
+        .object({
+          title: z.string(),
+          uri: z.string(),
+        })
+        .nullable(),
+      title: z.string(),
+      uri: z.string(),
+    })
+    .array()
+    .nonempty(),
 });
 
 const config = {

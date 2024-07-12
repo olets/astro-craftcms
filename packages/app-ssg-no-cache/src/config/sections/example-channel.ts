@@ -1,10 +1,5 @@
 import { z } from 'zod';
 
-const entrySchema = z.object({
-  title: z.string(),
-  uri: z.string(),
-});
-
 const query = `{
   entries (section: "exampleChannel") {
     title
@@ -13,7 +8,13 @@ const query = `{
 }`;
 
 const querySchema = z.object({
-  entries: entrySchema.array().nonempty(),
+  entries: z
+    .object({
+      title: z.string(),
+      uri: z.string(),
+    })
+    .array()
+    .nonempty(),
 });
 
 const config = {

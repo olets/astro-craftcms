@@ -10,16 +10,14 @@ import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 import url from '@lib/craft-cms/url';
 
-const { entrySchema } = config;
-
-type Entry = z.infer<typeof entrySchema>;
+const { querySchema } = config;
 
 /**
  * `Props` interface is tied to Astro.props
  * https://docs.astro.build/en/guides/typescript/#component-props
  */
 interface Props {
-  entry: Entry;
+  entry: z.infer<typeof querySchema.shape.entries.element>;
 }
 
 export const getStaticPaths = (async () => {
