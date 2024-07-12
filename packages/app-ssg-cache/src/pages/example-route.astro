@@ -26,7 +26,7 @@ const data = import.meta.env.PROD
   </thead>
   <tbody>
     {
-      data?.entries.map((entry) => (
+      data.entries.map((entry) => (
         <tr>
           <td>{entry.sectionHandle}</td>
           <td>{entry.title}</td>

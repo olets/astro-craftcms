@@ -33,7 +33,7 @@ export const getStaticPaths = (async () => {
     schema: querySchema,
   });
 
-  return await staticPaths({ entries: data?.entries, uriPrefix });
+  return await staticPaths({ entries: data.entries, uriPrefix });
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;

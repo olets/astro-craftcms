@@ -25,7 +25,7 @@ const data = await fetchAPI({
   </thead>
   <tbody>
     {
-      data?.entries?.map((entry) => (
+      data.entries.map((entry) => (
         <tr>
           <td>{entry.sectionHandle}</td>
           <td>{entry.title}</td>

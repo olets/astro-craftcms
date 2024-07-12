@@ -27,10 +27,6 @@ export const getStaticPaths = (async () => {
     schema: querySchema,
   });
 
-  if (data === undefined) {
-    return [];
-  }
-
   return await staticPaths<(typeof data.entries)[number]>({
     entries: data.entries,
     uriPrefix,

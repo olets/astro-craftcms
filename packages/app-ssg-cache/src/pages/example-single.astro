@@ -16,7 +16,7 @@ const data = import.meta.env.PROD
       schema: querySchema,
     });
 
-if (data?.entries === undefined || data.entries.length === 0) {
+if (data.entries.length === 0) {
   return new Response(null, { status: 404 });
 }
 

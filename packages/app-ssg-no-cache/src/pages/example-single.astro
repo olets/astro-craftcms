@@ -13,7 +13,7 @@ const data = await fetchAPI({
   schema: querySchema,
 });
 
-if (data === undefined) {
+if (data.entries.length === 0) {
   return new Response(null, { status: 404 });
 }
 
