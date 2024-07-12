@@ -61,5 +61,5 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
     }
   }
 
-  return result.data;
+  return result.data as z.infer<T>;
 }
