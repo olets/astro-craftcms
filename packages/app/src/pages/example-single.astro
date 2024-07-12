@@ -3,26 +3,14 @@
  * Page for Craft's "Example Single" section
  */
 
-import { z } from 'zod';
+import config from '@config/sections/example-single';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
-const query = `{
-  entries (uri: "example-single") {
-    title
-  }
-}`;
-
-const schema = z.object({
-  entries: z
-    .object({
-      title: z.string(),
-    })
-    .array(),
-});
+const { query, querySchema } = config;
 
 const data = await fetchAPI({
   query,
-  schema,
+  schema: querySchema,
 });
 
 if (data === undefined) {

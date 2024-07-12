@@ -3,45 +3,15 @@
  * Page for Craft's "Homepage" section
  */
 
-import { z } from 'zod';
+import config from '@config/sections/homepage';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
 
-const query = `{
-  entries(section: "homepage") {
-    title
-    ... on homepage_Entry {
-      exampleField
-    }
-  }
-  otherEntries: entries {
-    sectionHandle
-    title
-    typeHandle
-    uri
-  }
-}`;
-
-const schema = z.object({
-  entries: z
-    .object({
-      exampleField: z.string(),
-      title: z.string(),
-    })
-    .array(),
-  otherEntries: z
-    .object({
-      sectionHandle: z.string(),
-      title: z.string(),
-      typeHandle: z.string(),
-      uri: z.string(),
-    })
-    .array(),
-});
+const { query, querySchema } = config;
 
 const data = await fetchAPI({
   query,
-  schema,
+  schema: querySchema,
 });
 
 if (data === undefined) {

@@ -2,12 +2,9 @@
   "name": "astro-craftcms-app",
   "version": "0.0.1",
   "dependencies": {
-    "@astrojs/check": "^0.7.0",
-    "@astrojs/vercel": "^7.7.1",
     "astro": "^4.10.2",
-    "typescript": "^5.4.5",
-    "zod": "^3.23.8",
-    "zod-validation-error": "^3.3.0"
+    "@astrojs/check": "^0.7.0",
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "dev": "astro dev",
@@ -20,17 +17,18 @@
   },
   "type": "module",
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.1.0",
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.6.0",
     "@typescript-eslint/parser": "^7.14.1",
     "bun-types": "^1.1.13",
-    "dotenv": "^16.4.5",
     "eslint": "9.x",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.2",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "globals": "^15.6.0",
     "prettier": "^3.3.2",
-    "typescript-eslint": "^7.14.1"
+    "typescript-eslint": "^7.14.1",
+    "zod": "^3.23.8"
   }
 }

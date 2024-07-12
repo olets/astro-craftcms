@@ -4,35 +4,41 @@
  */
 
 import { z } from 'zod';
+import type { GetStaticPaths } from 'astro';
+import config from '@config/sections/example-channel';
 import fetchAPI from '@lib/craft-cms/fetch-api';
+import staticPaths from '@lib/craft-cms/static-paths';
 
-const { slug = '' } = Astro.params;
+const { entrySchema } = config;
+type Entry = z.infer<typeof entrySchema>;
 
-const query = `{
-  entries(uri: "example-channel/${slug}") {
-    title
-  }
-}`;
-
-const schema = z.object({
-  entries: z
-    .object({
-      title: z.string(),
-    })
-    .array()
-    .nonempty(),
-});
-
-const data = await fetchAPI({
-  query,
-  schema,
-});
-
-if (data === undefined) {
-  return new Response(null, { status: 404 });
+/**
+ * `Props` interface is tied to Astro.props
+ * https://docs.astro.build/en/guides/typescript/#component-props
+ */
+interface Props {
+  entry: Entry;
 }
 
-const entry = data.entries[0];
+export const getStaticPaths = (async () => {
+  const { query, querySchema, uriPrefix } = config;
+
+  const data = await fetchAPI({
+    query,
+    schema: querySchema,
+  });
+
+  if (data === undefined) {
+    return [];
+  }
+
+  return await staticPaths<(typeof data.entries)[number]>({
+    entries: data.entries,
+    uriPrefix,
+  });
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
 ---
 
 {entry.title}

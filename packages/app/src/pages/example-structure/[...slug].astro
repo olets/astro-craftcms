@@ -4,56 +4,43 @@
  */
 
 import { z } from 'zod';
+import type { GetStaticPaths } from 'astro';
+import config from '@config/sections/example-structure';
 import fetchAPI from '@lib/craft-cms/fetch-api';
-import url from '@lib/craft-cms/url.ts';
+import staticPaths from '@lib/craft-cms/static-paths';
+import url from '@lib/craft-cms/url';
 
-const { slug = '' } = Astro.params;
+const { entrySchema } = config;
 
-const query = `{
-  entries(uri: "example-structure/${slug}") {
-    children {
-      title
-      uri
-    }
-    parent {
-      title
-      uri
-    }
-    title
-  }
-}`;
+type Entry = z.infer<typeof entrySchema>;
 
-const schema = z.object({
-  entries: z
-    .object({
-      children: z
-        .object({
-          title: z.string(),
-          uri: z.string(),
-        })
-        .array(),
-      parent: z
-        .object({
-          title: z.string(),
-          uri: z.string(),
-        })
-        .nullable(),
-      title: z.string(),
-    })
-    .array()
-    .nonempty(),
-});
-
-const data = await fetchAPI({
-  query,
-  schema,
-});
-
-if (data === undefined) {
-  return new Response(null, { status: 404 });
+/**
+ * `Props` interface is tied to Astro.props
+ * https://docs.astro.build/en/guides/typescript/#component-props
+ */
+interface Props {
+  entry: Entry;
 }
 
-const entry = data.entries[0];
+export const getStaticPaths = (async () => {
+  const { query, querySchema, uriPrefix } = config;
+
+  const data = await fetchAPI({
+    query,
+    schema: querySchema,
+  });
+
+  if (data === undefined) {
+    return [];
+  }
+
+  return await staticPaths<(typeof data.entries)[number]>({
+    entries: data.entries,
+    uriPrefix,
+  });
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
 ---
 
 <dl>
@@ -72,13 +59,7 @@ const entry = data.entries[0];
       {
         entry.children.map((child) => (
           <li>
-            <dl>
-              <dt>title</dt>
-              <dd>{child.title}</dd>
-
-              <dt>URL</dt>
-              <dd>{url(child.uri)}</dd>
-            </dl>
+            <a href={url(child.uri)}>{child.title}</a>
           </li>
         ))
       }

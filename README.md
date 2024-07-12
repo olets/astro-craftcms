@@ -82,7 +82,7 @@ admin | changeme | changeme@example.com
     bun run app <replace with the script> # e.g. `bun run app dev` or `bun run app start` to start the app
     ```
 
-    For example, to start the SSR app run
+    For example, to start the SSG app run
 
     ```shell
     bun run app dev # or `bun run app start`
