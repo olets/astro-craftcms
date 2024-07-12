@@ -21,7 +21,8 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   if (url === undefined) {
-    console.warn('fetch-api: CRAFT_CMS_GRAPHQL_URL is not defined');
+    handleError('fetch-api: CRAFT_CMS_GRAPHQL_URL is not defined');
+
     return undefined;
   }
 
@@ -36,13 +37,17 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
 
     json = await response.json();
   } catch (error) {
+    let message = '';
+
     if (!response?.ok) {
-      console.error('fetch-api: response not ok', response?.status);
+      message = ['fetch-api: response not ok', response?.status].join('\n');
     } else if (error instanceof SyntaxError) {
-      console.error('fetch-api: There was a SyntaxError', error);
+      message = ['fetch-api: There was a SyntaxError', error].join('\n');
     } else {
-      console.error('fetch-api: There was an error', error);
+      message = ['fetch-api: There was an error', error].join('\n');
     }
+
+    handleError(message);
 
     return undefined;
   }
@@ -52,14 +57,18 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
   if (!result.success) {
     const message = `fetch-api: ${fromZodError(result.error).toString()}`;
 
-    if (import.meta.env.DEV) {
-      throw new Error(message);
-    } else {
-      console.log(message);
+    handleError(message);
 
-      return undefined;
-    }
+    return undefined;
   }
 
   return result.data as z.infer<T>;
+}
+
+function handleError(message: string): void {
+  if (import.meta.env.DEV) {
+    throw new Error(message);
+  }
+
+  console.error(message);
 }
