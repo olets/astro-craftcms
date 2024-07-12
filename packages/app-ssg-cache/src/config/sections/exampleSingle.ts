@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createSingleConfig } from '@lib/craft-cms/create-config';
 
 export interface Data {
   entries: {
@@ -17,17 +18,14 @@ const querySchema = z.object({
   entries: z
     .object({
       title: z.string(),
-      uri: z.string(),
     })
-    .array()
-    .nonempty(),
+    .array(),
 });
 
-const config = {
+const config = createSingleConfig({
   cacheDirectory: 'sections__exampleSingle',
-  hasDynamicRoutes: false,
   query,
   querySchema,
-};
+});
 
 export default config;

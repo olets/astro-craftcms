@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createSingleConfig } from '@lib/craft-cms/create-config';
 
 const query = `{
   entries (section: "exampleSingle") {
@@ -13,13 +14,12 @@ const querySchema = z.object({
       title: z.string(),
       uri: z.string(),
     })
-    .array()
-    .nonempty(),
+    .array(),
 });
 
-const config = {
+const config = createSingleConfig({
   query,
   querySchema,
-};
+});
 
 export default config;

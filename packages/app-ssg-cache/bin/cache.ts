@@ -17,6 +17,7 @@ async function cache() {
 
   for await (const file of glob.scan('.')) {
     console.log(`Processing ${file}`);
+
     const {
       cacheDirectory,
       hasDynamicRoutes,

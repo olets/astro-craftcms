@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createChannelOrStructureConfig } from '@lib/craft-cms/create-config';
 
 const query = `{
   entries (section: "exampleStructure") {
@@ -33,15 +34,13 @@ const querySchema = z.object({
       title: z.string(),
       uri: z.string(),
     })
-    .array()
-    .nonempty(),
+    .array(),
 });
 
-const config = {
-  entrySchema,
+const config = createChannelOrStructureConfig({
   query,
   querySchema,
   uriPrefix: 'example-structure',
-};
+});
 
 export default config;

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createRouteConfig } from '@lib/craft-cms/create-config';
 
 const query = `{
   entries {
@@ -20,11 +21,10 @@ const querySchema = z.object({
     .array(),
 });
 
-const config = {
+const config = createRouteConfig({
   cacheDirectory: 'routes__example-route',
-  hasDynamicRoutes: false,
   query,
   querySchema,
-};
+});
 
 export default config;
