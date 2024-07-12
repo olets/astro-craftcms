@@ -1,7 +1,5 @@
 import { Glob } from 'bun';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 
@@ -13,12 +11,12 @@ await cache();
 async function cache() {
   const fileSuffix = '.ts';
 
-  const filename = fileURLToPath(import.meta.url);
-  const dirname = path.dirname(filename);
-  const pattern = path.join(dirname, `/../src/config/**/*${fileSuffix}`);
-  const glob = new Glob(pattern);
+  const glob = new Glob(
+    `${import.meta.dirname}/../src/config/**/*${fileSuffix}`.replace('//', '/'),
+  );
 
   for await (const file of glob.scan('.')) {
+    console.log(`Processing ${file}`);
     const {
       cacheDirectory,
       hasDynamicRoutes,
@@ -39,17 +37,14 @@ async function cache() {
     /**
      * Cache fetched data
      */
-    writeFileSync(
-      path.join(dir, 'data.json'),
-      [JSON.stringify(data), ''].join('\n'),
-    );
+    writeFileSync(`${dir}/data.json`, [JSON.stringify(data), ''].join('\n'));
 
     if (hasDynamicRoutes) {
       /**
        * Cache static paths for dynamic routes
        */
       writeFileSync(
-        path.join(dir, 'static-paths.json'),
+        `${dir}/static-paths.json`,
         [
           JSON.stringify(
             await staticPaths({ entries: data?.entries, uriPrefix }),
@@ -70,7 +65,7 @@ async function cache() {
  * @returns
  */
 async function makeCacheDirectory(cacheDirectory = ''): Promise<string> {
-  const dir = path.join('src/cache', cacheDirectory);
+  const dir = `src/cache/${cacheDirectory}`;
 
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });
