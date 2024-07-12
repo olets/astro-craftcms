@@ -5,7 +5,6 @@
       "entry": {
         "children": [
           {
-            "id": "10",
             "title": "Example Structure Entry, Level 2",
             "uri": "example-structure/example-structure-entry-level-2"
           }
@@ -22,7 +21,6 @@
       "entry": {
         "children": [],
         "parent": {
-          "id": "8",
           "title": "Example Structure Entry, Level 1",
           "uri": "example-structure/example-structure-entry-level-1"
         },

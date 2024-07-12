@@ -1,5 +1,5 @@
 {
-  "entries": [{ "title": "Homepage", "exampleField": "Field content" }],
+  "entries": [{ "exampleField": "Field content", "title": "Homepage" }],
   "otherEntries": [
     {
       "sectionHandle": "homepage",

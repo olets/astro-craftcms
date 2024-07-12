@@ -21,8 +21,6 @@ const querySchema = z.object({
 });
 
 const config = {
-  cacheDirectory: 'routes__example-route',
-  hasDynamicRoutes: false,
   query,
   querySchema,
 };

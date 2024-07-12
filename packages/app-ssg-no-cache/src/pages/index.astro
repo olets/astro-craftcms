@@ -3,37 +3,18 @@
  * Page for Craft's "Homepage" section
  */
 
+import config from '@config/sections/homepage';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
-interface Data {
-  entries: {
-    exampleField: string;
-    title: string;
-  }[];
-  otherEntries: {
-    sectionHandle: string;
-    title: string;
-    typeHandle: string;
-    uri: string;
-  }[];
-}
 
-const data = await fetchAPI<Data>(`{
-  entries(section: "homepage") {
-    title
-    ... on homepage_Entry {
-      exampleField
-    }
-  }
-  otherEntries: entries {
-    sectionHandle
-    title
-    typeHandle
-    uri
-  }
-}`);
+const { query, querySchema } = config;
 
-if (data?.entries === undefined || data.entries.length === 0) {
+const data = await fetchAPI({
+  query,
+  schema: querySchema,
+});
+
+if (data === undefined) {
   return new Response(null, { status: 404 });
 }
 

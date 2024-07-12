@@ -3,22 +3,17 @@
  * Page for Craft's "Example Single" section
  */
 
+import config from '@config/sections/example-single';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
-interface Data {
-  entries: {
-    title: string;
-    uri: string;
-  }[];
-}
+const { query, querySchema } = config;
 
-const data = await fetchAPI<Data>(`{
-  entries (uri: "example-single") {
-    title
-  }
-}`);
+const data = await fetchAPI({
+  query,
+  schema: querySchema,
+});
 
-if (data?.entries === undefined || data.entries.length === 0) {
+if (data === undefined) {
   return new Response(null, { status: 404 });
 }
 

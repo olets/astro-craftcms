@@ -4,8 +4,7 @@
     "props": {
       "entry": {
         "title": "Example Channel Entry",
-        "uri": "example-channel/example-channel-entry",
-        "url": "https://astro-craftcms.ddev.site/example-channel/example-channel-entry"
+        "uri": "example-channel/example-channel-entry"
       }
     }
   }

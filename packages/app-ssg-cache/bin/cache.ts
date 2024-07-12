@@ -4,15 +4,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
-import type { Config } from '@lib/craft-cms/types';
-
-interface Data {
-  entries?: {
-    uri: string;
-    [key: string]: unknown;
-  }[];
-  [key: string]: unknown;
-}
 
 await cache();
 
@@ -32,10 +23,11 @@ async function cache() {
       cacheDirectory,
       hasDynamicRoutes,
       query,
+      querySchema,
       uriPrefix = '',
-    } = await import(file).then((m) => m.default as Config);
+    } = await import(file).then((m) => m.default);
 
-    const data = await fetchAPI<Data>(query);
+    const data = await fetchAPI({ query, schema: querySchema });
 
     if (data === undefined) {
       console.warn(`No data returned for ${file}`);

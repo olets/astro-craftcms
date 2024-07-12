@@ -3,10 +3,16 @@
  * Pages for Craft's "Example Structure" section
  */
 
+import { z } from 'zod';
 import type { GetStaticPaths } from 'astro';
+import config from '@config/sections/example-structure';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 import url from '@lib/craft-cms/url';
+
+const { entrySchema } = config;
+
+type Entry = z.infer<typeof entrySchema>;
 
 /**
  * `Props` interface is tied to Astro.props
@@ -16,44 +22,21 @@ interface Props {
   entry: Entry;
 }
 
-interface Entry {
-  children: {
-    id: number;
-    title: string;
-    uri: string;
-  }[];
-  parent: {
-    id: number;
-    title: string;
-    uri: string;
-  };
-  title: string;
-  uri: string;
-}
-
-interface Data {
-  entries: Entry[];
-}
-
 export const getStaticPaths = (async () => {
-  const data = await fetchAPI<Data>(`{
-    entries (section: "exampleStructure") {
-      children {
-        title
-        uri
-      }
-      parent {
-        title
-        uri
-      }
-      title
-      uri
-    }
-  }`);
+  const { query, querySchema, uriPrefix } = config;
 
-  return await staticPaths<Entry>({
-    entries: data?.entries,
-    uriPrefix: 'example-structure',
+  const data = await fetchAPI({
+    query,
+    schema: querySchema,
+  });
+
+  if (data === undefined) {
+    return [];
+  }
+
+  return await staticPaths<(typeof data.entries)[number]>({
+    entries: data.entries,
+    uriPrefix,
   });
 }) satisfies GetStaticPaths;
 

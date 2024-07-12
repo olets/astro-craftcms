@@ -37,8 +37,6 @@ const querySchema = z.object({
 });
 
 const config = {
-  cacheDirectory: 'sections__exampleStructure',
-  hasDynamicRoutes: true,
   entrySchema,
   query,
   querySchema,

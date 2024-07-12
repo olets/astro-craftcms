@@ -1,18 +1,5 @@
 import { z } from 'zod';
 
-export interface Data {
-  entries: {
-    exampleField: string;
-    title: string;
-  }[];
-  otherEntries: {
-    sectionHandle: string;
-    title: string;
-    typeHandle: string;
-    uri: string;
-  }[];
-}
-
 const query = `{
   entries(section: "homepage") {
     title
@@ -46,8 +33,6 @@ const querySchema = z.object({
 });
 
 const config = {
-  cacheDirectory: 'sections__homepage',
-  hasDynamicRoutes: false,
   query,
   querySchema,
 };

@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import fetchApi from '@lib/craft-cms/fetch-api';
+import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const query = `{
   entries (uri: "example-single") {
@@ -20,7 +20,7 @@ const schema = z.object({
     .array(),
 });
 
-const data = await fetchApi({
+const data = await fetchAPI({
   query,
   schema,
 });

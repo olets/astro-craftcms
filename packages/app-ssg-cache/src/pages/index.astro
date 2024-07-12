@@ -5,12 +5,17 @@
 
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import cachedData from '@cache/sections__homepage/data.json';
-import config, { type Data } from '@config/sections/homepage';
+import config from '@config/sections/homepage';
 import url from '@lib/craft-cms/url';
 
-const { query } = config;
+const { query, querySchema } = config;
 
-const data = import.meta.env.PROD ? cachedData : await fetchAPI<Data>(query);
+const data = import.meta.env.PROD
+  ? cachedData
+  : await fetchAPI({
+      query,
+      schema: querySchema,
+    });
 
 if (data?.entries === undefined || data.entries.length === 0) {
   return new Response(null, { status: 404 });

@@ -1,4 +1,4 @@
-import type { Config } from '@lib/craft-cms/types';
+import { z } from 'zod';
 
 export interface Data {
   entries: {
@@ -6,15 +6,28 @@ export interface Data {
     uri: string;
   }[];
 }
+const query = `{
+  entries (section: "exampleSingle") {
+    title
+    uri
+  }
+}`;
 
-const config: Config = {
+const querySchema = z.object({
+  entries: z
+    .object({
+      title: z.string(),
+      uri: z.string(),
+    })
+    .array()
+    .nonempty(),
+});
+
+const config = {
   cacheDirectory: 'sections__exampleSingle',
   hasDynamicRoutes: false,
-  query: `{
-    entries (uri: "example-single") {
-      title
-    }
-  }`,
+  query,
+  querySchema,
 };
 
 export default config;
