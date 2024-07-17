@@ -4,8 +4,7 @@
  */
 
 import { z } from 'zod';
-import type { GetStaticPaths } from 'astro';
-import cachedStaticPaths from '@cache/sections__exampleStructure/static-paths.json';
+import type { GetStaticPaths, GetStaticPathsResult } from 'astro';
 import config from '@config/sections/exampleStructure';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
@@ -23,6 +22,11 @@ interface Props {
 
 export const getStaticPaths = (async () => {
   if (import.meta.env.PROD) {
+    const cachedStaticPathsModule: Record<'default', GetStaticPathsResult>[] =
+      await Astro.glob('@cache/sections__exampleStructure-*/static-paths.json');
+
+    const cachedStaticPaths = cachedStaticPathsModule[0].default;
+
     return cachedStaticPaths;
   }
 
@@ -53,7 +57,7 @@ const { entry } = Astro.props;
   <dd>
     <ul>
       {
-        entry.children.map((child) => (
+        entry?.children.map((child) => (
           <li>
             <dl>
               <dt>title</dt>

@@ -1,13 +1,17 @@
 ---
-import cachedData from '@cache/routes__example-route/data.json';
+import { z } from 'zod';
 import config from '@config/routes/example-route';
 import url from '@lib/craft-cms/url';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, querySchema } = config;
 
+const cachedData: z.infer<typeof querySchema>[] = await Astro.glob(
+  '@cache/routes__example-route-*/data.json',
+);
+
 const data = import.meta.env.PROD
-  ? cachedData
+  ? cachedData[0]
   : await fetchAPI({
       query,
       schema: querySchema,
@@ -26,7 +30,7 @@ const data = import.meta.env.PROD
   </thead>
   <tbody>
     {
-      data.entries.map((entry) => (
+      data.entries.map((entry: any) => (
         <tr>
           <td>{entry.sectionHandle}</td>
           <td>{entry.title}</td>

@@ -3,15 +3,19 @@
  * Page for Craft's "Homepage" section
  */
 
+import { z } from 'zod';
 import fetchAPI from '@lib/craft-cms/fetch-api';
-import cachedData from '@cache/sections__homepage/data.json';
 import config from '@config/sections/homepage';
 import url from '@lib/craft-cms/url';
 
 const { query, querySchema } = config;
 
+const cachedData: z.infer<typeof querySchema>[] = await Astro.glob(
+  '@cache/sections__homepage-*/data.json',
+);
+
 const data = import.meta.env.PROD
-  ? cachedData
+  ? cachedData[0]
   : await fetchAPI({
       query,
       schema: querySchema,

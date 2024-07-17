@@ -3,14 +3,18 @@
  * Page for Craft's "Example Single" section
  */
 
-import cachedData from '@cache/sections__exampleSingle/data.json';
+import { z } from 'zod';
 import config from '@config/sections/exampleSingle';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, querySchema } = config;
 
+const cachedData: z.infer<typeof querySchema>[] = await Astro.glob(
+  '@cache/sections__exampleSingle-*/data.json',
+);
+
 const data = import.meta.env.PROD
-  ? cachedData
+  ? cachedData[0]
   : await fetchAPI({
       query,
       schema: querySchema,
