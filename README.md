@@ -10,6 +10,10 @@ Read the related articles (more in progress):
 2. [SSR Astro With Headless Craft CMS
 ](https://www.olets.dev/posts/ssr-astro-with-headless-craft-cms/)
 
+<!-- @TODO 3 -->
+
+<!-- @TODO 4 -->
+
 ## Requirements
 
 - A Node.js version manager. [asdf](https://asdf-vm.com/) is supported out of the box. If you use something else, add the appropriate config file using the Node.js version specified in `.tool-versions`.
@@ -87,6 +91,11 @@ admin | changeme | changeme@example.com
 
 #### SSR
 
+[SSR Astro With Headless Craft CMS
+](https://www.olets.dev/posts/ssr-astro-with-headless-craft-cms/) is a guide to building this app.
+
+Basics of working with it:
+
 - Run `packages/app-ssr/package.json` scripts from the project root or from `packages` with
 
     ```shell
@@ -120,6 +129,8 @@ To manage the Astro app's Node.js dependencies, `cd` to `packages/app-ssr` and r
 
 > [!WARNING]  
 > Still a work in progress
+
+<!-- []() is a guide to building this app. -->
 
 - Run `packages/app-ssg-no-cache/package.json` scripts from the project root or from `packages` with
 
@@ -158,6 +169,8 @@ Run the `build` script, and then upload and serve `packages/app-ssg-no-cache/dis
 
 > [!WARNING]  
 > Still a work in progress
+
+<!-- []() is a guide to building this app. -->
 
 - Run `packages/app-ssg-cache-cache/package.json` scripts from the project root or from `packages` with
 
