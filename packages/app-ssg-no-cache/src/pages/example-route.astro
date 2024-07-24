@@ -3,12 +3,9 @@ import config from '@config/routes/example-route';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
 
-const { query, querySchema } = config;
+const { query, schema } = config;
 
-const data = await fetchAPI({
-  query,
-  schema: querySchema,
-});
+const data = await fetchAPI({ query, schema });
 ---
 
 <h1>My route</h1>

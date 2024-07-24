@@ -10,7 +10,7 @@ const query = `{
   }
 }`;
 
-const querySchema = z.object({
+const schema = z.object({
   entries: z
     .object({
       sectionHandle: z.string(),
@@ -21,9 +21,6 @@ const querySchema = z.object({
     .array(),
 });
 
-const config = createRouteConfig({
-  query,
-  querySchema,
-});
+const config = createRouteConfig({ query, schema });
 
 export default config;

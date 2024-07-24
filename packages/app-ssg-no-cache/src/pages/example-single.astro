@@ -6,12 +6,9 @@
 import config from '@config/sections/example-single';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
-const { query, querySchema } = config;
+const { query, schema } = config;
 
-const data = await fetchAPI({
-  query,
-  schema: querySchema,
-});
+const data = await fetchAPI({ query, schema });
 
 if (data.entries.length === 0) {
   return new Response(null, { status: 404 });

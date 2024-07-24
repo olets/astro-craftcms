@@ -16,7 +16,7 @@ const query = `{
   }
 }`;
 
-const querySchema = z.object({
+const schema = z.object({
   entries: z
     .object({
       children: z
@@ -39,7 +39,7 @@ const querySchema = z.object({
 
 const config = createChannelOrStructureConfig({
   query,
-  querySchema,
+  schema,
   uriPrefix: 'example-structure',
 });
 

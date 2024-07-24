@@ -26,7 +26,7 @@ export interface ChannelOrStructureConfigI<
 
 interface ConfigInputI<T> {
   query: string;
-  querySchema: T;
+  schema: T;
 }
 
 export interface RouteConfigI<T extends z.AnyZodObject>

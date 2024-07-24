@@ -8,7 +8,7 @@ const query = `{
   }
 }`;
 
-const querySchema = z.object({
+const schema = z.object({
   entries: z
     .object({
       title: z.string(),
@@ -17,9 +17,6 @@ const querySchema = z.object({
     .array(),
 });
 
-const config = createSingleConfig({
-  query,
-  querySchema,
-});
+const config = createSingleConfig({ query, schema });
 
 export default config;
