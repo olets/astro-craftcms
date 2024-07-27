@@ -1,6 +1,19 @@
 import { z } from 'zod';
 import type { SingleConfig } from '@lib/craft-cms/types';
 
+export interface Data {
+  entries: {
+    exampleField: string;
+    title: string;
+  }[];
+  otherEntries: {
+    sectionHandle: string;
+    title: string;
+    typeHandle: string;
+    uri: string;
+  }[];
+}
+
 const query = `{
   entries(section: "homepage") {
     title
@@ -34,6 +47,8 @@ const schema = z.object({
 });
 
 export default {
+  cacheDirectory: 'sections__homepage',
+  hasDynamicRoutes: false,
   query,
   schema,
 } satisfies SingleConfig<typeof schema>;

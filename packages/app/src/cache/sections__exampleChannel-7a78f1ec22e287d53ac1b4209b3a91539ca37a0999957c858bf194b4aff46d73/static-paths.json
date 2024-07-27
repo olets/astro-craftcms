@@ -1,0 +1,11 @@
+[
+  {
+    "params": { "slug": "example-channel-entry" },
+    "props": {
+      "entry": {
+        "title": "Example Channel Entry",
+        "uri": "example-channel/example-channel-entry"
+      }
+    }
+  }
+]

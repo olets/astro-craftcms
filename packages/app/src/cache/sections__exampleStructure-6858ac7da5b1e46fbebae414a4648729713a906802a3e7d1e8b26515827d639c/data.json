@@ -1,0 +1,24 @@
+{
+  "entries": [
+    {
+      "children": [
+        {
+          "title": "Example Structure Entry, Level 2",
+          "uri": "example-structure/example-structure-entry-level-2"
+        }
+      ],
+      "parent": null,
+      "title": "Example Structure Entry, Level 1",
+      "uri": "example-structure/example-structure-entry-level-1"
+    },
+    {
+      "children": [],
+      "parent": {
+        "title": "Example Structure Entry, Level 1",
+        "uri": "example-structure/example-structure-entry-level-1"
+      },
+      "title": "Example Structure Entry, Level 2",
+      "uri": "example-structure/example-structure-entry-level-2"
+    }
+  ]
+}

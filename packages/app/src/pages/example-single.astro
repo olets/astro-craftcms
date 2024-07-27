@@ -3,12 +3,22 @@
  * Page for Craft's "Example Single" section
  */
 
+import { z } from 'zod';
 import config from '@config/sections/exampleSingle';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-const data = await fetchAPI({ query, schema });
+const cachedData: z.infer<typeof schema>[] = await Astro.glob(
+  '@cache/sections__exampleSingle-*/data.json',
+);
+
+const data = import.meta.env.PROD
+  ? cachedData[0]
+  : await fetchAPI({
+      query,
+      schema,
+    });
 
 if (data.entries.length === 0) {
   return new Response(null, { status: 404 });

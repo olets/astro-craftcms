@@ -38,6 +38,8 @@ const schema = z.object({
 });
 
 export default {
+  cacheDirectory: 'sections__exampleStructure',
+  hasDynamicRoutes: true,
   query,
   schema,
   uriPrefix: 'example-structure',

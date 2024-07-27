@@ -18,6 +18,8 @@ const schema = z.object({
 });
 
 export default {
+  cacheDirectory: 'sections__exampleChannel',
+  hasDynamicRoutes: true,
   query,
   schema,
   uriPrefix: 'example-channel',
