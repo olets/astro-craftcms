@@ -45,7 +45,8 @@ Read the related articles (more in progress):
 1. Create the apps' env files
 
     ```shell
-    cp packages/app-ssg/.env{.example,}
+    cp packages/app-ssg-cache/.env{.example,}
+    cp packages/app-ssg-no-cache/.env{.example,}
     cp packages/app-ssr/.env{.example,}
     ```
 
