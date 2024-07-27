@@ -3,4 +3,5 @@
 
 interface ImportMetaEnv {
   readonly CRAFT_CMS_GRAPHQL_URL: string;
+  readonly FETCH_CMS_CONTENT: string;
 }

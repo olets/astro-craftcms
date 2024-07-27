@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../.astro/collections/example-single.schema.json",
+  "entries": [{ "title": "Example Single" }]
+}

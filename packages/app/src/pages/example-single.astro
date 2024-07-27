@@ -3,12 +3,21 @@
  * Page for Craft's "Example Single" section
  */
 
+import { getEntry } from 'astro:content';
+import { z } from 'zod';
 import config from '@config/example-single';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-const data = await fetchAPI({ query, schema });
+let data: z.infer<typeof schema>;
+
+if (import.meta.env.FETCH_CMS_CONTENT === 'true') {
+  data = await fetchAPI({ query, schema });
+} else {
+  const { data: cachedData } = await getEntry('example-single', 'cms-cache');
+  data = cachedData;
+}
 
 if (data.entries.length === 0) {
   return new Response(null, { status: 404 });

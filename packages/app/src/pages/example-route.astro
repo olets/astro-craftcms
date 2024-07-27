@@ -1,14 +1,21 @@
 ---
+import { getEntry } from 'astro:content';
+import { z } from 'zod';
 import config from '@config/example-route';
-import fetchAPI from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
+import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-const data = await fetchAPI({ query, schema });
----
+let data: z.infer<typeof schema>;
 
-<h1>My route</h1>
+if (import.meta.env.FETCH_CMS_CONTENT === 'true') {
+  data = await fetchAPI({ query, schema });
+} else {
+  const { data: cachedData } = await getEntry('example-route', 'cms-cache');
+  data = cachedData;
+}
+---
 
 <table>
   <thead>
