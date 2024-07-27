@@ -8,9 +8,9 @@ import fetchAPI from '@lib/craft-cms/fetch-api';
 import config from '@config/sections/homepage';
 import url from '@lib/craft-cms/url';
 
-const { query, querySchema } = config;
+const { query, schema } = config;
 
-const cachedData: z.infer<typeof querySchema>[] = await Astro.glob(
+const cachedData: z.infer<typeof schema>[] = await Astro.glob(
   '@cache/sections__homepage-*/data.json',
 );
 
@@ -18,7 +18,7 @@ const data = import.meta.env.PROD
   ? cachedData[0]
   : await fetchAPI({
       query,
-      schema: querySchema,
+      schema,
     });
 
 if (data.entries.length === 0) {

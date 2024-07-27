@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createSingleConfig } from '@lib/craft-cms/create-config';
+import type { SingleConfig } from '@lib/craft-cms/types';
 
 const query = `{
   entries (section: "exampleSingle") {
@@ -17,6 +17,7 @@ const schema = z.object({
     .array(),
 });
 
-const config = createSingleConfig({ query, schema });
-
-export default config;
+export default {
+  query,
+  schema,
+} satisfies SingleConfig<typeof schema>;

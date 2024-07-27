@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createChannelOrStructureConfig } from '@lib/craft-cms/create-config';
+import type { ChannelConfig } from '@lib/craft-cms/types';
 
 const query = `{
   entries (section: "exampleChannel") {
@@ -8,7 +8,7 @@ const query = `{
   }
 }`;
 
-const querySchema = z.object({
+const schema = z.object({
   entries: z
     .object({
       title: z.string(),
@@ -17,11 +17,10 @@ const querySchema = z.object({
     .array(),
 });
 
-const config = createChannelOrStructureConfig({
+export default {
   cacheDirectory: 'sections__exampleChannel',
+  hasDynamicRoutes: true,
   query,
-  querySchema,
+  schema,
   uriPrefix: 'example-channel',
-});
-
-export default config;
+} satisfies ChannelConfig<typeof schema>;

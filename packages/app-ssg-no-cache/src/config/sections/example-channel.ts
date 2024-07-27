@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createChannelOrStructureConfig } from '@lib/craft-cms/create-config';
+import type { ChannelConfig } from '@lib/craft-cms/types';
 
 const query = `{
   entries (section: "exampleChannel") {
@@ -17,10 +17,8 @@ const schema = z.object({
     .array(),
 });
 
-const config = createChannelOrStructureConfig({
+export default {
   query,
   schema,
   uriPrefix: 'example-channel',
-});
-
-export default config;
+} satisfies ChannelConfig<typeof schema>;

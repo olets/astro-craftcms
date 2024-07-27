@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createRouteConfig } from '@lib/craft-cms/create-config';
+import type { RouteConfig } from '@lib/craft-cms/types';
 
 const query = `{
   entries {
@@ -10,7 +10,7 @@ const query = `{
   }
 }`;
 
-const querySchema = z.object({
+const schema = z.object({
   entries: z
     .object({
       sectionHandle: z.string(),
@@ -21,10 +21,9 @@ const querySchema = z.object({
     .array(),
 });
 
-const config = createRouteConfig({
+export default {
   cacheDirectory: 'routes__example-route',
+  hasDynamicRoutes: false,
   query,
-  querySchema,
-});
-
-export default config;
+  schema,
+} satisfies RouteConfig<typeof schema>;
