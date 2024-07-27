@@ -3,14 +3,13 @@
   "version": "0.0.1",
   "packageManager": "bun@1.1.13",
   "scripts": {
-    "apply": "ddev craft project-config/apply",
+    "craft": "ddev craft",
     "db-backup": "ddev craft db/backup --zip && printf '\n\nYou should move the newly created file in ./storage/backups to ./backups/db.sql/zip\n'",
     "db-import": "ddev import-db --file=backups/db.sql.zip",
     "launch": "ddev launch",
     "restart": "ddev restart",
     "start": "ddev start",
-    "stop": "ddev stop",
-    "touch": "ddev craft project-config/touch"
+    "stop": "ddev stop"
   },
   "type": "module"
 }
