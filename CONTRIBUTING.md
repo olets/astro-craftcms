@@ -12,17 +12,7 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
     git rebase --update-refs -i blank
     ```
 
-1.
-    ```shell
-    pick .......
-    update-ref refs/heads/ssr
-    b # <--- add this
-
-    pick .......
-    update-ref refs/heads/ssg
-
-    pick .......
-    ```
+    and in the `git-rebase-todo` change all `pick`s to `edit`s.
 
 1.
     ```shell
@@ -36,7 +26,8 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
 1.
     ```shell
     bun i
-    git add -A
+    git add packages/app packages/app-ssr
+    git commit --amend --no-edit
     git rebase --continue
     git checkout main -- packages/app-ssg-no-cache
     rm -rf packages/app
@@ -48,7 +39,8 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
 1.
     ```shell
     bun i
-    git add -A
+    git add packages/app packages/app-ssg-cache
+    git commit --amend --no-edit
     git rebase --continue
     git checkout main -- packages/app-ssg-cache
     rm -rf packages/app
@@ -60,7 +52,8 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
 1.
     ```shell
     bun i
-    git add -A
+    git add packages/app packages/app-ssg-cache
+    git commit --amend --no-edit
     git rebase --continue
     # (rebase finishes)
     git checkout ssr
