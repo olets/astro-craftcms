@@ -40,6 +40,12 @@ Read the related articles (more in progress):
     bun run cms db:import
     ```
 
+1. Generate a security for Craft
+
+    ```shell
+    bun run cms craft setup/security-key
+    ```
+
 1. Start and log into Craft CMS (see below) and click on the avatar in the upper right. Update the admin name, email, and password.
 
 1. Create the apps' env files
