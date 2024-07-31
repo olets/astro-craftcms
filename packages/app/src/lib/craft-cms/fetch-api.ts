@@ -14,16 +14,14 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
 }: {
   query: string;
   schema: T;
-}): Promise<z.infer<T> | undefined> {
+}): Promise<z.infer<T>> {
   let json;
   let response;
 
   const url = import.meta.env.CRAFT_CMS_GRAPHQL_URL;
 
   if (url === undefined) {
-    handleError('fetch-api: CRAFT_CMS_GRAPHQL_URL is not defined');
-
-    return undefined;
+    throw new Error('fetch-api: CRAFT_CMS_GRAPHQL_URL is not defined');
   }
 
   try {
@@ -47,9 +45,7 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
       message = ['fetch-api: There was an error', error].join('\n');
     }
 
-    handleError(message);
-
-    return undefined;
+    throw new Error(message);
   }
 
   const result = schema.safeParse(json.data);
@@ -57,18 +53,8 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
   if (!result.success) {
     const message = `fetch-api: ${fromZodError(result.error).toString()}`;
 
-    handleError(message);
-
-    return undefined;
-  }
-
-  return result.data as z.infer<T>;
-}
-
-function handleError(message: string): void {
-  if (import.meta.env.DEV) {
     throw new Error(message);
   }
 
-  console.error(message);
+  return result.data as z.infer<T>;
 }
