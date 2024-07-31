@@ -14,7 +14,7 @@ const query = `{
       exampleField
     }
   }
-  otherEntries: entries {
+  otherEntries: entries(section: "!= homepage") {
     sectionHandle
     title
     typeHandle
@@ -76,19 +76,17 @@ const entry = data.entries[0];
     </thead>
     <tbody>
       {
-        data?.otherEntries
-          .filter((otherEntry) => otherEntry.sectionHandle !== 'homepage')
-          .map((otherEntry) => (
-            <tr>
-              <td>{otherEntry.sectionHandle}</td>
-              <td>{otherEntry.title}</td>
-              <td>{otherEntry.typeHandle}</td>
-              <td>{url(otherEntry.uri)}</td>
-              <td>
-                <a href={url(otherEntry.uri)}>Go</a>
-              </td>
-            </tr>
-          ))
+        data?.otherEntries.map((otherEntry) => (
+          <tr>
+            <td>{otherEntry.sectionHandle}</td>
+            <td>{otherEntry.title}</td>
+            <td>{otherEntry.typeHandle}</td>
+            <td>{url(otherEntry.uri)}</td>
+            <td>
+              <a href={url(otherEntry.uri)}>Go</a>
+            </td>
+          </tr>
+        ))
       }
     </tbody>
   </table>
