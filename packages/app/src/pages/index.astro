@@ -3,48 +3,15 @@
  * Page for Craft's "Homepage" section
  */
 
-import { z } from 'zod';
+import config from '@config/index';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import url from '@lib/craft-cms/url';
 
-const query = `{
-  entries(section: "homepage") {
-    title
-    ... on homepage_Entry {
-      exampleField
-    }
-  }
-  otherEntries: entries(section: "!= homepage") {
-    sectionHandle
-    title
-    typeHandle
-    uri
-  }
-}`;
+const { query, schema } = config;
 
-const schema = z.object({
-  entries: z
-    .object({
-      exampleField: z.string(),
-      title: z.string(),
-    })
-    .array(),
-  otherEntries: z
-    .object({
-      sectionHandle: z.string(),
-      title: z.string(),
-      typeHandle: z.string(),
-      uri: z.string(),
-    })
-    .array(),
-});
+const data = await fetchAPI({ query, schema });
 
-const data = await fetchAPI({
-  query,
-  schema,
-});
-
-if (data === undefined) {
+if (data.entries.length === 0) {
   return new Response(null, { status: 404 });
 }
 
@@ -76,17 +43,19 @@ const entry = data.entries[0];
     </thead>
     <tbody>
       {
-        data?.otherEntries.map((otherEntry) => (
-          <tr>
-            <td>{otherEntry.sectionHandle}</td>
-            <td>{otherEntry.title}</td>
-            <td>{otherEntry.typeHandle}</td>
-            <td>{url(otherEntry.uri)}</td>
-            <td>
-              <a href={url(otherEntry.uri)}>Go</a>
-            </td>
-          </tr>
-        ))
+        data?.otherEntries
+          .filter((otherEntry) => otherEntry.sectionHandle !== 'homepage')
+          .map((otherEntry) => (
+            <tr>
+              <td>{otherEntry.sectionHandle}</td>
+              <td>{otherEntry.title}</td>
+              <td>{otherEntry.typeHandle}</td>
+              <td>{url(otherEntry.uri)}</td>
+              <td>
+                <a href={url(otherEntry.uri)}>Go</a>
+              </td>
+            </tr>
+          ))
       }
     </tbody>
   </table>

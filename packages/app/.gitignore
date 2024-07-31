@@ -1,5 +1,2 @@
-dist/
 .astro/
-node_modules/
 .env
-.vercel
