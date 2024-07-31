@@ -8,6 +8,7 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
 
 1.
     ```shell
+    bun run cms stop
     git checkout ssg-with-cached-data
     git rebase --update-refs -i blank
     ```
