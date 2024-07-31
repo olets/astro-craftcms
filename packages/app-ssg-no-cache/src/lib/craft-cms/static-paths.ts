@@ -1,19 +1,19 @@
 import type { GetStaticPathsResult } from 'astro';
 
-interface BaseT {
+interface Entry {
   uri: string;
 }
 
 /**
- * Builds Astro static paths from fetched data.
+ * Builds Astro static paths from entries.
  *
- * @template T the response's data's type
- * @augments T BaseT { uri: string  };
- * @param query the GraphQL query
+ * @template T the entries' type
+ * @augments T Entry
+ * @param entries
  * @param [uriPrefix] optional. The URI prefix to trim from entry URIs to determine the slug.
  * @returns
  */
-export default async function <T extends BaseT>({
+export default async function <T extends Entry>({
   entries,
   uriPrefix,
 }: {
