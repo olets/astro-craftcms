@@ -10,7 +10,8 @@ Read the related articles (more in progress):
 2. [SSR Astro With Headless Craft CMS
 ](https://www.olets.dev/posts/ssr-astro-with-headless-craft-cms/)
 
-<!-- @TODO 3 -->
+3. [SSG Astro with Headless Craft CMS Content Fetched At Build Time
+](https://www.olets.dev/posts/ssg-astro-with-headless-craft-cms-content-fetched-at-build-time/)
 
 <!-- @TODO 4 -->
 
