@@ -40,12 +40,14 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
 1.
     ```shell
     bun i
-    git add packages/app packages/app-ssg-cache
+    git add packages/app packages/app-ssg-no-cache
     git commit --amend --no-edit
     git rebase --continue
+    # note whether there was a conflict. this will matter later
     git checkout main -- packages/app-ssg-cache
     rm -rf packages/app
-    mv packages/app-ssg-cache packages/app
+    mv packages/app-ssg-no-cache packages/app
+    # if that errors, move it manually
     ```
 
 1. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
@@ -54,7 +56,14 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
     ```shell
     bun i
     git add packages/app packages/app-ssg-cache
+    ```
+1. If the last `git rebase --continue` had no conflict, run
+
+    ```shell
     git commit --amend --no-edit
+    ```
+1.
+    ```shell
     git rebase --continue
     # (rebase finishes)
     git checkout ssr
