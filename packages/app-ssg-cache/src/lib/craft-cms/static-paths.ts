@@ -1,28 +1,28 @@
 import type { GetStaticPathsResult } from 'astro';
 
-interface Entry {
-  uri: string;
+interface Data {
+  entries: {
+    uri: string;
+  }[];
 }
 
 /**
- * Builds Astro static paths from entries.
+ * Builds Astro static paths from query response data.
  *
- * @template T the entries' type
- * @augments T Entry
- * @param entries
+ * @template T the response data's type
+ * @augments T Data
+ * @param data
  * @param [uriPrefix] optional. The URI prefix to trim from entry URIs to determine the slug.
  * @returns
  */
-export default async function <T extends Entry>({
-  entries,
+export default async function <T extends Data>({
+  data,
   uriPrefix,
 }: {
-  entries: T[] | undefined;
+  data: T;
   uriPrefix?: string;
 }): Promise<GetStaticPathsResult> {
-  if (entries === undefined) {
-    return [];
-  }
+  const { entries } = data;
 
   return entries.map((entry) => {
     let slug = entry.uri;
@@ -32,8 +32,8 @@ export default async function <T extends Entry>({
     }
 
     return {
-      params: { slug: slug },
-      props: { entry },
+      params: { slug },
+      props: { data, entry },
     };
   });
 }
