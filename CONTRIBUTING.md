@@ -46,7 +46,7 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
     # note whether there was a conflict. this will matter later
     git checkout main -- packages/app-ssg-cache
     rm -rf packages/app
-    mv packages/app-ssg-no-cache packages/app
+    mv packages/app-ssg-cache packages/app
     # if that errors, move it manually
     ```
 
