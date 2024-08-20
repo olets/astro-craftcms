@@ -21,7 +21,10 @@ interface Props {
 export const getStaticPaths = (async () => {
   if (import.meta.env.PROD) {
     const cachedStaticPathsModule: Record<'default', GetStaticPathsResult>[] =
-      await Astro.glob('@cache/sections__exampleChannel__*/static-paths.json');
+      await Astro.glob(
+        // DUPE packages/app-ssg-cache/bin/cache.ts's cacheDirName
+        '@cache/sections__exampleChannel__*/static-paths.json',
+      );
 
     const cachedStaticPaths = cachedStaticPathsModule[0].default;
 

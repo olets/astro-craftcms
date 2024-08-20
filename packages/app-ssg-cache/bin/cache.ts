@@ -18,8 +18,6 @@ async function cache() {
   for await (const file of glob.scan('.')) {
     console.log(`Processing ${file}`);
 
-    const hash = createHash('sha256');
-
     /**
      * See src/lib/craft-cms/types.ts's ChannelConfig and RouteConfig
      */
@@ -34,9 +32,7 @@ async function cache() {
       continue;
     }
 
-    hash.update(JSON.stringify(data));
-
-    const dir = await makeCacheDirectory(`${cacheKey}__${hash.digest('hex')}`);
+    const dir = await makeCacheDirectory(cacheDirName(cacheKey, data));
 
     /**
      * Cache fetched data
@@ -56,6 +52,17 @@ async function cache() {
 
     console.log(`Data fetched and cached for ${file}`);
   }
+}
+
+function cacheDirName(cacheKey: string, data: any): string {
+  /**
+   * DUPE src/pages/**.astro
+   */
+  const hash = createHash('sha256');
+
+  hash.update(JSON.stringify(data));
+
+  return `${cacheKey}__${hash.digest('hex')}`;
 }
 
 /**
