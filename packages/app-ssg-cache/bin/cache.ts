@@ -36,7 +36,7 @@ async function cache() {
     hash.update(JSON.stringify(data));
 
     const dir = await makeCacheDirectory(
-      `${cacheDirectory}-${hash.digest('hex')}`,
+      `${cacheDirectory}__${hash.digest('hex')}`,
     );
 
     /**

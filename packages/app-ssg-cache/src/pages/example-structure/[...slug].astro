@@ -22,7 +22,9 @@ interface Props {
 export const getStaticPaths = (async () => {
   if (import.meta.env.PROD) {
     const cachedStaticPathsModule: Record<'default', GetStaticPathsResult>[] =
-      await Astro.glob('@cache/sections__exampleStructure-*/static-paths.json');
+      await Astro.glob(
+        '@cache/sections__exampleStructure__*/static-paths.json',
+      );
 
     const cachedStaticPaths = cachedStaticPathsModule[0].default;
 

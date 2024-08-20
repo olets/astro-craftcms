@@ -11,7 +11,7 @@ import url from '@lib/craft-cms/url';
 const { query, schema } = config;
 
 const cachedData: z.infer<typeof schema>[] = await Astro.glob(
-  '@cache/sections__homepage-*/data.json',
+  '@cache/sections__homepage__*/data.json',
 );
 
 const data = import.meta.env.PROD

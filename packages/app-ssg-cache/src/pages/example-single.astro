@@ -10,7 +10,7 @@ import fetchAPI from '@lib/craft-cms/fetch-api';
 const { query, schema } = config;
 
 const cachedData: z.infer<typeof schema>[] = await Astro.glob(
-  '@cache/sections__exampleSingle-*/data.json',
+  '@cache/sections__exampleSingle__*/data.json',
 );
 
 const data = import.meta.env.PROD
