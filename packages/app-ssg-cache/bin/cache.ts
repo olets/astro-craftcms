@@ -20,15 +20,13 @@ async function cache() {
 
     const hash = createHash('sha256');
 
-    const {
-      cacheDirectory,
-      hasDynamicRoutes,
-      query,
-      querySchema,
-      uriPrefix = '',
-    } = await import(file).then((m) => m.default);
+    /**
+     * See src/lib/craft-cms/types.ts's ChannelConfig and RouteConfig
+     */
+    const { cacheDirectory, hasDynamicRoutes, query, schema, uriPrefix } =
+      await import(file).then((m) => m.default);
 
-    const data = await fetchAPI({ query, schema: querySchema });
+    const data = await fetchAPI({ query, schema });
 
     if (data === undefined) {
       console.warn(`No data returned for ${file}`);
@@ -49,12 +47,11 @@ async function cache() {
     if (hasDynamicRoutes) {
       /**
        * Cache static paths for dynamic routes
+       * See src/lib/craft-cms/types.ts's ChannelConfig
        */
       await Bun.write(
         `${dir}/static-paths.json`,
-        JSON.stringify(
-          await staticPaths({ entries: data?.entries, uriPrefix }),
-        ),
+        JSON.stringify(await staticPaths({ data, uriPrefix })),
       );
     }
 
