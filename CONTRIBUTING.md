@@ -15,16 +15,16 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
 
     and in the `git-rebase-todo` change all `pick`s to `edit`s.
 
-1.
+2.
     ```shell
     git checkout main -- packages/app-ssr
     rm -rf packages/app
     mv packages/app-ssr packages/app
     ```
 
-1. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
+3. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
 
-1.
+4.
     ```shell
     bun i
     git add packages/app packages/app-ssr
@@ -35,9 +35,9 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
     mv packages/app-ssg-no-cache packages/app
     ```
 
-1. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
+5. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
 
-1.
+6.
     ```shell
     bun i
     git add packages/app packages/app-ssg-no-cache
@@ -50,19 +50,19 @@ Changes to `main`'s `packages/app-*` need to be repeated in the single-app branc
     # if that errors, move it manually
     ```
 
-1. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
+8. In `packages/app/package.json`, change the `"name"` to `astro-craftcms-app`.
 
-1.
+9.
     ```shell
     bun i
     git add packages/app packages/app-ssg-cache
     ```
-1. If the last `git rebase --continue` had no conflict, run
+10. If the last `git rebase --continue` had no conflict, run
 
     ```shell
     git commit --amend --no-edit
     ```
-1.
+11.
     ```shell
     git rebase --continue
     # (rebase finishes)
