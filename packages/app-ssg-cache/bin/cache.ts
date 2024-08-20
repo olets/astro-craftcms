@@ -23,9 +23,9 @@ async function cache() {
     /**
      * See src/lib/craft-cms/types.ts's ChannelConfig and RouteConfig
      */
-    const { cacheDirectory, query, schema, uriPrefix } = await import(
-      file
-    ).then((m) => m.default);
+    const { cacheKey, query, schema, uriPrefix } = await import(file).then(
+      (m) => m.default,
+    );
 
     const data = await fetchAPI({ query, schema });
 
@@ -36,9 +36,7 @@ async function cache() {
 
     hash.update(JSON.stringify(data));
 
-    const dir = await makeCacheDirectory(
-      `${cacheDirectory}__${hash.digest('hex')}`,
-    );
+    const dir = await makeCacheDirectory(`${cacheKey}__${hash.digest('hex')}`);
 
     /**
      * Cache fetched data

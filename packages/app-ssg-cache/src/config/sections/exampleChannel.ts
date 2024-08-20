@@ -18,7 +18,7 @@ const schema = z.object({
 });
 
 export default {
-  cacheDirectory: 'sections__exampleChannel',
+  cacheKey: 'sections__exampleChannel',
   query,
   schema,
   uriPrefix: 'example-channel',

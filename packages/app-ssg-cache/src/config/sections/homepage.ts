@@ -47,7 +47,7 @@ const schema = z.object({
 });
 
 export default {
-  cacheDirectory: 'sections__homepage',
+  cacheKey: 'sections__homepage',
   query,
   schema,
 } satisfies SingleConfig<typeof schema>;
