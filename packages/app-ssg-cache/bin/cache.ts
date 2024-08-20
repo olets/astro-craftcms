@@ -23,8 +23,9 @@ async function cache() {
     /**
      * See src/lib/craft-cms/types.ts's ChannelConfig and RouteConfig
      */
-    const { cacheDirectory, hasDynamicRoutes, query, schema, uriPrefix } =
-      await import(file).then((m) => m.default);
+    const { cacheDirectory, query, schema, uriPrefix } = await import(
+      file
+    ).then((m) => m.default);
 
     const data = await fetchAPI({ query, schema });
 
@@ -44,7 +45,7 @@ async function cache() {
      */
     await Bun.write(`${dir}/data.json`, JSON.stringify(data));
 
-    if (hasDynamicRoutes) {
+    if (uriPrefix) {
       /**
        * Cache static paths for dynamic routes
        * See src/lib/craft-cms/types.ts's ChannelConfig

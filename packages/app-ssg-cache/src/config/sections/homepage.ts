@@ -48,7 +48,6 @@ const schema = z.object({
 
 export default {
   cacheDirectory: 'sections__homepage',
-  hasDynamicRoutes: false,
   query,
   schema,
 } satisfies SingleConfig<typeof schema>;

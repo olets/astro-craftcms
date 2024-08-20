@@ -23,7 +23,6 @@ const schema = z.object({
 
 export default {
   cacheDirectory: 'routes__example-route',
-  hasDynamicRoutes: false,
   query,
   schema,
 } satisfies RouteConfig<typeof schema>;

@@ -25,7 +25,6 @@ const schema = z.object({
 
 export default {
   cacheDirectory: 'sections__exampleSingle',
-  hasDynamicRoutes: false,
   query,
   schema,
 } satisfies SingleConfig<typeof schema>;
