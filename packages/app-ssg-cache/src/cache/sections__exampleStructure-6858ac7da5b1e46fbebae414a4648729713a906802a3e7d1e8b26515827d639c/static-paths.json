@@ -2,6 +2,30 @@
   {
     "params": { "slug": "example-structure-entry-level-1" },
     "props": {
+      "data": {
+        "entries": [
+          {
+            "children": [
+              {
+                "title": "Example Structure Entry, Level 2",
+                "uri": "example-structure/example-structure-entry-level-2"
+              }
+            ],
+            "parent": null,
+            "title": "Example Structure Entry, Level 1",
+            "uri": "example-structure/example-structure-entry-level-1"
+          },
+          {
+            "children": [],
+            "parent": {
+              "title": "Example Structure Entry, Level 1",
+              "uri": "example-structure/example-structure-entry-level-1"
+            },
+            "title": "Example Structure Entry, Level 2",
+            "uri": "example-structure/example-structure-entry-level-2"
+          }
+        ]
+      },
       "entry": {
         "children": [
           {
@@ -18,6 +42,30 @@
   {
     "params": { "slug": "example-structure-entry-level-2" },
     "props": {
+      "data": {
+        "entries": [
+          {
+            "children": [
+              {
+                "title": "Example Structure Entry, Level 2",
+                "uri": "example-structure/example-structure-entry-level-2"
+              }
+            ],
+            "parent": null,
+            "title": "Example Structure Entry, Level 1",
+            "uri": "example-structure/example-structure-entry-level-1"
+          },
+          {
+            "children": [],
+            "parent": {
+              "title": "Example Structure Entry, Level 1",
+              "uri": "example-structure/example-structure-entry-level-1"
+            },
+            "title": "Example Structure Entry, Level 2",
+            "uri": "example-structure/example-structure-entry-level-2"
+          }
+        ]
+      },
       "entry": {
         "children": [],
         "parent": {
