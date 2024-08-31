@@ -3,24 +3,21 @@
  * Page for Craft's "Homepage" section
  */
 
-import { z } from 'zod';
+import { getEntry } from 'astro:content';
 import fetchAPI from '@lib/craft-cms/fetch-api';
-import config from '@config/sections/homepage';
+import config from '@config/index';
 import url from '@lib/craft-cms/url';
 
 const { query, schema } = config;
 
-const cachedData: z.infer<typeof schema>[] = await Astro.glob(
-  // DUPE packages/app-ssg-cache/bin/cache.ts's cacheDirName
-  '@cache/sections__homepage__*/data.json',
-);
+let { data } = await getEntry('index', 'cache');
 
-const data = import.meta.env.PROD
-  ? cachedData[0]
-  : await fetchAPI({
-      query,
-      schema,
-    });
+if (import.meta.env.PROD) {
+  data = await fetchAPI({
+    query,
+    schema,
+  });
+}
 
 if (data.entries.length === 0) {
   return new Response(null, { status: 404 });

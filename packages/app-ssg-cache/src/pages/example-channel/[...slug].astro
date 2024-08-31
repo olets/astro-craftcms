@@ -3,9 +3,10 @@
  * Pages for Craft's "Example Channel" section
  */
 
+import type { GetStaticPaths } from 'astro';
+import { getEntry } from 'astro:content';
 import { z } from 'zod';
-import type { GetStaticPaths, GetStaticPathsResult } from 'astro';
-import config from '@config/sections/exampleChannel';
+import config from '@config/example-channel';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 
@@ -21,21 +22,15 @@ interface Props {
 }
 
 export const getStaticPaths = (async () => {
-  if (import.meta.env.PROD) {
-    const cachedStaticPathsModule: Record<'default', GetStaticPathsResult>[] =
-      await Astro.glob(
-        // DUPE packages/app-ssg-cache/bin/cache.ts's cacheDirName
-        '@cache/sections__exampleChannel__*/static-paths.json',
-      );
-
-    const cachedStaticPaths = cachedStaticPathsModule[0].default;
-
-    return cachedStaticPaths;
-  }
-
   const { query, schema, uriPrefix } = config;
 
-  const data = await fetchAPI({ query, schema });
+  let data = await fetchAPI({ query, schema });
+
+  if (import.meta.env.PROD) {
+    let { data: cachedData } = await getEntry('example-channel', 'cache');
+
+    data = cachedData;
+  }
 
   return await staticPaths<Data>({ data, uriPrefix });
 }) satisfies GetStaticPaths;

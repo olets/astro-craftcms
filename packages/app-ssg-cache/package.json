@@ -2,8 +2,8 @@
   "name": "astro-craftcms-app-ssg-cache",
   "version": "0.0.1",
   "dependencies": {
-    "astro": "^4.10.2",
     "@astrojs/check": "^0.7.0",
+    "astro": "^4.15.1",
     "typescript": "^5.4.5"
   },
   "scripts": {
@@ -12,7 +12,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cache": "rm -rf src/cache && dotenvx run -- bun bin/cache.ts && prettier --write src/cache",
+    "cache": "dotenvx run -- bun bin/cache.ts && prettier --write src/content",
     "format": "prettier --write .",
     "lint": "eslint . --fix --max-warnings 0"
   },
