@@ -28,7 +28,7 @@ export const getStaticPaths = (async () => {
   let data = await fetchAPI({ query, schema });
 
   if (import.meta.env.PROD) {
-    let { data: cachedData } = await getEntry('example-structure', 'cache');
+    let { data: cachedData } = await getEntry('example-structure', 'cms-cache');
 
     data = cachedData;
   }

@@ -33,7 +33,7 @@ async function cache() {
     }
 
     await Bun.write(
-      `src/content/${basename}/cache.json`,
+      `src/content/${basename}/cms-cache.json`,
       JSON.stringify({
         $schema: `../../../.astro/collections/${basename}.schema.json`,
         ...data,

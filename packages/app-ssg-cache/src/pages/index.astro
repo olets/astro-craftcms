@@ -10,7 +10,7 @@ import url from '@lib/craft-cms/url';
 
 const { query, schema } = config;
 
-let { data } = await getEntry('index', 'cache');
+let { data } = await getEntry('index', 'cms-cache');
 
 if (import.meta.env.PROD) {
   data = await fetchAPI({

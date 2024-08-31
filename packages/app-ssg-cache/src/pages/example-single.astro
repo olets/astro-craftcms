@@ -9,7 +9,7 @@ import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-let { data } = await getEntry('example-single', 'cache');
+let { data } = await getEntry('example-single', 'cms-cache');
 
 if (import.meta.env.PROD) {
   data = await fetchAPI({ query, schema });

@@ -6,7 +6,7 @@ import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-let { data } = await getEntry('example-route', 'cache');
+let { data } = await getEntry('example-route', 'cms-cache');
 
 if (import.meta.env.PROD) {
   data = await fetchAPI({ query, schema });
