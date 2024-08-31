@@ -13,7 +13,9 @@ async function cache() {
   const glob = new Glob(pattern);
 
   for await (const file of glob.scan('.')) {
-    console.log(`Processing ${file}`);
+    console.log(`${file}`);
+    console.log(`    Processing`);
+
     const basename = (await $`basename ${file}`.text())
       .trim()
       .replace(/\.ts$/, '');
@@ -26,7 +28,7 @@ async function cache() {
     const data = await fetchAPI({ query, schema });
 
     if (data === undefined) {
-      console.warn(`No data returned for ${file}`);
+      console.warn(`    No data returned`);
       continue;
     }
 
@@ -38,6 +40,7 @@ async function cache() {
       }),
     );
 
-    console.log(`Data fetched and cached for ${file}`);
+    console.log(`    Data fetched and cached`);
+    console.log();
   }
 }
