@@ -4,7 +4,7 @@
  */
 
 import type { GetStaticPaths } from 'astro';
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 import { z } from 'zod';
 import config from '@config/example-structure';
 import fetchAPI from '@lib/craft-cms/fetch-api';
@@ -26,9 +26,7 @@ export const getStaticPaths = (async () => {
   let data = await fetchAPI({ query, schema });
 
   if (import.meta.env.PROD) {
-    const { data: cachedData } = await getCollection('example-structure').then(
-      (collection) => collection[0],
-    );
+    let { data: cachedData } = await getEntry('example-structure', 'cache');
 
     data = cachedData;
   }

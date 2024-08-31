@@ -3,16 +3,14 @@
  * Page for Craft's "Homepage" section
  */
 
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import config from '@config/index';
 import url from '@lib/craft-cms/url';
 
 const { query, schema } = config;
 
-let { data } = await getCollection(
-  'index' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
-).then((collection) => collection[0]);
+let { data } = await getEntry('index', 'cache');
 
 if (import.meta.env.PROD) {
   data = await fetchAPI({

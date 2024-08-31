@@ -1,14 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 import config from '@config/example-route';
 import url from '@lib/craft-cms/url';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-let { data } = await getCollection(
-  'example-route' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
-).then((collection) => collection[0]);
+let { data } = await getEntry('example-route', 'cache');
 
 if (import.meta.env.PROD) {
   data = await fetchAPI({
