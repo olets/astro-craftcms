@@ -1,0 +1,36 @@
+{
+  "name": "astro-craftcms-app-ssg-cache-collection",
+  "version": "0.0.1",
+  "dependencies": {
+    "astro": "^4.10.2",
+    "@astrojs/check": "^0.7.0",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "cache": "dotenvx run -- bun bin/cache.ts && prettier --write src/content",
+    "format": "prettier --write .",
+    "lint": "eslint . --fix --max-warnings 0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.1.0",
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.6.0",
+    "@types/node": "^20.14.11",
+    "@typescript-eslint/parser": "^7.14.1",
+    "bun-types": "^1.1.13",
+    "eslint": "9.x",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-astro": "^1.2.2",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "typescript-eslint": "^7.14.1",
+    "zod": "^3.23.8"
+  }
+}

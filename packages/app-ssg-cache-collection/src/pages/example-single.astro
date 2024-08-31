@@ -1,0 +1,30 @@
+---
+/**
+ * Page for Craft's "Example Single" section
+ */
+
+import { getCollection } from 'astro:content';
+import config from '@config/sections/exampleSingle';
+import fetchAPI from '@lib/craft-cms/fetch-api';
+
+const { query, schema } = config;
+
+let { data } = await getCollection(
+  'sections__exampleSingle' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
+).then((collection) => collection[0]);
+
+if (import.meta.env.PROD) {
+  data = await fetchAPI({
+    query,
+    schema,
+  });
+}
+
+if (data.entries.length === 0) {
+  return new Response(null, { status: 404 });
+}
+
+const entry = data.entries[0];
+---
+
+{entry.title}

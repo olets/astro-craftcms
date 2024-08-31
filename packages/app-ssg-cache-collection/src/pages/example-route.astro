@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import config from '@config/routes/example-route';
+import url from '@lib/craft-cms/url';
+import fetchAPI from '@lib/craft-cms/fetch-api';
+
+const { query, schema } = config;
+
+let { data } = await getCollection(
+  'routes__example_route' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
+).then((collection) => collection[0]);
+
+if (import.meta.env.PROD) {
+  data = await fetchAPI({
+    query,
+    schema,
+  });
+}
+---
+
+<table>
+  <thead>
+    <tr>
+      <th>sectionHandle</th>
+      <th>title</th>
+      <th>typeHandle</th>
+      <th>url</th>
+      <th>visit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      data.entries.map((entry) => (
+        <tr>
+          <td>{entry.sectionHandle}</td>
+          <td>{entry.title}</td>
+          <td>{entry.typeHandle}</td>
+          <td>{url(entry.uri)}</td>
+          <td>
+            <a href={url(entry.uri)}>Go</a>
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

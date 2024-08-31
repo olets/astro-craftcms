@@ -1,0 +1,41 @@
+---
+/**
+ * Pages for Craft's "Example Channel" section
+ */
+
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import { z } from 'zod';
+import config from '@config/sections/exampleChannel';
+import fetchAPI from '@lib/craft-cms/fetch-api';
+import staticPaths from '@lib/craft-cms/static-paths';
+
+/**
+ * `Props` interface is tied to Astro.props
+ * https://docs.astro.build/en/guides/typescript/#component-props
+ */
+interface Props {
+  data: z.infer<typeof config.schema>;
+  entry: z.infer<typeof config.schema.shape.entries.element>;
+}
+
+export const getStaticPaths = (async () => {
+  const { query, schema, uriPrefix } = config;
+
+  let data = await fetchAPI({ query, schema });
+
+  if (import.meta.env.PROD) {
+    const { data: cachedData } = await getCollection(
+      'sections__exampleChannel',
+    ).then((collection) => collection[0]);
+
+    data = cachedData;
+  }
+
+  return await staticPaths<typeof data>({ data, uriPrefix });
+}) satisfies GetStaticPaths;
+
+const { data, entry } = Astro.props;
+---
+
+{entry.title}
