@@ -38,7 +38,6 @@ const schema = z.object({
 });
 
 export default {
-  cacheKey: 'sections__exampleStructure',
   query,
   schema,
   uriPrefix: 'example-structure',

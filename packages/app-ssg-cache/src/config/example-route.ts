@@ -1,9 +1,11 @@
 import { z } from 'zod';
-import type { ChannelConfig } from '@lib/craft-cms/types';
+import type { RouteConfig } from '@lib/craft-cms/types';
 
 const query = `{
-  entries (section: "exampleChannel") {
+  entries {
+    sectionHandle
     title
+    typeHandle
     uri
   }
 }`;
@@ -11,15 +13,15 @@ const query = `{
 const schema = z.object({
   entries: z
     .object({
+      sectionHandle: z.string(),
       title: z.string(),
+      typeHandle: z.string(),
       uri: z.string(),
     })
     .array(),
 });
 
 export default {
-  cacheKey: 'sections__exampleChannel',
   query,
   schema,
-  uriPrefix: 'example-channel',
-} satisfies ChannelConfig<typeof schema>;
+} satisfies RouteConfig<typeof schema>;

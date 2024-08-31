@@ -1,22 +1,16 @@
 ---
-import { z } from 'zod';
-import config from '@config/routes/example-route';
+import { getEntry } from 'astro:content';
+import config from '@config/example-route';
 import url from '@lib/craft-cms/url';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
-const cachedData: z.infer<typeof schema>[] = await Astro.glob(
-  // DUPE packages/app-ssg-cache/bin/cache.ts's cacheDirName
-  '@cache/routes__example-route__*/data.json',
-);
+let { data } = await getEntry('example-route', 'cache');
 
-const data = import.meta.env.PROD
-  ? cachedData[0]
-  : await fetchAPI({
-      query,
-      schema,
-    });
+if (import.meta.env.PROD) {
+  data = await fetchAPI({ query, schema });
+}
 ---
 
 <table>

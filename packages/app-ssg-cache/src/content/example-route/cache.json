@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../.astro/collections/example-route.schema.json",
   "entries": [
     {
       "sectionHandle": "homepage",
