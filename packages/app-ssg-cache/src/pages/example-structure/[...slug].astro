@@ -36,7 +36,7 @@ export const getStaticPaths = (async () => {
   return await staticPaths<Data>({ data, uriPrefix });
 }) satisfies GetStaticPaths;
 
-const { data, entry } = Astro.props;
+const { /* data, */ entry } = Astro.props;
 ---
 
 <dl>
