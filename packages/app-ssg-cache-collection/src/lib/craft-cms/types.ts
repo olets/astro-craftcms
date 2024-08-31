@@ -15,7 +15,6 @@ const singleSchema = z.object({
 });
 
 interface Config<T> {
-  cacheKey: string;
   query: string;
   schema: T;
 }

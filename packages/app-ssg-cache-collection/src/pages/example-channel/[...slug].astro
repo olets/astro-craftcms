@@ -6,7 +6,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { z } from 'zod';
-import config from '@config/sections/exampleChannel';
+import config from '@config/example-channel';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import staticPaths from '@lib/craft-cms/static-paths';
 
@@ -25,9 +25,9 @@ export const getStaticPaths = (async () => {
   let data = await fetchAPI({ query, schema });
 
   if (import.meta.env.PROD) {
-    const { data: cachedData } = await getCollection(
-      'sections__exampleChannel',
-    ).then((collection) => collection[0]);
+    const { data: cachedData } = await getCollection('example-channel').then(
+      (collection) => collection[0],
+    );
 
     data = cachedData;
   }

@@ -4,13 +4,13 @@
  */
 
 import { getCollection } from 'astro:content';
-import config from '@config/sections/exampleSingle';
+import config from '@config/example-single';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
 const { query, schema } = config;
 
 let { data } = await getCollection(
-  'sections__exampleSingle' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
+  'example-single' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
 ).then((collection) => collection[0]);
 
 if (import.meta.env.PROD) {

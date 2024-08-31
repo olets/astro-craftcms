@@ -1,4 +1,4 @@
-import { Glob } from 'bun';
+import { $, Glob } from 'bun';
 import path from 'node:path';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 
@@ -14,13 +14,14 @@ async function cache() {
 
   for await (const file of glob.scan('.')) {
     console.log(`Processing ${file}`);
+    const basename = (await $`basename ${file}`.text())
+      .trim()
+      .replace(/\.ts$/, '');
 
     /**
      * See src/lib/craft-cms/types.ts's ChannelConfig and RouteConfig
      */
-    const { cacheKey, query, schema } = await import(file).then(
-      (m) => m.default,
-    );
+    const { query, schema } = await import(file).then((m) => m.default);
 
     const data = await fetchAPI({ query, schema });
 
@@ -30,9 +31,9 @@ async function cache() {
     }
 
     await Bun.write(
-      `src/content/${cacheKey}/data.json`,
+      `src/content/${basename}/data.json`,
       JSON.stringify({
-        $schema: `../../../.astro/collections/${cacheKey}.schema.json`,
+        $schema: `../../../.astro/collections/${basename}.schema.json`,
         ...data,
       }),
     );

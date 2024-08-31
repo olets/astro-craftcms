@@ -5,13 +5,13 @@
 
 import { getCollection } from 'astro:content';
 import fetchAPI from '@lib/craft-cms/fetch-api';
-import config from '@config/sections/homepage';
+import config from '@config/index';
 import url from '@lib/craft-cms/url';
 
 const { query, schema } = config;
 
 let { data } = await getCollection(
-  'sections__homepage' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
+  'index' /* DUPE `config.cacheKey`; BUG/LIMITATION? can't use `config.cacheKey` */,
 ).then((collection) => collection[0]);
 
 if (import.meta.env.PROD) {
