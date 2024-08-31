@@ -22,7 +22,7 @@ const schema = z.object({
 });
 
 export default {
-  cacheKey: 'routes__example_route',
+  cacheKey: 'routes__example-route',
   query,
   schema,
 } satisfies RouteConfig<typeof schema>;

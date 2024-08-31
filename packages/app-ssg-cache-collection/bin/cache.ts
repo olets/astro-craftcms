@@ -29,7 +29,13 @@ async function cache() {
       continue;
     }
 
-    await Bun.write(`src/content/${cacheKey}/data.json`, JSON.stringify(data));
+    await Bun.write(
+      `src/content/${cacheKey}/data.json`,
+      JSON.stringify({
+        $schema: `../../../.astro/collections/${cacheKey}.schema.json`,
+        ...data,
+      }),
+    );
 
     console.log(`Data fetched and cached for ${file}`);
   }

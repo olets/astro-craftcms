@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../.astro/collections/sections__homepage.schema.json",
   "entries": [{ "exampleField": "Field content", "title": "Homepage" }],
   "otherEntries": [
     {

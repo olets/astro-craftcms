@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../.astro/collections/sections__exampleChannel.schema.json",
   "entries": [
     {
       "title": "Example Channel Entry",

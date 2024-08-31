@@ -2,8 +2,8 @@
   "name": "astro-craftcms-app-ssg-cache-collection",
   "version": "0.0.1",
   "dependencies": {
-    "astro": "^4.10.2",
     "@astrojs/check": "^0.7.0",
+    "astro": "^4.15.1",
     "typescript": "^5.4.5"
   },
   "scripts": {

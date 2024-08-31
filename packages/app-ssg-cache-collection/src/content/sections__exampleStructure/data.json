@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../.astro/collections/sections__exampleStructure.schema.json",
   "entries": [
     {
       "children": [
