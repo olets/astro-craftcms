@@ -12,10 +12,7 @@ const { query, schema } = config;
 let { data } = await getEntry('example-single', 'cache');
 
 if (import.meta.env.PROD) {
-  data = await fetchAPI({
-    query,
-    schema,
-  });
+  data = await fetchAPI({ query, schema });
 }
 
 if (data.entries.length === 0) {
