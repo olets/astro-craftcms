@@ -1,13 +1,6 @@
 import { z } from 'zod';
 import type { SingleConfig } from '@lib/craft-cms/types';
 
-export interface Data {
-  entries: {
-    title: string;
-    uri: string;
-  }[];
-}
-
 const query = `{
   entries (section: "exampleSingle") {
     title
