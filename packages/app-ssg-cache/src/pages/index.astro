@@ -12,11 +12,8 @@ const { query, schema } = config;
 
 let { data } = await getEntry('index', 'cms-cache');
 
-if (import.meta.env.PROD) {
-  data = await fetchAPI({
-    query,
-    schema,
-  });
+if (import.meta.env.DEV) {
+  data = await fetchAPI({ query, schema });
 }
 
 if (data.entries.length === 0) {

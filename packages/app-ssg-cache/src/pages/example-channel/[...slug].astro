@@ -24,12 +24,10 @@ interface Props {
 export const getStaticPaths = (async () => {
   const { query, schema, uriPrefix } = config;
 
-  let data = await fetchAPI({ query, schema });
+  let { data } = await getEntry('example-channel', 'cms-cache');
 
-  if (import.meta.env.PROD) {
-    let { data: cachedData } = await getEntry('example-channel', 'cms-cache');
-
-    data = cachedData;
+  if (import.meta.env.DEV) {
+    data = await fetchAPI({ query, schema });
   }
 
   return await staticPaths<Data>({ data, uriPrefix });
