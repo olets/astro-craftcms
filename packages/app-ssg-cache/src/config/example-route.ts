@@ -21,7 +21,4 @@ const schema = z.object({
     .array(),
 });
 
-export default {
-  query,
-  schema,
-} satisfies RouteConfig<typeof schema>;
+export default { query, schema } satisfies RouteConfig<typeof schema>;

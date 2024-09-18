@@ -23,7 +23,4 @@ const schema = z.object({
     .array(),
 });
 
-export default {
-  query,
-  schema,
-} satisfies SingleConfig<typeof schema>;
+export default { query, schema } satisfies SingleConfig<typeof schema>;
