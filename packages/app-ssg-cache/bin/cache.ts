@@ -8,17 +8,18 @@ await cache();
  * Fetch and cache Craft CMS data.
  */
 async function cache() {
-  const pattern = path.join(import.meta.dirname, `../src/config/**/*.ts`);
+  const pattern = path.join(import.meta.dirname, '../src/config/**/*.ts');
 
   const glob = new Glob(pattern);
 
   for await (const file of glob.scan('.')) {
-    console.log(`${file}`);
-    console.log(`    Processing`);
+    const basename = (await $`basename ${file}`.text()).trim();
+    const indentation = '    ';
 
-    const basename = (await $`basename ${file}`.text())
-      .trim()
-      .replace(/\.ts$/, '');
+    console.log(`src/config/${basename}`);
+    console.log(`${indentation}Processing`);
+
+    const basenameWithoutExtension = basename.replace(/\.ts$/, '');
 
     /**
      * See src/lib/craft-cms/types.ts's ChannelConfig and RouteConfig
@@ -28,19 +29,18 @@ async function cache() {
     const data = await fetchAPI({ query, schema });
 
     if (data === undefined) {
-      console.warn(`    No data returned`);
+      console.warn(`${indentation}No data returned`);
       continue;
     }
 
     await Bun.write(
-      `src/content/${basename}/cms-cache.json`,
+      `src/content/${basenameWithoutExtension}/cms-cache.json`,
       JSON.stringify({
-        $schema: `../../../.astro/collections/${basename}.schema.json`,
+        $schema: `../../../.astro/collections/${basenameWithoutExtension}.schema.json`,
         ...data,
       }),
     );
 
-    console.log(`    Data fetched and cached`);
-    console.log();
+    console.log(`${indentation}Data fetched and cached\n`);
   }
 }
