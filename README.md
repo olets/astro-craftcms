@@ -4,16 +4,13 @@ Demonstration of three approaches to [Astro](https://astro.build/) with content 
 
 Read the related articles (more in progress):
 
-1. [Monorepo Setup for Headless Craft CMS
-](https://www.olets.dev/posts/monorepo-setup-for-headless-craft-cms/)
+1. [Monorepo Setup for Headless Craft CMS](https://www.olets.dev/posts/monorepo-setup-for-headless-craft-cms/)
 
-2. [SSR Astro With Headless Craft CMS
-](https://www.olets.dev/posts/ssr-astro-with-headless-craft-cms/)
+2. [SSR Astro With Headless Craft CMS](https://www.olets.dev/posts/ssr-astro-with-headless-craft-cms/)
 
-3. [SSG Astro with Headless Craft CMS Content Fetched At Build Time
-](https://www.olets.dev/posts/ssg-astro-with-headless-craft-cms-content-fetched-at-build-time/)
+3. [SSG Astro with Headless Craft CMS Content Fetched At Build Time](https://www.olets.dev/posts/ssg-astro-with-headless-craft-cms-content-fetched-at-build-time/)
 
-<!-- @TODO 4 -->
+4. [SSG Astro with Headless Craft CMS Content Fetched At Build Time Or Cached In Advance](https://www.olets.dev/posts/ssg-astro-with-headless-craft-cms-content-fetched-at-build-time-or-cached-in-advance/)
 
 ## Requirements
 
