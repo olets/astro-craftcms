@@ -12,7 +12,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cache": "dotenvx run -- bun bin/cache.ts && prettier --write src/content/*/*.json --log-level warn",
+    "cache": "bun bin/cache.ts && prettier --write src/content/*/*.json --log-level warn",
     "format": "prettier --write .",
     "lint": "eslint . --fix --max-warnings 0"
   },
