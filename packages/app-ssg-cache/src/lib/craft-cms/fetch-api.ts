@@ -38,7 +38,10 @@ export default async function fetchAPI<T extends z.ZodTypeAny>({
     let message = '';
 
     if (!response?.ok) {
-      message = ['fetch-api: response not ok', response?.status].join('\n');
+      message = [
+        'fetch-api: response not ok. Is the CMS reachable?',
+        response?.status,
+      ].join('\n');
     } else if (error instanceof SyntaxError) {
       message = ['fetch-api: There was a SyntaxError', error].join('\n');
     } else {
