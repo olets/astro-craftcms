@@ -24,10 +24,13 @@ interface Props {
 export const getStaticPaths = (async () => {
   const { query, schema, uriPrefix } = config;
 
-  let { data } = await getEntry('example-channel', 'cms-cache');
+  let data: z.infer<typeof schema>;
 
-  if (import.meta.env.DEV) {
+  if (import.meta.env.FETCH_CMS_CONTENT === 'true') {
     data = await fetchAPI({ query, schema });
+  } else {
+    const { data: cachedData } = await getEntry('example-channel', 'cms-cache');
+    data = cachedData;
   }
 
   return await staticPaths<Data>({ data, uriPrefix });

@@ -4,16 +4,20 @@
  */
 
 import { getEntry } from 'astro:content';
+import { z } from 'zod';
 import fetchAPI from '@lib/craft-cms/fetch-api';
 import config from '@config/index';
 import url from '@lib/craft-cms/url';
 
 const { query, schema } = config;
 
-let { data } = await getEntry('index', 'cms-cache');
+let data: z.infer<typeof schema>;
 
-if (import.meta.env.DEV) {
+if (import.meta.env.FETCH_CMS_CONTENT === 'true') {
   data = await fetchAPI({ query, schema });
+} else {
+  const { data: cachedData } = await getEntry('index', 'cms-cache');
+  data = cachedData;
 }
 
 if (data.entries.length === 0) {
