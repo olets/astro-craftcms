@@ -1,100 +1,77 @@
 #ddev-generated
+# If you remove the ddev-generated line above you
+# are responsible for maintaining this file. DDEV will not then
+# update it, for example if you add `additional_hostnames`, etc.
 
 http:
   routers:
-    
-    
     astro-craftcms-web-80-http:
-      
-      rule: HostRegexp(`astro-craftcms.ddev.site`)
-      
-      middlewares:
-        - autodetect
-      service: "astro-craftcms-web-80-http"
-      tls: false
       entrypoints:
         - http-80
-    
-    
-    astro-craftcms-web-8025-http:
+      rule: HostRegexp(`^astro-craftcms\.ddev\.site$`)
       
-      rule: HostRegexp(`astro-craftcms.ddev.site`)
-      
-      middlewares:
-        - autodetect
-      service: "astro-craftcms-web-8025-http"
+      service: "astro-craftcms-web-80"
+      ruleSyntax: v3
       tls: false
+      # middlewares:
+      #   - "astro-craftcms-redirectHttps"
+    astro-craftcms-web-8025-http:
       entrypoints:
         - http-8025
-    
-    
-    
+      rule: HostRegexp(`^astro-craftcms\.ddev\.site$`)
+      
+      service: "astro-craftcms-web-8025"
+      ruleSyntax: v3
+      tls: false
+      # middlewares:
+      #   - "astro-craftcms-redirectHttps"
     
     
     
     astro-craftcms-web-80-https:
-      
-      rule: HostRegexp(`astro-craftcms.ddev.site`)
-      
-      middlewares:
-        - autodetect
-      service: "astro-craftcms-web-80-https"
-      
-      tls: true
-      
       entrypoints:
         - http-443
-    
-    
-    astro-craftcms-web-8025-https:
+      rule: HostRegexp(`^astro-craftcms\.ddev\.site$`)
       
-      rule: HostRegexp(`astro-craftcms.ddev.site`)
-      
-      middlewares:
-        - autodetect
-      service: "astro-craftcms-web-8025-https"
+      service: "astro-craftcms-web-80"
+      ruleSyntax: v3
       
       tls: true
       
+    astro-craftcms-web-8025-https:
       entrypoints:
         - http-8026
-    
+      rule: HostRegexp(`^astro-craftcms\.ddev\.site$`)
+      
+      service: "astro-craftcms-web-8025"
+      ruleSyntax: v3
+      
+      tls: true
+      
     
 
-  # autodetect won't be needed in Traefik 3 https://github.com/traefik/traefik/pull/9546
   middlewares:
-    autodetect:
-      contentType:
-        autoDetect: false
+    astro-craftcms-redirectHttps:
+      redirectScheme:
+        scheme: https
+        permanent: true
 
   services:
-    
-    astro-craftcms-web-80-http:
+    astro-craftcms-web-80:
       loadbalancer:
         servers:
           - url: http://ddev-astro-craftcms-web:80
-    
-    astro-craftcms-web-8025-http:
+        
+    astro-craftcms-web-8025:
       loadbalancer:
         servers:
           - url: http://ddev-astro-craftcms-web:8025
+        
     
-    astro-craftcms-web-80-https:
     
-      loadbalancer:
-        servers:
-          - url: http://ddev-astro-craftcms-web:80
     
-    astro-craftcms-web-8025-https:
-    
-      loadbalancer:
-        servers:
-          - url: http://ddev-astro-craftcms-web:8025
-    
-
 
 tls:
   certificates:
     - certFile: /mnt/ddev-global-cache/traefik/certs/astro-craftcms.crt
       keyFile: /mnt/ddev-global-cache/traefik/certs/astro-craftcms.key
-
